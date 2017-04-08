@@ -12,6 +12,11 @@
             body {width: 90%;
                   margin-left: 5%;}
         </style>
+        <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.8.3/js-yaml.js"></script>
         <script type="text/javascript">
         var surveyJSON = '{"title": "Create OWRS files",' +
 '"utilities": [' +
@@ -430,11 +435,11 @@
 ' "Does this Customer Class contain a Service Charge?", "Does the Service Charge depend on the following:"],'+
 '"billFrequency": ["Monthly", "BiMonthly", "Other"],'+
 '"rateStructures":['+
-'"RESIDENTIAL SINGLE", "RESIDENTIAL MULTI",'+
+'"RESIDENTIAL_SINGLE", "RESIDENTIAL_MULTI",'+
 '"IRRIGATION", "COMMERCIAL",'+
 '"INDUSTRIAL", "INSTITUTIONAL",'+
-'"FIRE SERVICE", "NONPOTABLE",'+
-'"NON RESIDENTIAL", "UNMETERED",'+
+'"FIRE_SERVICE", "NONPOTABLE",'+
+'"NON_RESIDENTIAL", "UNMETERED",'+
 '"RECLAIMED", "GOVERNMENTAL",'+
 '"INTERRUPTIBLE", "DOCKS SHIPPING",'+
 '"BUILDING CONTRACTOR", "RESIDENTIAL CONSTRUCTION",'+
@@ -470,12 +475,14 @@ var survey = JSON.parse(surveyJSON)
                 var meterSizes = [];
                 var meterTypes = [];
                 var serviceChargeCategories = [];
+                var serviceCharges = [];
                 var isServiceCharge = [];
                 
                 
                 
                 function MainPage()
                 {
+                    
                     title.innerHTML = survey.title;
                     subtitle.innerHTML = "";
                     clear(form);
@@ -611,12 +618,24 @@ var survey = JSON.parse(surveyJSON)
                     
                     Answer = document.createElement("span");
                     
-                    Answer.innerHTML = '<input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes"/>'+
-                    '<label for = "YesServiceCharge">Yes</label>'+
-                    '<input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No"/>'+
-                    '<label for = "NoServiceCharge">No</label>';
+                    if(isServiceCharge[currentIndex])
+                    {
+                        Answer.innerHTML = '<input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" checked = "true"/>'+
+                        '<label for = "YesServiceCharge">Yes</label>'+
+                        '<input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No" />'+
+                        '<label for = "NoServiceCharge">No</label>';
+                        serviceList.appendChild(Answer);
+                        getServiceChargeInfo();
+                    }
+                    else
+                    {  
+                        Answer.innerHTML = '<input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" />'+
+                        '<label for = "YesServiceCharge">Yes</label>'+
+                        '<input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No"  checked = "true"/>'+
+                        '<label for = "NoServiceCharge">No</label>';
+                        serviceList.appendChild(Answer);
+                    }
                     
-                    serviceList.appendChild(Answer);
                     
                     var BREAK = document.createElement("br");
                     serviceList.appendChild(BREAK);
@@ -664,6 +683,23 @@ var survey = JSON.parse(surveyJSON)
                         var serviceDependsOnDiv = document.createElement("div");
                         serviceDependsOnDiv.id = "serviceDependsOnDiv";
                         serviceList.appendChild(serviceDependsOnDiv);
+                        
+                        if(serviceParameters[currentIndex] != null)
+                        {
+                            for(var i = 0; i < survey.serviceDependsOn.length; ++i)
+                            {
+                                var isChecked = document.getElementById("dependsOn" + i);
+                                for(var j = 0; j < serviceParameters[currentIndex].length; ++j)
+                                {
+                                    if(serviceParameters[currentIndex][j] == isChecked.value)
+                                    {
+                                        isChecked.checked = true;
+                                    }
+                                }
+                            }
+                            
+                            getServiceChargeDepends();
+                        }
                     }
                     else
                     {
@@ -696,6 +732,17 @@ var survey = JSON.parse(surveyJSON)
                         if(checkCheckBox.checked == true)
                         {
                             serviceParameters[currentIndex].push(survey.serviceDependsOn[i]);
+                        }
+                        else
+                        {
+                            if(survey.serviceDependsOn[i] == "Meter Type")
+                            {
+                                meterTypes[currentIndex] = null;
+                            }
+                            else if(survey.serviceDependsOn[i] == "Meter Size")
+                            {
+                                meterSizes[currentIndex] = null;
+                            }
                         }
                     }
                     
@@ -744,7 +791,46 @@ var survey = JSON.parse(surveyJSON)
                     Answer = document.createElement("div");
                     Answer.id = "serviceChargesDiv";
                     serviceDependsOnDiv.appendChild(Answer);
+                    
+                    if(meterSizes[currentIndex] != null)
+                    {
+                        for(var i = 0; i < survey.meterSizes.length; ++i)
+                        {
+                            var isChecked = document.getElementById("meterSize" + i);
+                            
+                            for(var j = 0; j < meterSizes[currentIndex].length; ++j)
+                            {
+                                if(meterSizes[currentIndex][j] ==isChecked.value)
+                                {
+                                    isChecked.checked = true;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if(meterTypes[currentIndex] != null)
+                    {
+                        for(var i = 0; i < survey.meterTypes.length; ++i)
+                        {
+                            var isChecked = document.getElementById("meterType" + i);
+                            
+                            for(var j = 0; j < meterTypes[currentIndex].length; ++j)
+                            {
+                                if(meterTypes[currentIndex][j] ==isChecked.value)
+                                {
+                                    isChecked.checked = true;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if(meterTypes[currentIndex] != null || meterSizes[currentIndex] != null)
+                    {
+                        createServiceChargeField();
+                    }
                 }
+                
+                
                 function createServiceChargeField()
                 {
                     var serviceChargesDiv = document.getElementById("serviceChargesDiv")
@@ -768,7 +854,7 @@ var survey = JSON.parse(surveyJSON)
                         }
                         else if(checkCheckBox.checked == true)
                         {
-                            meterSizes[currentIndex].push(survey.meterSizes[i] + '"');
+                            meterSizes[currentIndex].push(survey.meterSizes[i]);
                         }
                     }
                     
@@ -804,13 +890,13 @@ var survey = JSON.parse(surveyJSON)
                                 
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
-                                Answer.style.width = '200px';
-                                Answer.innerHTML = meterTypes[currentIndex][i] + ' ' + meterSizes[currentIndex][j];
+                                Answer.style.width = '300px';
+                                Answer.innerHTML = meterTypes[currentIndex][i] + ' ' + meterSizes[currentIndex][j] + '"';
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
                                 Answer.setAttribute("type", "text");
-                                Answer.id = tempCategory;
+                                Answer.id = "charge" + (j + i * meterSizes[currentIndex].length);
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 var BREAK = document.createElement("br");
@@ -829,13 +915,13 @@ var survey = JSON.parse(surveyJSON)
                                 
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
-                                Answer.innerHTML = meterSizes[currentIndex][i];
-                                Answer.style.width = '200px';
+                                Answer.innerHTML = meterSizes[currentIndex][i] + '"';
+                                Answer.style.width = '300px';
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
                                 Answer.setAttribute("type", "text");
-                                Answer.id = tempCategory;
+                                Answer.id = "charge" + i;
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 var BREAK = document.createElement("br");
@@ -854,17 +940,31 @@ var survey = JSON.parse(surveyJSON)
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
                                 Answer.innerHTML = meterTypes[currentIndex][i];
-                                Answer.style.width = '200px';
+                                Answer.style.width = '300px';
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
                                 Answer.setAttribute("type", "text");
-                                Answer.id = tempCategory;
+                                Answer.id = "charge" + i;
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 var BREAK = document.createElement("br");
                                 serviceChargesDiv.appendChild(BREAK);
                             }
+                    }
+                    
+                    if(serviceCharges[currentIndex] != null && serviceCharges[currentIndex].length == serviceChargeCategories[currentIndex].length)
+                    {
+                        for(var i = 0; i < serviceChargeCategories[currentIndex].length; ++i)
+                        {
+                            var tempCharge = document.getElementById("charge" + i);
+                            
+                            tempCharge.value = serviceCharges[currentIndex][i];
+                        }
+                    }
+                    else
+                    {
+                        serviceCharges[currentIndex] = [];
                     }
                 }
                 
@@ -873,6 +973,7 @@ var survey = JSON.parse(surveyJSON)
                 
                 function PreviousGetAnswers()
                 {
+                    
                     if(currentIndex == 0)
                     {
                         MainPage();
@@ -886,25 +987,175 @@ var survey = JSON.parse(surveyJSON)
                 
                 function NextGetAnswers()
                 {
-                    if(currentIndex == SelectedRateStructures.length - 1)
+                    var Continue = true;
+                    if(isServiceCharge[currentIndex])
                     {
-                        Complete();
+                        if(serviceParameters[currentIndex] == null)
+                        {
+                            alert("You must select what the Service Charge Depends On");
+                            Continue = false;
+                        }
+                        else
+                        {
+                            for(var i = 0; i < serviceParameters[currentIndex].length; ++i)
+                            {
+                                if(serviceParameters[currentIndex][i] == "Meter Size")
+                                {
+                                    if(meterSizes[currentIndex] == null)
+                                    {
+                                        alert("Select A Meter Size or Deselect The Meter Size Option");
+                                        Continue = false;
+                                    }
+                                }
+                                else if(serviceParameters[currentIndex][i] == "Meter Type")
+                                {
+                                    if(meterTypes[currentIndex] == null)
+                                    {
+                                        alert("Select A Meter Type or Deselect The Meter Type Option");
+                                        Continue = false;
+                                    }
+                                }
+                            }
+                        }
+                        if(Continue)
+                        {
+                            serviceCharges[currentIndex] = []
+                            for(var i = 0; i < serviceChargeCategories[currentIndex].length; ++i)
+                            {
+                                var tempCharge = document.getElementById("charge" + i);
+                        
+                                if(tempCharge.value == "")
+                                {
+                                    alert("Service Charge at row " + (i + 1) + " isn't filled out");
+                                    Continue = false;
+                                }
+                                else
+                                {
+                                    serviceCharges[currentIndex].push(tempCharge.value);
+                                }
+                            }
+                        }
                     }
-                    else
+                    if(Continue)
                     {
-                        currentIndex += 1;
-                        RateStructure(currentIndex);
+                        if(currentIndex == SelectedRateStructures.length - 1)
+                        {
+                            Complete();
+                        }
+                        else
+                        {
+                            currentIndex += 1;
+                            RateStructure(currentIndex);
+                        }
                     }
                 }
                 
                 function Complete()
                 {
+                    var OWRSformat = {
+                       "metadata" : {
+                            "effective_date" : "" + EffectiveDate + "",
+                            "utility_name" : "" + UtilityName + "",
+                            "bill_frequency" : "" + BillFrequency + ""
+                       }, 
+                       "rate_structure" : {
+                       
+                       }
+                    };
+                    
+                    for(var structure in SelectedRateStructures)
+                    {
+                        var tempStructure; 
+                        
+                        var serviceJSON;
+                        
+                        if(isServiceCharge[structure])
+                        {
+                            serviceJSON = {
+                                "depends_on" : [],
+                                "values" : {}
+                            };
+                            
+                            for(var parameter in serviceParameters[structure])
+                            {
+                                if(serviceParameters[structure][parameter] == "Meter Size")
+                                {
+                                    serviceJSON.depends_on.push("meter_size");
+                                }
+                                else if(serviceParameters[structure][parameter] == "Meter Type")
+                                {
+                                    serviceJSON.depends_on.push("meter_type");
+                                }
+                            }
+                            
+                            var valueStorage = '{';
+                            for(var value in serviceCharges[structure])
+                            {
+                                if(value == serviceCharges[structure].length - 1)
+                                {
+                                    valueStorage += '"' + serviceChargeCategories[structure][value] + '" : "' + serviceCharges[structure][value] + '" }'
+                                }
+                                else
+                                {
+                                    valueStorage += '"' + serviceChargeCategories[structure][value] + '" : "' + serviceCharges[structure][value] + '", '
+                                }
+                            }
+                            serviceJSON.values = JSON.parse(valueStorage);
+                        }
+                        else
+                        { serviceJSON = 0; }
+                        
+                        switch(SelectedRateStructures[structure])
+                        {
+                            case "RESIDENTIAL_SINGLE": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
+                                                        tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON ; break;
+                            case "RESIDENTIAL_MULTI": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
+                                                        tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON; break;
+                            case "IRRIGATION": tempStructure = { "IRRIGATION" : { "service_charge" : {} } }; 
+                                                        tempStructure.IRRIGATION.service_charge = serviceJSON; break;
+                            case "COMMERCIAL": tempStructure = { "COMMERCIAL" : { "service_charge" : {} } }; 
+                                                        tempStructure.COMMERCIAL.service_charge = serviceJSON; break;
+                            case "INDUSTRIAL": tempStructure = { "INDUSTRIAL" : { "service_charge" : {} } }; 
+                                                        tempStructure.INDUSTRIAL.service_charge = serviceJSON; break;
+                            case "INSTITUTIONAL": tempStructure = { "INSTITUTIONAL" : { "service_charge" : {} } }; 
+                                                        tempStructure.INSTITUTIONAL.service_charge = serviceJSON; break;
+                            case "FIRE_SERVICE": tempStructure = { "FIRE_SERVICE" : { "service_charge" : {} } }; 
+                                                        tempStructure.FIRE_SERVICE.service_charge = serviceJSON; break;
+                            case "NONPOTABLE": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } }; 
+                                                        tempStructure.NONPOTABLE.service_charge = serviceJSON; break;
+                            case "NON_RESIDENTIAL": tempStructure = { "NON_RESIDENTIAL" : { "service_charge" : {} } }; 
+                                                        tempStructure.NON_RESIDENTIAL.service_charge = serviceJSON; break;
+                            case "UNMETERED": tempStructure = { "UNMETERED" : { "service_charge" : {} } }; 
+                                                        tempStructure.UNMETERED.service_charge = serviceJSON; break;
+                            case "RECLAIMED": tempStructure = { "RECLAIMED" : { "service_charge" : {} } }; 
+                                                        tempStructure.RECLAIMED.service_charge = serviceJSON; break;
+                            case "GOVERNMENTAL": tempStructure = { "GOVERNMENTAL" : { "service_charge" : {} } }; 
+                                                        tempStructure.GOVERNMENTAL.service_charge = serviceJSON; break;
+                            case "INTERRUPTIBLE": tempStructure = { "INTERRUPTIBLE" : { "service_charge" : {} } }; 
+                                                        tempStructure.INTERRUPTIBLE.service_charge = serviceJSON; break;
+                            case "DOCKS SHIPPING": tempStructure = { "DOCKS_SHIPPING" : { "service_charge" : {} } }; 
+                                                        tempStructure.DOCKS_SHIPPING.service_charge = serviceJSON; break;
+                            case "BUILDING CONTRACTOR": tempStructure = { "BUILDING_CONTRACTOR" : { "service_charge" : {} } }; 
+                                                        tempStructure.BUILDING_CONTRACTOR.service_charge = serviceJSON; break;
+                            case "RESIDENTIAL CONSTRUCTION": tempStructure = { "RESIDENTIAL_CONSTRUCTION" : { "service_charge" : {} } }; 
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION.service_charge = serviceJSON; break;
+                            case "OTHER": tempStructure = { "OTHER" : { "service_charge" : {} } }; 
+                                                        tempStructure.OTHER.service_charge = serviceJSON; break;
+                        }
+                        
+                        OWRSformat.rate_structure = jQuery.extend({}, OWRSformat.rate_structure, tempStructure);
+                    }
+                    
+                    var YAML = jsyaml.safeDump(OWRSformat);
+                    
                     var cleared = document.getElementById("surveyContainer");
                     clear(cleared);
                     
                     var TheEnd = document.createElement("h1");
                     TheEnd.appendChild(document.createTextNode("Thank You"));
                     cleared.appendChild(TheEnd);
+                    
+                    alert(YAML);
                 }
                 
                 function QuestionTxt(question, number, Parent)
