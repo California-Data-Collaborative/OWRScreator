@@ -1125,7 +1125,7 @@ var survey = JSON.parse(surveyJSON)
                         clear(commodityDependsOnDiv);
                     }
                     
-                    QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
+                    QuestionTxt("Coming Soon", 11, commodityDependsOnDiv);
                 }
                 
                 function BudgetDepends()
