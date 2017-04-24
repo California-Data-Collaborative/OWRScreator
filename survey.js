@@ -1621,14 +1621,17 @@ var survey = JSON.parse(surveyJSON)
                         {
                             case 'Uniform': 
                             commodityCharges[currentIndex] = []
-                            if(isUniformDependsOn == "No")
+                            if(isUniformDependsOn[currentIndex] == "No")
                             {
                                 var Charge = document.getElementById("uniformPrice0");
-                                commodityCharges[currentIndex][0] = Charge.value;
+                                if(Charge.value == "")
+                                    { alert("You must enter a rate"); Continue = false; } 
+                                else
+                                { commodityCharges[currentIndex][0] = Charge.value; }
                             }
                             else
                             {
-                              if(uniformParameters[currentIndex].length != 0)
+                              if(uniformParameters[currentIndex] != null)
                               {
                                   for(var i = 0; i < uniformParameters[currentIndex].length; ++i)
                                   {
@@ -1672,7 +1675,7 @@ var survey = JSON.parse(surveyJSON)
                                      commodityCharges[currentIndex] = []
                                     for(var i = 0; i < commodityChargeCategories[currentIndex].length; ++i)
                                     {
-                                        var tempCharge = document.getElementById("uniformPrice" + i);
+                                        var tempCharge = document.getElementById("commodityCharge" + i);
                                 
                                         if(tempCharge.value == "")
                                         {
@@ -1683,9 +1686,9 @@ var survey = JSON.parse(surveyJSON)
                                         {
                                             commodityCharges[currentIndex].push(tempCharge.value);
                                         }
-                            } 
+                                    } 
                                   }
-                              }                                  
+                                }                                  
                             }
                             
                             break;
@@ -1725,6 +1728,7 @@ var survey = JSON.parse(surveyJSON)
                         var tempStructure; 
                         
                         var serviceJSON;
+                        var commodityJSON;
                         
                         if(isServiceCharge[structure])
                         {
@@ -1761,43 +1765,116 @@ var survey = JSON.parse(surveyJSON)
                         }
                         else
                         { serviceJSON = 0; }
+                    
+                        if(isCommodityCharge[structure])
+                        {
+                            switch(commodityStructure[structure])
+                            {
+                                case 'Uniform':
+                                    commodityJSON  = {
+                                        "commodity_charge": "flat_rate*usage_ccf",
+                                        "flat_rate" : {}
+                                    };
+                                    
+                                    if(isUniformDependsOn[structure] == 'No')
+                                    {
+                                        commodityJSON.flat_rate = commodityCharges[structure][0];
+                                    }
+                                    else
+                                    {
+                                        commodityJSON.flat_rate.depends_on = [];
+                                        
+                                        for(var i = 0; i < uniformParameters[structure].length; ++i)
+                                        {
+                                            var temp;
+                                            switch(uniformParameters[structure][i])
+                                            {
+                                                case 'Season': temp = 'season'; break;
+                                                case 'Temperature Zone': temp = 'temperature_zone'; break;
+                                                case 'Elevation Zone': temp = 'elevation_zone'; break;
+                                                case 'Pressure Zone': temp = 'pressure_zone'; break;
+                                                case 'Lot Size Group': temp = 'lot_size_group'; break;
+                                            }
+                                            commodityJSON.flat_rate.depends_on.push(temp);
+                                        }
+                                        
+                                        var tempComm = "{ "
+                                        for(value in commodityChargeCategories[structure])
+                                        {
+                                            var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            if(value == commodityChargeCategories[structure].length - 1)
+                                            {
+                                                tempComm += '"' + replacementStr.replace(" ", "|") + '": "' + commodityCharges[structure][value]+ '" }';
+                                            }
+                                            else
+                                            {
+                                                tempComm += '"' + replacementStr.replace(" ", "|") + '": "' + commodityCharges[structure][value]+ '", ';
+                                            }
+                                        }
+                                        commodityJSON.flat_rate.values = JSON.parse(tempComm);
+                                    }
+                                case 'Tiered':
+                                case 'Budget':
+                            }
+                        }
+                        else
+                        { commodityJSON = { "commodity_charge" : 0 } };
+                        
+                        alert(commodityJSON.commodity_charge);
                         
                         switch(SelectedRateStructures[structure])
                         {
                             case "RESIDENTIAL_SINGLE": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
-                                                        tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON ; break;
+                                                        tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON ;
+                                                        tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON); break;
                             case "RESIDENTIAL_MULTI": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
-                                                        tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON; break;
-                            case "IRRIGATION": tempStructure = { "IRRIGATION" : { "service_charge" : {} } }; 
-                                                        tempStructure.IRRIGATION.service_charge = serviceJSON; break;
+                                                        tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON; 
+                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON); break;
+                            case "IRRIGATION": tempStructure = { "IRRIGATION" : { "service_charge" : {} } };
+                                                        tempStructure.IRRIGATION.service_charge = serviceJSON; 
+                                                        tempStructure.IRRIGATION = jQuery.extend({}, tempStructure.IRRIGATION, commodityJSON); break;
                             case "COMMERCIAL": tempStructure = { "COMMERCIAL" : { "service_charge" : {} } }; 
-                                                        tempStructure.COMMERCIAL.service_charge = serviceJSON; break;
-                            case "INDUSTRIAL": tempStructure = { "INDUSTRIAL" : { "service_charge" : {} } }; 
-                                                        tempStructure.INDUSTRIAL.service_charge = serviceJSON; break;
-                            case "INSTITUTIONAL": tempStructure = { "INSTITUTIONAL" : { "service_charge" : {} } }; 
-                                                        tempStructure.INSTITUTIONAL.service_charge = serviceJSON; break;
+                                                        tempStructure.COMMERCIAL.service_charge = serviceJSON; 
+                                                        tempStructure.COMMERCIAL = jQuery.extend({}, tempStructure.COMMERCIAL, commodityJSON); break;
+                            case "INDUSTRIAL": tempStructure = { "INDUSTRIAL" : { "service_charge" : {} } };
+                                                        tempStructure.INDUSTRIAL.service_charge = serviceJSON; 
+                                                        tempStructure.INDUSTRIAL = jQuery.extend({}, tempStructure.INDUSTRIAL, commodityJSON); break;
+                            case "INSTITUTIONAL": tempStructure = { "INSTITUTIONAL" : { "service_charge" : {} } };
+                                                        tempStructure.INSTITUTIONAL.service_charge = serviceJSON; 
+                                                        tempStructure.INSTITUTIONAL = jQuery.extend({}, tempStructure.INSTITUTIONAL, commodityJSON); break;
                             case "FIRE_SERVICE": tempStructure = { "FIRE_SERVICE" : { "service_charge" : {} } }; 
-                                                        tempStructure.FIRE_SERVICE.service_charge = serviceJSON; break;
-                            case "NONPOTABLE": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } }; 
-                                                        tempStructure.NONPOTABLE.service_charge = serviceJSON; break;
+                                                        tempStructure.FIRE_SERVICE.service_charge = serviceJSON; 
+                                                        tempStructure.RFIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON); break;
+                            case "NONPOTABLE": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } };
+                                                        tempStructure.NONPOTABLE.service_charge = serviceJSON; 
+                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON); break;
                             case "NON_RESIDENTIAL": tempStructure = { "NON_RESIDENTIAL" : { "service_charge" : {} } }; 
-                                                        tempStructure.NON_RESIDENTIAL.service_charge = serviceJSON; break;
-                            case "UNMETERED": tempStructure = { "UNMETERED" : { "service_charge" : {} } }; 
-                                                        tempStructure.UNMETERED.service_charge = serviceJSON; break;
+                                                        tempStructure.NON_RESIDENTIAL.service_charge = serviceJSON; 
+                                                        tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON); break;
+                            case "UNMETERED": tempStructure = { "UNMETERED" : { "service_charge" : {} } };
+                                                        tempStructure.UNMETERED.service_charge = serviceJSON; 
+                                                        tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON); break;
                             case "RECLAIMED": tempStructure = { "RECLAIMED" : { "service_charge" : {} } }; 
-                                                        tempStructure.RECLAIMED.service_charge = serviceJSON; break;
+                                                        tempStructure.RECLAIMED.service_charge = serviceJSON; 
+                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON); break;
                             case "GOVERNMENTAL": tempStructure = { "GOVERNMENTAL" : { "service_charge" : {} } }; 
-                                                        tempStructure.GOVERNMENTAL.service_charge = serviceJSON; break;
+                                                        tempStructure.GOVERNMENTAL.service_charge = serviceJSON; 
+                                                        tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON); break;
                             case "INTERRUPTIBLE": tempStructure = { "INTERRUPTIBLE" : { "service_charge" : {} } }; 
-                                                        tempStructure.INTERRUPTIBLE.service_charge = serviceJSON; break;
+                                                        tempStructure.INTERRUPTIBLE.service_charge = serviceJSON; 
+                                                        tempStructure.INTERRUPTIBLE = jQuery.extend({}, tempStructure.INTERRUPTIBLE, commodityJSON); break;
                             case "DOCKS SHIPPING": tempStructure = { "DOCKS_SHIPPING" : { "service_charge" : {} } }; 
-                                                        tempStructure.DOCKS_SHIPPING.service_charge = serviceJSON; break;
+                                                        tempStructure.DOCKS_SHIPPING.service_charge = serviceJSON; 
+                                                        tempStructure.DOCKS_SHIPPING = jQuery.extend({}, tempStructure.DOCKS_SHIPPING, commodityJSON); break;
                             case "BUILDING CONTRACTOR": tempStructure = { "BUILDING_CONTRACTOR" : { "service_charge" : {} } }; 
-                                                        tempStructure.BUILDING_CONTRACTOR.service_charge = serviceJSON; break;
+                                                        tempStructure.BUILDING_CONTRACTOR.service_charge = serviceJSON; 
+                                                        tempStructure.BUILDING_CONTRACTOR = jQuery.extend({}, tempStructure.BUILDING_CONTRACTOR, commodityJSON); break;
                             case "RESIDENTIAL CONSTRUCTION": tempStructure = { "RESIDENTIAL_CONSTRUCTION" : { "service_charge" : {} } }; 
-                                                        tempStructure.RESIDENTIAL_CONSTRUCTION.service_charge = serviceJSON; break;
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION.service_charge = serviceJSON; 
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION = jQuery.extend({}, tempStructure.RESIDENTIAL_CONSTRUCTION, commodityJSON); break;
                             case "OTHER": tempStructure = { "OTHER" : { "service_charge" : {} } }; 
-                                                        tempStructure.OTHER.service_charge = serviceJSON; break;
+                                                        tempStructure.OTHER.service_charge = serviceJSON; 
+                                                        tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON); break;
                         }
                         
                         OWRSformat.rate_structure = jQuery.extend({}, OWRSformat.rate_structure, tempStructure);
@@ -1814,6 +1891,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     alert(YAML);
                 }
+                
                 
                 function QuestionTxt(question, number, Parent)
                 {
