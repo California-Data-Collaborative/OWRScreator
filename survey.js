@@ -459,6 +459,7 @@ var survey = JSON.parse(surveyJSON)
                 var serviceChargeCategories = [];
                 var serviceCharges = [];
                 var isServiceCharge = [];
+                var ParametersToUse = [];
                 
                 var uniformParameters = [];
                 var commodityStructure = [];
@@ -466,6 +467,7 @@ var survey = JSON.parse(surveyJSON)
                 var tierStartsParameters = [];
                 var tierStarts = [];
                 var isTierStartsDepends = [];
+                var tierStartsCategories = [];
                 var tierPricesParameters = [];
                 var tierPrices = [];
                 var isTierPricesDepends = [];
@@ -927,13 +929,25 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                function primeParamArrays()
+                {
+                    if(season[currentIndex] == null)
+                        season[currentIndex] = [];
+                    if(temperatureZone[currentIndex] == null)
+                        temperatureZone[currentIndex] = [];
+                    if(elevationZone[currentIndex] == null)
+                        elevationZone[currentIndex] = []; 
+                    if(pressureZone[currentIndex] == null)
+                        pressureZone[currentIndex] = [];
+                    if(lotSizeGroup[currentIndex] == null)
+                        lotSizeGroup[currentIndex] = [];
+                }
+                
                 function UniformDepends()
                 {
                     commodityStructure[currentIndex] = 'Uniform';
                     
-                    season[currentIndex] = []; temperatureZone[currentIndex] = [];
-                    elevationZone[currentIndex] = []; pressureZone[currentIndex] = [];
-                    lotSizeGroup[currentIndex] = [];
+                    primeParamArrays();
                     
                     var commodityDependsOnDiv = document.getElementById("commodityDependsOnDiv");
                     if(commodityDependsOnDiv.childNodes.length > 0)
@@ -1010,110 +1024,53 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(isUniformDependsOn[currentIndex] == 'Yes')
                     {
-                        var numberOfParameters = 1;
-                        var ParametersToUse = [];
+                        createUsedParameters(uniformParameters[currentIndex], 0);
                         
-                        for(var i = 0; i < uniformParameters[currentIndex].length; ++i)
-                        {
-                            if(season[currentIndex] != null || temperatureZone[currentIndex] != null || elevationZone[currentIndex] != null || pressureZone[currentIndex] != null || lotSizeGroup[currentIndex] != null)
+                            var Continue = true;
+                            
+                            for(var i = 0; i < ParametersToUse.length; ++i)
                             {
-                                switch(uniformParameters[currentIndex][i])
+                                if(ParametersToUse[i] == null)
                                 {
-                                    case 'Season': ParametersToUse[i] = season[currentIndex][0]; break;
-                                    case 'Temperature Zone': ParametersToUse[i] = temperatureZone[currentIndex][0]; break;
-                                    case 'Elevation Zone': ParametersToUse[i] = elevationZone[currentIndex][0]; break;
-                                    case 'Pressure Zone': ParametersToUse[i] = pressureZone[currentIndex][0]; break;
-                                    case 'Lot Size Group': ParametersToUse[i] = lotSizeGroup[currentIndex][0]; break;
+                                    Continue = false;
+                                    i = ParametersToUse.length;
                                 }
-                            }
-                        }
-                        if(ParametersToUse[0] != null)
-                        {
-                            commodityChargeCategories[currentIndex] = [];
-                            for(var i = 0; i < ParametersToUse[0].length; ++i)
-                            {
-                                var FullParameter = "";
-                                FullParameter = ParametersToUse[0][i];
-                                if(ParametersToUse[1] != null)
-                                {
-                                    for(var j = 0; j < ParametersToUse[1].length; ++j)
-                                    {
-                                        FullParameter = ParametersToUse[0][i] + " " + ParametersToUse[1][j];
-                                        if(ParametersToUse[2] != null)
-                                        {
-                                            for(var k = 0; k < ParametersToUse[2].length; ++k)
-                                            {
-                                                FullParameter = (ParametersToUse[0][i] + " " + ParametersToUse[1][j] + " " + ParametersToUse[2][k]);
-                                                if(ParametersToUse[3] != null)
-                                                {
-                                                    for(var l = 0; l < ParametersToUse[3].length; ++l)
-                                                    {
-                                                        FullParameter = (ParametersToUse[0][i] + " " + ParametersToUse[1][j] + " " + ParametersToUse[2][k] + " " + ParametersToUse[3][l]);
-                                                        if(ParametersToUse[4] != null)
-                                                        {
-                                                            for(var m = 0; m < ParametersToUse[4].length; ++m)
-                                                            {
-                                                                FullParameter = (ParametersToUse[0][i] + " " + ParametersToUse[1][j] + " " + ParametersToUse[2][k] + " " + ParametersToUse[3][l] + " " + ParametersToUse[4][m]);
-                                                                FullParameter += " Rate:";
-                                                                commodityChargeCategories[currentIndex].push(FullParameter);
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            FullParameter += " Rate:";
-                                                            commodityChargeCategories[currentIndex].push(FullParameter);
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    FullParameter += " Rate:";
-                                                    commodityChargeCategories[currentIndex].push(FullParameter); 
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            FullParameter += " Rate:";
-                                            commodityChargeCategories[currentIndex].push(FullParameter);
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    FullParameter += " Rate:";
-                                    commodityChargeCategories[currentIndex].push(FullParameter);
-                                }
-                            }
-                        
-                            for(var i = 0; i < commodityChargeCategories[currentIndex].length; ++i)
-                            {
-                                Answer = document.createElement("label");
-                                Answer.setAttribute("for", "commodityCharge" + i);
-                                Answer.appendChild(document.createTextNode(commodityChargeCategories[currentIndex][i]));
-                                uniformPriceDiv.appendChild(Answer);
-                                
-                                Answer = document.createElement("input");
-                                Answer.setAttribute("type", "text");
-                                Answer.id = "commodityCharge" + i;
-                                uniformPriceDiv.appendChild(Answer);
-                                
-                                var BREAK = document.createElement("br");
-                                uniformPriceDiv.appendChild(BREAK);
                             }
                             
-                            if(commodityCharges[currentIndex] != null && commodityChargeCategories[currentIndex] != null)
+                            if(Continue)
                             {
-                                if(commodityCharges[currentIndex].length == commodityChargeCategories[currentIndex].length)
+                                commodityChargeCategories[currentIndex] = [];
+                                getCategories(commodityChargeCategories[currentIndex], 0, ParametersToUse.length, "", "Rate:");
+                            
+                        
+                                for(var i = 0; i < commodityChargeCategories[currentIndex].length; ++i)
                                 {
-                                    for(var i = 0; i < commodityCharges[currentIndex].length; ++i)
+                                    Answer = document.createElement("label");
+                                    Answer.setAttribute("for", "commodityCharge" + i);
+                                    Answer.appendChild(document.createTextNode(commodityChargeCategories[currentIndex][i]));
+                                    uniformPriceDiv.appendChild(Answer);
+                                
+                                    Answer = document.createElement("input");
+                                    Answer.setAttribute("type", "text");
+                                    Answer.id = "commodityCharge" + i;
+                                    uniformPriceDiv.appendChild(Answer);
+                                
+                                    var BREAK = document.createElement("br");
+                                    uniformPriceDiv.appendChild(BREAK);
+                                }
+                            
+                                if(commodityCharges[currentIndex] != null && commodityChargeCategories[currentIndex] != null)
+                                {
+                                    if(commodityCharges[currentIndex].length == commodityChargeCategories[currentIndex].length)
                                     {
-                                        var input = document.getElementById("commodityCharge" + i);
-                                        input.value = commodityCharges[currentIndex][i];
+                                        for(var i = 0; i < commodityCharges[currentIndex].length; ++i)
+                                        {
+                                            var input = document.getElementById("commodityCharge" + i);
+                                            input.value = commodityCharges[currentIndex][i];
+                                        }
                                     }
                                 }
                             }
-                        }
                     }
                     else
                     {
@@ -1133,9 +1090,7 @@ var survey = JSON.parse(surveyJSON)
                 {
                     commodityStructure[currentIndex] = 'Tiered';
                     
-                    season[currentIndex] = []; temperatureZone[currentIndex] = [];
-                    elevationZone[currentIndex] = []; pressureZone[currentIndex] = [];
-                    lotSizeGroup[currentIndex] = [];
+                    primeParamArrays();
                     
                     var commodityDependsOnDiv = document.getElementById("commodityDependsOnDiv");
                     if(commodityDependsOnDiv.childNodes.length > 0)
@@ -1228,6 +1183,10 @@ var survey = JSON.parse(surveyJSON)
                         tierStartsParameterValueDiv.id = "tierStartsParameterValueDiv";
                         tierStartsDiv.appendChild(tierStartsParameterValueDiv);
                         
+                        var tierStartsValuesDiv = document.createElement("div");
+                        tierStartsValuesDiv.id = "tierStartsValuesDiv";
+                        tierStartsDiv.appendChild(tierStartsValuesDiv);
+                        
                         getDepends(tierStartsParameterDiv, tierStartsParameters[currentIndex], 'tierStarts');
                     }
                     else
@@ -1253,12 +1212,16 @@ var survey = JSON.parse(surveyJSON)
                         tierPricesParameterValueDiv.id = "tierPricesParameterValueDiv";
                         tierPricesDiv.appendChild(tierPricesParameterValueDiv);
                         
+                        var tierPricesValuesDiv = document.createElement("div");
+                        tierPricesValuesDiv.id = "tierPricesValuesDiv";
+                        tierPricesDiv.appendChild(tierPricesValuesDiv);
+                        
                         getDepends(tierPricesParameterDiv, tierPricesParameters[currentIndex], 'tierPrices');
                     }
                     else
                     {
                         isTierPricesDepends[currentIndex] = false;
-                        Tier("tierPricesDiv", survey.questions[12], 15, isTierPricesDepends[currentIndex], "TierPrice", getTierPricesInfo);
+                        Tier("tierPricesDiv", survey.questions[12], 15, isTierPricesDepends[currentIndex], "TierPrices", getTierPricesInfo);
                     }
                 }
                 
@@ -1389,7 +1352,6 @@ var survey = JSON.parse(surveyJSON)
                     
                     Answer = document.createElement("span");
                     
-                    var temp;
                     switch(parameter)
                     {
                         case 'Season': 
@@ -1400,28 +1362,19 @@ var survey = JSON.parse(surveyJSON)
                                 '<label for = "' + checkboxID + '">' + survey.season[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
-                            if(season[currentIndex] != null)
+                            if(season[currentIndex][tierIdentifier] != null)
                             {
-                                switch(tierIdentifier)
-                                {
-                                    case 0: temp = season[currentIndex][0]; break;
-                                    case 1: temp = season[currentIndex][1]; break;
-                                    case 2: temp = season[currentIndex][2]; break;
-                                }
-                                if(temp != null)
-                                {
                                     for(var i = 0; i < survey.season.length; ++i)
                                     {
                                         var checkCheckBox = document.getElementById(identifier + "Season" + i);
-                                        for(var j = 0; j < temp.length; ++j)
+                                        for(var j = 0; j < season[currentIndex][tierIdentifier].length; ++j)
                                         {
-                                            if(temp[j] == checkCheckBox.value)
+                                            if(season[currentIndex][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
                                         }
                                     }
-                                }
                             }
                             break;
                         case 'Temperature Zone':
@@ -1567,11 +1520,51 @@ var survey = JSON.parse(surveyJSON)
                     {
                         if(Identifier == "tierStarts")
                         {
-                            theSwitchStatement(tierStartsParameters[currentIndex], Identifier, 1);
+                            var Continue = true;
+                            theSwitchStatement(tierStartsParameters[currentIndex], Identifier, 2);
+                            createUsedParameters(tierStartsParameters[currentIndex], 2);
+                            for(var i = 0; i < ParametersToUse.length; ++i)
+                            {
+                                if(ParametersToUse[i] == null)
+                                {
+                                    Continue = false;
+                                    i = ParametersToUse.length;
+                                }
+                            }
+                            
+                            if(Continue)
+                            {
+                                tierStartsCategories[currentIndex] = [];
+                                getCategories(tierStartsCategories[currentIndex], 0, ParametersToUse.length, "", "Level:");
+                            }
+                            
+                            var tierStartsValuesDiv = document.getElementById("tierStartsValuesDiv");
+                            
+                            createTierFields(tierStartsValuesDiv, Identifier, tierStartsCategories[currentIndex], "Tier Levels");
                         }
                         else
                         {
+                            var Continue = true;
                             theSwitchStatement(tierPricesParameters[currentIndex], Identifier, 2);
+                            createUsedParameters(tierPricesParameters[currentIndex], 2);
+                            for(var i = 0; i < ParametersToUse.length; ++i)
+                            {
+                                if(ParametersToUse[i] == null)
+                                {
+                                    Continue = false;
+                                    i = ParametersToUse.length;
+                                }
+                            }
+                            
+                            if(Continue)
+                            {
+                                commodityChargeCategories[currentIndex] = [];
+                                getCategories(commodityChargeCategories[currentIndex], 0, ParametersToUse.length, "", "Rate:");
+                            }
+                            
+                            var tierPricesValuesDiv = document.getElementById("tierPricesValuesDiv");
+                            
+                            createTierFields(tierPricesValuesDiv, Identifier, commodityChargeCategories[currentIndex], "Tier Prices");
                         }
                     }
                     else if(commodityStructure[currentIndex] == 'Budget')
@@ -1630,6 +1623,80 @@ var survey = JSON.parse(surveyJSON)
                                     } break;
                             }
                         }
+                }
+                
+                function getCategories(actualArray, Position, Stop, Text, EndText)
+                {
+                    if(Position == Stop)
+                    {
+                        actualArray.push(Text + EndText);
+                    }
+                    else
+                    {
+                        for(var i = 0; i < ParametersToUse[Position].length; ++i)
+                        {
+                            Temp = Text;
+                            Temp += ParametersToUse[Position][i] + " ";
+                            getCategories(actualArray, Position + 1, Stop, Temp, EndText);
+                        }
+                    }
+                }
+                
+                function createUsedParameters(parameterList, identifier)
+                {
+                    ParametersToUse = [];
+                        
+                    for(var i = 0; i < parameterList.length; ++i)
+                    {
+                         if(season[currentIndex] != null || temperatureZone[currentIndex] != null || elevationZone[currentIndex] != null || pressureZone[currentIndex] != null || lotSizeGroup[currentIndex] != null)
+                        {
+                            switch(parameterList[i])
+                            {
+                                case 'Season': ParametersToUse[i] = season[currentIndex][identifier]; break;
+                                case 'Temperature Zone': ParametersToUse[i] = temperatureZone[currentIndex][identifier]; break;
+                                case 'Elevation Zone': ParametersToUse[i] = elevationZone[currentIndex][identifier]; break;
+                                case 'Pressure Zone': ParametersToUse[i] = pressureZone[currentIndex][identifier]; break;
+                                case 'Lot Size Group': ParametersToUse[i] = lotSizeGroup[currentIndex][identifier]; break;
+                            }
+                        }
+                    }
+                }
+                
+                function createTierFields(DIV, identifier, categoryArray, subtitle)
+                {
+                    if(DIV.childNodes.length > 0)
+                    {
+                        clear(DIV);
+                    }
+                    
+                    Answer = document.createElement("h4");
+                    Answer.appendChild(document.createTextNode(subtitle));
+                    DIV.appendChild(Answer);
+                    
+                    for(var i = 0; i < categoryArray.length; ++i)
+                    {
+                        var ID = categoryArray[i].split(" ").join();
+                        
+                        Answer = document.createElement("p");
+                        Answer.appendChild(document.createTextNode(categoryArray[i]))
+                        DIV.appendChild(Answer);
+                        
+                        for(var j = 0; j < tierLevels[currentIndex]; ++j)
+                        {
+                            Answer = document.createElement("label");
+                            Answer.setAttribute("for", identifier + ID + j);
+                            Answer.appendChild(document.createTextNode("Tier " + (j + 1) + ": "));
+                            DIV.appendChild(Answer);
+                            
+                            Answer = document.createElement("input");
+                            Answer.setAttribute("type", "text");
+                            Answer.id = identifier + ID + j;
+                            DIV.appendChild(Answer);
+                            
+                            Answer = document.createElement("br");
+                            DIV.appendChild(Answer);
+                        }
+                    }
                 }
                 
                 function createServiceChargeField()
@@ -1691,7 +1758,6 @@ var survey = JSON.parse(surveyJSON)
                                 
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
-                                Answer.style.width = '300px';
                                 Answer.innerHTML = meterTypes[currentIndex][i] + ' ' + meterSizes[currentIndex][j] +'"';
                                 serviceChargesDiv.appendChild(Answer);
                                 
@@ -1717,7 +1783,6 @@ var survey = JSON.parse(surveyJSON)
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
                                 Answer.innerHTML = meterSizes[currentIndex][i] + '"';
-                                Answer.style.width = '300px';
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
@@ -1741,7 +1806,6 @@ var survey = JSON.parse(surveyJSON)
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
                                 Answer.innerHTML = meterTypes[currentIndex][i];
-                                Answer.style.width = '300px';
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
@@ -2052,9 +2116,10 @@ var survey = JSON.parse(surveyJSON)
                                             }
                                             else
                                             {
-                                                tempComm += '"' + replacementStr.split(" ").join("|") + ': "' + commodityCharges[structure][value]+ ', ';
+                                                tempComm += '"' + replacementStr.split(" ").join("|") + '": ' + commodityCharges[structure][value]+ ', ';
                                             }
                                         }
+                                        alert(tempComm);
                                         commodityJSON.flat_rate.values = JSON.parse(tempComm);
                                     }
                                 case 'Tiered':
