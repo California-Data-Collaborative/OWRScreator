@@ -467,6 +467,7 @@ var survey = JSON.parse(surveyJSON)
                 var tierStartsParameters = [];
                 var tierStarts = [];
                 var isTierStartsDepends = [];
+                var tierStartsValues = [];
                 var tierStartsCategories = [];
                 var tierPricesParameters = [];
                 var tierPrices = [];
@@ -1130,6 +1131,8 @@ var survey = JSON.parse(surveyJSON)
                     
                     Tier("tierStartsDiv", survey.questions[10], 14, isTierStartsDepends[currentIndex], "TierStarts", getTierStartsInfo);
                     Tier("tierPricesDiv", survey.questions[12], 15, isTierPricesDepends[currentIndex], "TierPrices", getTierPricesInfo);
+                    getTierStartsInfo();
+                    getTierPricesInfo();
                 }
                 
                 function Tier(DIV, question, qNumber, dependsOn, Identifier, Function)
@@ -1174,6 +1177,19 @@ var survey = JSON.parse(surveyJSON)
                     if(Radio.checked)
                     {
                         isTierStartsDepends[currentIndex] = true;
+                        if(tierStartsDiv.childNodes.length > 0)
+                        {
+                            clear(tierStartsDiv);
+                        }
+                        QuestionTxt(survey.questions[10], 14,tierStartsDiv)
+                        Answer = document.createElement("span");
+                        
+                        Answer.innerHTML = '<input type = "radio" id = "YesTierStarts" name = "isTierStartsDepends" onclick = "getTierStartsInfo()" value = "Yes" checked = "true"/>'+
+                        '<label for = "YesTierStarts">Yes</label>'+
+                        '<input type = "radio" id = "NoTierStarts" name = "isTierStartsDepends" onclick = "getTierStartsInfo()" value = "No" />'+
+                        '<label for = "NoTierStarts">No</label>';
+                        
+                        tierStartsDiv.appendChild(Answer);
                         
                         var tierStartsParameterDiv = document.createElement("div");
                         tierStartsParameterDiv.id = "tierStartsParameterDiv";
@@ -1193,6 +1209,14 @@ var survey = JSON.parse(surveyJSON)
                     {
                         isTierStartsDepends[currentIndex] = false;
                         Tier("tierStartsDiv", survey.questions[10], 14, isTierStartsDepends[currentIndex], "TierStarts", getTierStartsInfo);
+                        
+                        Answer = document.createElement('div');
+                        Answer.id = "tierStartsValuesDIV";
+                        tierStartsDiv.appendChild(Answer);
+                        
+                        tierStartsCategories[currentIndex] = [""];
+                        
+                        createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels:")
                     }
                 }
                 
@@ -1203,6 +1227,19 @@ var survey = JSON.parse(surveyJSON)
                     if(Radio.checked)
                     {
                         isTierPricesDepends[currentIndex] = true;
+                        if(tierPricesDiv.childNodes.length > 0)
+                        {
+                            clear(tierPricesDiv);
+                        }
+                        QuestionTxt(survey.questions[12], 15,tierPricesDiv)
+                        Answer = document.createElement("span");
+                        
+                        Answer.innerHTML = '<input type = "radio" id = "YesTierPrices" name = "isTierPricesDepends" onclick = "getTierPricesInfo()" value = "Yes" checked = "true"/>'+
+                        '<label for = "YesTierPrices">Yes</label>'+
+                        '<input type = "radio" id = "NoTierPrices" name = "isTierPricesDepends" onclick = "getTierPricesInfo()" value = "No" />'+
+                        '<label for = "NoTierPrices">No</label>';
+                        
+                        tierPricesDiv.appendChild(Answer);
                         
                         var tierPricesParameterDiv = document.createElement("div");
                         tierPricesParameterDiv.id = "tierPricesParameterDiv";
@@ -1222,6 +1259,14 @@ var survey = JSON.parse(surveyJSON)
                     {
                         isTierPricesDepends[currentIndex] = false;
                         Tier("tierPricesDiv", survey.questions[12], 15, isTierPricesDepends[currentIndex], "TierPrices", getTierPricesInfo);
+                        
+                        Answer = document.createElement('div');
+                        Answer.id = "tierPricesValuesDIV";
+                        tierPricesDiv.appendChild(Answer);
+                        
+                        commodityChargeCategories[currentIndex] = [""];
+                        
+                        createTierFields(Answer, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices:")
                     }
                 }
                 
@@ -1385,28 +1430,19 @@ var survey = JSON.parse(surveyJSON)
                                 '<label for = "' + checkboxID + '">' + survey.temperatureZone[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
-                            if(temperatureZone[currentIndex] != null)
+                            if(temperatureZone[currentIndex][tierIdentifier] != null)
                             {
-                                switch(tierIdentifier)
-                                {
-                                    case 0: temp = temperatureZone[currentIndex][0]; break;
-                                    case 1: temp = temperatureZone[currentIndex][1]; break;
-                                    case 2: temp = temperatureZone[currentIndex][2]; break;
-                                }
-                                if(temp != null)
-                                {
                                     for(var i = 0; i < survey.temperatureZone.length; ++i)
                                     {
                                         var checkCheckBox = document.getElementById(identifier + "TemperatureZone" + i);
-                                        for(var j = 0; j < temp.length; ++j)
+                                        for(var j = 0; j < temperatureZone[currentIndex][tierIdentifier].length; ++j)
                                         {
-                                            if(temp[j] == checkCheckBox.value)
+                                            if(temperatureZone[currentIndex][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
                                         }
                                     }
-                                }
                             }
                             break;
                         case 'Elevation Zone':
@@ -1417,28 +1453,19 @@ var survey = JSON.parse(surveyJSON)
                                 '<label for = "' + checkboxID + '">' + survey.elevationZone[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
-                            if(elevationZone[currentIndex] != null)
+                            if(elevationZone[currentIndex][tierIdentifier] != null)
                             {
-                                switch(tierIdentifier)
-                                {
-                                    case 0: temp = elevationZone[currentIndex][0]; break;
-                                    case 1: temp = elevationZone[currentIndex][1]; break;
-                                    case 2: temp = elevationZone[currentIndex][2]; break;
-                                }
-                                if(temp != null)
-                                {
                                     for(var i = 0; i < survey.elevationZone.length; ++i)
                                     {
                                         var checkCheckBox = document.getElementById(identifier + "ElevationZone" + i);
-                                        for(var j = 0; j < temp.length; ++j)
+                                        for(var j = 0; j < elevationZone[currentIndex][tierIdentifier].length; ++j)
                                         {
-                                            if(temp[j] == checkCheckBox.value)
+                                            if(elevationZone[currentIndex][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
                                         }
                                     }
-                                }
                             }
                             break;
                         case 'Pressure Zone':
@@ -1449,29 +1476,19 @@ var survey = JSON.parse(surveyJSON)
                                 '<label for = "' + checkboxID + '">' + survey.pressureZone[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
-                            if(pressureZone[currentIndex] != null)
+                            if(pressureZone[currentIndex][tierIdentifier] != null)
                             {
-                                switch(tierIdentifier)
-                                {
-                                    case 0: temp = pressureZone[currentIndex][0]; break;
-                                    case 1: temp = pressureZone[currentIndex][1]; break;
-                                    case 2: temp = pressureZone[currentIndex][2]; break;
-                                }
-                            
-                                if(temp != null)
-                                {
                                     for(var i = 0; i < survey.pressureZone.length; ++i)
                                     {
-                                        var checkCheckBox = document.getElementById(identifier + "pressureZone" + i);
-                                        for(var j = 0; j < temp.length; ++j)
+                                        var checkCheckBox = document.getElementById(identifier + "PressureZone" + i);
+                                        for(var j = 0; j < pressureZone[currentIndex][tierIdentifier].length; ++j)
                                         {
-                                            if(temp[j] == checkCheckBox.value)
+                                            if(pressureZone[currentIndex][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
                                         }
                                     }
-                                }
                             }
                             break;
                         case 'Lot Size Group':
@@ -1482,30 +1499,29 @@ var survey = JSON.parse(surveyJSON)
                                 '<label for = "' + checkboxID + '">' + survey.lotSizeGroup[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
-                            if(lotSizeGroup[currentIndex] != null)
+                            if(lotSizeGroup[currentIndex][tierIdentifier] != null)
                             {
-                                switch(tierIdentifier)
-                                {
-                                    case 0: temp = lotSizeGroup[currentIndex][0]; break;
-                                    case 1: temp = lotSizeGroup[currentIndex][1]; break;
-                                    case 2: temp = lotSizeGroup[currentIndex][2]; break;
-                                }
-                                if(temp != null)
-                                {
                                     for(var i = 0; i < survey.lotSizeGroup.length; ++i)
                                     {
                                         var checkCheckBox = document.getElementById(identifier + "LotSizeGroup" + i);
-                                        for(var j = 0; j < temp.length; ++j)
+                                        for(var j = 0; j < lotSizeGroup[currentIndex][tierIdentifier].length; ++j)
                                         {
-                                            if(temp[j] == checkCheckBox.value)
+                                            if(lotSizeGroup[currentIndex][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
                                         }
                                     }
-                                }
                             }
                             break;
+                    }
+                    
+                    if(tierIdentifier > 0)
+                    {
+                        if(tierStartsCategories[currentIndex] != null && tierIdentifier == 1)
+                            createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels");
+                        if(commodityChargeCategories[currentIndex] != null && tierIdentifier == 2)
+                            createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices");
                     }
                 }
                 
@@ -1521,8 +1537,8 @@ var survey = JSON.parse(surveyJSON)
                         if(Identifier == "tierStarts")
                         {
                             var Continue = true;
-                            theSwitchStatement(tierStartsParameters[currentIndex], Identifier, 2);
-                            createUsedParameters(tierStartsParameters[currentIndex], 2);
+                            theSwitchStatement(tierStartsParameters[currentIndex], Identifier, 1);
+                            createUsedParameters(tierStartsParameters[currentIndex], 1);
                             for(var i = 0; i < ParametersToUse.length; ++i)
                             {
                                 if(ParametersToUse[i] == null)
@@ -1540,7 +1556,7 @@ var survey = JSON.parse(surveyJSON)
                             
                             var tierStartsValuesDiv = document.getElementById("tierStartsValuesDiv");
                             
-                            createTierFields(tierStartsValuesDiv, Identifier, tierStartsCategories[currentIndex], "Tier Levels");
+                            createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels");
                         }
                         else
                         {
@@ -1564,7 +1580,7 @@ var survey = JSON.parse(surveyJSON)
                             
                             var tierPricesValuesDiv = document.getElementById("tierPricesValuesDiv");
                             
-                            createTierFields(tierPricesValuesDiv, Identifier, commodityChargeCategories[currentIndex], "Tier Prices");
+                            createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices");
                         }
                     }
                     else if(commodityStructure[currentIndex] == 'Budget')
@@ -1669,34 +1685,127 @@ var survey = JSON.parse(surveyJSON)
                         clear(DIV);
                     }
                     
+                    if(commodityCharges[currentIndex] != null && commodityCharges[currentIndex].length != 0)
+                    {
+                        if(commodityCharges[currentIndex].length != commodityChargeCategories[currentIndex].length*tierLevels[currentIndex])
+                            commodityCharges[currentIndex] = [];
+                    }
+                    if(tierStartsValues[currentIndex] != null)
+                    {
+                        if(tierStartsValues[currentIndex].length != tierStartsCategories[currentIndex].length*tierLevels[currentIndex])
+                            tierStartsValues[currentIndex] = [];
+                    }
+                    
                     Answer = document.createElement("h4");
                     Answer.appendChild(document.createTextNode(subtitle));
                     DIV.appendChild(Answer);
                     
+                    var number = 0;
                     for(var i = 0; i < categoryArray.length; ++i)
                     {
                         var ID = categoryArray[i].split(" ").join();
                         
-                        Answer = document.createElement("p");
-                        Answer.appendChild(document.createTextNode(categoryArray[i]))
-                        DIV.appendChild(Answer);
+                        if(ID != "")
+                        {
+                            Answer = document.createElement("p");
+                            Answer.appendChild(document.createTextNode(categoryArray[i]))
+                            DIV.appendChild(Answer);
+                        }
                         
                         for(var j = 0; j < tierLevels[currentIndex]; ++j)
                         {
                             Answer = document.createElement("label");
-                            Answer.setAttribute("for", identifier + ID + j);
+                            Answer.setAttribute("for", identifier + number);
                             Answer.appendChild(document.createTextNode("Tier " + (j + 1) + ": "));
                             DIV.appendChild(Answer);
                             
                             Answer = document.createElement("input");
                             Answer.setAttribute("type", "text");
-                            Answer.id = identifier + ID + j;
+                            Answer.id = identifier + number;
+                            number++;
+                            
+                            if(j == 0 && identifier == "tierStarts")
+                            {
+                                Answer.value = 0;
+                                Answer.readOnly = true;
+                            }
+                            
                             DIV.appendChild(Answer);
                             
                             Answer = document.createElement("br");
                             DIV.appendChild(Answer);
                         }
                     }
+                    
+                    if(identifier == "tierStarts" && tierStartsValues[currentIndex] != null && tierStartsValues[currentIndex].length == tierStartsCategories[currentIndex].length*tierLevels[currentIndex])
+                    {
+                        var index = 0;
+                        for(var i = 0; i < categoryArray.length; ++i)
+                        {
+                            for(var j = 0; j < tierLevels[currentIndex]; ++j)
+                            {
+                                var temp = document.getElementById(identifier + index);
+                                temp.value = tierStartsValues[currentIndex][index];
+                                index++;
+                            }
+                        }
+                    }
+                    else if(identifier == "tierPrices" && commodityCharges[currentIndex] != null && commodityCharges[currentIndex].length == commodityChargeCategories[currentIndex].length*tierLevels[currentIndex])
+                    {
+                        var index = 0;
+                        for(var i = 0; i < categoryArray.length; ++i)
+                        {
+                            for(var j = 0; j < tierLevels[currentIndex]; ++j)
+                            {
+                                var temp = document.getElementById(identifier + index);
+                                temp.value = commodityCharges[currentIndex][index];
+                                index++;
+                            }
+                        }
+                    }
+                }
+                
+                function errorCheckCommodityParameters(structure, tierIdentifier, Continue)
+                {
+                    for(var i = 0; i < structure.length; ++i)
+                    {
+                        switch(structure[i])
+                        {
+                            case "Season":
+                                if(season[currentIndex][tierIdentifier] == null || season[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                    alert("No parameters selected for Season");
+                                } break;
+                            case "Temperature Zone":
+                                if(temperatureZone[currentIndex][tierIdentifier] == null || temperatureZone[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                    alert("No parameters selected for Temperature Zone");
+                                } break;
+                            case "Elevation Zone":
+                                if(elevationZone[currentIndex][tierIdentifier] == null || elevationZone[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                    alert("No parameters selected for Elevation Zone");
+                                } break;
+                            case "Pressure Zone":
+                                if(pressureZone[currentIndex][tierIdentifier] == null || pressureZone[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                     alert("No parameters selected for Pressure Zone");
+                                } break;
+                            case "Lot Size Group":
+                                if(lotSizeGroup[currentIndex][tierIdentifier] == null || lotSizeGroup[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                    alert("No parameters selected for Lot Size Group");
+                                } break;
+                        }
+                    }
+                    
+                    
+                    return Continue;
                 }
                 
                 function createServiceChargeField()
@@ -1927,46 +2036,10 @@ var survey = JSON.parse(surveyJSON)
                                 {
                                     if(uniformParameters[currentIndex] != null)
                                     {
-                                        for(var i = 0; i < uniformParameters[currentIndex].length; ++i)
-                                        {
-                                            switch(uniformParameters[currentIndex][i])
-                                            {
-                                            case "Season":
-                                                if(season[currentIndex][0] == null)
-                                                {
-                                                    Continue = false;
-                                                    alert("No parameters selected for Season");
-                                                } break;
-                                            case "Temperature Zone":
-                                                if(temperatureZone[currentIndex][0] == null)
-                                                {
-                                                    Continue = false;
-                                                    alert("No parameters selected for Temperature Zone");
-                                                } break;
-                                            case "Elevation Zone":
-                                                if(elevationZone[currentIndex][0] == null)
-                                                {
-                                                    Continue = false;
-                                                    alert("No parameters selected for Elevation Zone");
-                                                } break;
-                                            case "Pressure Zone":
-                                                if(pressureZone[currentIndex][0] == null)
-                                                {
-                                                    Continue = false;
-                                                    alert("No parameters selected for Pressure Zone");
-                                                } break;
-                                            case "Lot Size Group":
-                                                if(lotSizeGroup[currentIndex][0] == null)
-                                                {
-                                                    Continue = false;
-                                                    alert("No parameters selected for Lot Size Group");
-                                                } break;
-                                            }
-                                        }
-                                  
+                                        Continue = errorCheckCommodityParameters(uniformParameters[currentIndex], 0, Continue);
+                                        
                                         if(Continue)
                                         {
-                                            commodityCharges[currentIndex] = []
                                             if(commodityChargeCategories[currentIndex] != null)
                                             {
                                                 for(var i = 0; i < commodityChargeCategories[currentIndex].length; ++i)
@@ -1998,8 +2071,120 @@ var survey = JSON.parse(surveyJSON)
                                     }
                                 }
                                 break;
-                            case 'Tiered': break;
-                            case 'Budget': break;
+                                case 'Tiered': 
+                                commodityCharges[currentIndex] = [];
+                                tierStartsValues[currentIndex] = [];
+                                
+                                if(isTierStartsDepends[currentIndex])
+                                {
+                                    if(tierStartsParameters[currentIndex] != null && tierStartsParameters[currentIndex].length > 0)
+                                    {
+                                        Continue = errorCheckCommodityParameters(tierStartsParameters[currentIndex], 1, Continue);
+                                        
+                                        if(Continue)
+                                        {
+                                            if(tierStartsCategories[currentIndex] != null && tierStartsCategories[currentIndex].length > 0)
+                                            {
+                                                for(var i = 0; i < (tierStartsCategories[currentIndex].length*tierLevels[currentIndex]); ++i)
+                                                {
+                                                    var tempCharge = document.getElementById("tierStarts" + i);
+                                    
+                                                    if(tempCharge.value == "")
+                                                    {
+                                                        var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                        alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " isn't filled out");
+                                                        Continue = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        tierStartsValues[currentIndex].push(tempCharge.value);
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Continue = false;
+                                                alert("Parameter Fields are empty");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Continue = false;
+                                        alert("No parameters Selected for Tier Levels");
+                                    }
+                                }
+                                else
+                                {
+                                    for(var i = 0; i < tierLevels[currentIndex]; ++i)
+                                    {
+                                        var Level = document.getElementById("tierStarts" + i);
+                                        if(Level.value == "")
+                                        { 
+                                            alert("You must enter a CCF level for tier " + (i + 1)); 
+                                            Continue = false;
+                                        } 
+                                        else
+                                        { tierStartsValues[currentIndex][i] = Level.value; }
+                                    }
+                                }
+                                
+                                if(isTierPricesDepends[currentIndex])
+                                {
+                                    if(tierPricesParameters[currentIndex] != null && tierPricesParameters[currentIndex].length > 0)
+                                    {
+                                        Continue = errorCheckCommodityParameters(tierPricesParameters[currentIndex], 2, Continue);
+                                        
+                                        if(Continue)
+                                        {
+                                            if(commodityChargeCategories[currentIndex] != null && commodityChargeCategories[currentIndex].length > 0)
+                                            { 
+                                                for(var i = 0; i < (commodityChargeCategories[currentIndex].length*tierLevels[currentIndex]); ++i)
+                                                {
+                                                    var tempCharge = document.getElementById("tierPrices" + i);
+                                    
+                                                    if(tempCharge.value == "")
+                                                    {
+                                                        var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                        alert("The Tier Price for " + commodityChargeCategories[currentIndex][tempIndex].replace(" Rate:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " isn't filled out");
+                                                        Continue = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        commodityCharges[currentIndex].push(tempCharge.value);
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Continue = false;
+                                                alert("Parameter Fields are empty");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Continue = false;
+                                        alert("No parameters Selected for Tier Prices");
+                                    }
+                                }
+                                else
+                                {
+                                    for(var i = 0; i < tierLevels[currentIndex]; ++i)
+                                    {
+                                        var Price = document.getElementById("tierPrices" + i);
+                                        if(Price.value == "")
+                                        { 
+                                            alert("You must enter a Price for tier " + (i + 1)); 
+                                            Continue = false;
+                                        } 
+                                        else
+                                        { commodityCharges[currentIndex][i] = Price.value; }
+                                    }
+                                }
+                                
+                                break;
+                                case 'Budget': break;
                             }
                         }
                     }
@@ -2016,6 +2201,18 @@ var survey = JSON.parse(surveyJSON)
                             RateStructure(currentIndex);
                         }
                     }
+                }
+                
+                function parameterParser(structure)
+                {
+                    switch(structure)
+                    {
+                        case 'Season': return 'season'; break;
+                        case 'Temperature Zone': return 'temperature_zone'; break;
+                        case 'Elevation Zone': return 'elevation_zone'; break;
+                        case 'Pressure Zone': return 'pressure_zone'; break;
+                        case 'Lot Size Group': return 'lot_size_group'; break;
+                                            }
                 }
                 
                 function Complete()
@@ -2076,6 +2273,7 @@ var survey = JSON.parse(surveyJSON)
                     
                         if(isCommodityCharge[structure])
                         {
+                            commodityJSON = "";
                             switch(commodityStructure[structure])
                             {
                                 case 'Uniform':
@@ -2094,15 +2292,7 @@ var survey = JSON.parse(surveyJSON)
                                         
                                         for(var i = 0; i < uniformParameters[structure].length; ++i)
                                         {
-                                            var temp;
-                                            switch(uniformParameters[structure][i])
-                                            {
-                                                case 'Season': temp = 'season'; break;
-                                                case 'Temperature Zone': temp = 'temperature_zone'; break;
-                                                case 'Elevation Zone': temp = 'elevation_zone'; break;
-                                                case 'Pressure Zone': temp = 'pressure_zone'; break;
-                                                case 'Lot Size Group': temp = 'lot_size_group'; break;
-                                            }
+                                            var temp = parameterParser(uniformParameters[structure][i]);
                                             commodityJSON.flat_rate.depends_on.push(temp);
                                         }
                                         
@@ -2121,9 +2311,98 @@ var survey = JSON.parse(surveyJSON)
                                         }
                                         alert(tempComm);
                                         commodityJSON.flat_rate.values = JSON.parse(tempComm);
-                                    }
+                                    } break;
                                 case 'Tiered':
-                                case 'Budget':
+                                    commodityJSON = { "commodity_charge": "Tiered" };
+                                    if(isTierStartsDepends[currentIndex])
+                                    {
+                                        commodityJSON.tier_starts = { "depends_on": [],
+                                                                      "values": {}     };
+                                        for(var i = 0; i < tierStartsParameters[structure].length; ++i)
+                                        {
+                                            var temp = parameterParser(tierStartsParameters[structure][i])
+                                            commodityJSON.tier_starts.depends_on.push(temp);
+                                        }
+                                        
+                                        var tempComm = "{ ", number = 0; 
+                                        for(value in tierStartsCategories[structure])
+                                        {
+                                            var replacementStr = tierStartsCategories[structure][value].replace(" Level:", "");
+                                            tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
+                                            
+                                            for(var k = 0; k < tierLevels[structure]; ++k)
+                                            {
+                                                if(k == tierLevels[structure] - 1)
+                                                {
+                                                    tempComm += tierStartsValues[structure][number] + ' ]';
+                                                }
+                                                else
+                                                {
+                                                    tempComm += tierStartsValues[structure][number] + ', ';
+                                                }
+                                                number++;
+                                            }
+                                            
+                                            if(value == tierStartsCategories[structure].length - 1)
+                                                tempComm += ' }';
+                                            else
+                                                tempComm += ', '
+                                        }
+                                        commodityJSON.tier_starts.values = JSON.parse(tempComm)
+                                    }
+                                    else
+                                    {
+                                        commodityJSON.tier_starts = [];
+                                        for(var i = 0; i < tierLevels[currentIndex]; ++i)
+                                        {
+                                            commodityJSON.tier_starts.push(Number(tierStartsValues[structure][i]));
+                                        }
+                                    }
+                                    if(isTierPricesDepends[currentIndex])
+                                    {
+                                        commodityJSON.tier_prices = { "depends_on": [],
+                                                                      "values": {}     };
+                                        for(var i = 0; i < tierPricesParameters[structure].length; ++i)
+                                        {
+                                            var temp = parameterParser(tierPricesParameters[structure][i])
+                                            commodityJSON.tier_prices.depends_on.push(temp);
+                                        }
+                                        
+                                        var tempComm = "{ ", number = 0; 
+                                        for(value in commodityChargeCategories[structure])
+                                        {
+                                            var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
+                                            
+                                            for(var k = 0; k < tierLevels[structure]; ++k)
+                                            {
+                                                if(k == tierLevels[structure] - 1)
+                                                {
+                                                    tempComm += commodityCharges[structure][number] + ' ]';
+                                                }
+                                                else
+                                                {
+                                                    tempComm += commodityCharges[structure][number] + ', ';
+                                                }
+                                                number++;
+                                            }
+                                            
+                                            if(value == commodityChargeCategories[structure].length - 1)
+                                                tempComm += ' }';
+                                            else
+                                                tempComm += ', '
+                                        }
+                                        commodityJSON.tier_prices.values = JSON.parse(tempComm)
+                                    }
+                                    else
+                                    {
+                                        commodityJSON.tier_prices = [];
+                                        for(var i = 0; i < tierLevels[currentIndex]; ++i)
+                                        {
+                                            commodityJSON.tier_prices.push(Number(commodityCharges[structure][i]));
+                                        }
+                                    } break;
+                                case 'Budget': break;
                             }
                         }
                         else
