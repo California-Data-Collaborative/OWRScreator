@@ -429,14 +429,15 @@ var surveyJSON = '{"title": "Create OWRS files",' +
 '"BUILDING CONTRACTOR", "RESIDENTIAL CONSTRUCTION",'+
 '"Other"],'+
 '"serviceDependsOn": ["Meter Size", "Meter Type"],'+
-'"commodityDependsOn": ["Season", "Temperature Zone", "Elevation Zone", "Pressure Zone", "Lot Size Group"],'+
+'"commodityDependsOn": ["Season", "Temperature Zone", "Elevation Zone", "Pressure Zone", "Lot Size Group", "Meter Size", "Month"],'+
 '"meterSizes": ["5/8","3/4", "1", "1 1/2", "2", "3", "4", "6", "8", "10", "12", "14", "16", "18"],'+
 '"meterTypes": ["Disc", "Compound", "Turbo", "Magnetic Meter", "Propeller", "Omni F2"],'+
 '"season": ["Summer", "Winter"],'+
 '"temperatureZone": ["Low", "Medium", "High"], '+
 '"elevationZone":["1", "2", "3", "4", "5"],'+
 '"pressureZone":["1", "2", "3", "4", "5"],'+
-'"lotSizeGroup":["1", "2", "3", "4", "5"]}'
+'"lotSizeGroup":["1", "2", "3", "4", "5"],'+
+'"month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]}'
 var survey = JSON.parse(surveyJSON)
 
                 var form = document.getElementById("survey");
@@ -480,7 +481,14 @@ var survey = JSON.parse(surveyJSON)
                 var commodityCharges = [];
                 var tierStartsDependsOn = [];
                 var tierPricesDependsOn = [];
+                
+                var gpcd = [];
+                var indoor = [];
+                var outdoor = [];
+                
                 var uniformDependsOn = [];
+                var commodityMeterSize = [];
+                var month = [];
                 var season = [];
                 var elevationZone = [];
                 var pressureZone = [];
@@ -942,6 +950,10 @@ var survey = JSON.parse(surveyJSON)
                         pressureZone[currentIndex] = [];
                     if(lotSizeGroup[currentIndex] == null)
                         lotSizeGroup[currentIndex] = [];
+                    if(month[currentIndex] == null)
+                        month[currentIndex] = [];
+                    if(commodityMeterSize[currentIndex] == null)
+                        commodityMeterSize[currentIndex] = [];
                 }
                 
                 function UniformDepends()
@@ -1270,9 +1282,36 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                function budgetVariableFieldCreator(DIV, id, Text, valueArray, defaultValue)
+                {
+                    Answer = document.createElement("label");
+                    Answer.setAttribute("for", id);
+                    Answer.style.width = '250px';
+                    Answer.appendChild(document.createTextNode(Text));
+                    DIV.appendChild(Answer);
+                    
+                    Answer = document.createElement("input");
+                    Answer.setAttribute("type", "text");
+                    Answer.style.width = '300px';
+                    Answer.id = id;
+                    if(valueArray != null)
+                    {
+                        Answer.value = valueArray;
+                    }
+                    else
+                    {
+                        Answer.value = defaultValue;
+                    }
+                    DIV.appendChild(Answer);
+                    
+                    var BREAK = document.createElement("br");
+                    DIV.appendChild(BREAK);
+                }
+                
                 function BudgetDepends()
                 {
                     commodityStructure[currentIndex] = 'Budget';
+                    primeParamArrays();
                     
                     var commodityDependsOnDiv = document.getElementById("commodityDependsOnDiv");
                     if(commodityDependsOnDiv.childNodes.length > 0)
@@ -1280,7 +1319,37 @@ var survey = JSON.parse(surveyJSON)
                         clear(commodityDependsOnDiv);
                     }
                     
-                    QuestionTxt("Coming Soon", 11, commodityDependsOnDiv);
+                    QuestionTxt("Enter the Values Below:", 17, commodityDependsOnDiv);
+                    
+                    
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "gpcd", "Gallons Per Capita Day:", gpcd[currentIndex], "60");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "indoor", "Indoor Budget Equation:", indoor[currentIndex], "hhsize*gpcd*days_in_period*(1/178)");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "outdoor", "Outdoor Budget Equation:", gpcd[currentIndex], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
+                    
+                    
+                    QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
+                    Answer = document.createElement("select");
+                    for(var i = 4; i <= 6; ++i)
+                    {
+                        Answer.appendChild(new Option(i, i));
+                    }
+                    Answer.id = "numOfTiers";
+                    if(tierLevels[currentIndex] != null)
+                    {
+                        Answer.value = tierLevels[currentIndex];
+                    }
+                    Answer.setAttribute("onchange", "createTierLevels()");
+                    commodityDependsOnDiv.appendChild(Answer);
+                    
+                    var tierStartsDiv = document.createElement("div");
+                    tierStartsDiv.id = "tierStartsDiv";
+                    commodityDependsOnDiv.appendChild(tierStartsDiv);
+                    
+                    var tierPricesDiv = document.createElement("div");
+                    tierPricesDiv.id = "tierPricesDiv";
+                    commodityDependsOnDiv.appendChild(tierPricesDiv);
+                    
+                    createTierLevels();
                 }
                 
                 
@@ -1374,7 +1443,38 @@ var survey = JSON.parse(surveyJSON)
                     }
                     else if (commodityStructure[currentIndex] == 'Budget')
                     {
-                        
+                        if(tierIdentifier == "tierStarts")
+                        {
+                            tierStartsParameters[currentIndex] = [];
+                            pushParameters(tierStartsParameters[currentIndex], tierIdentifier);
+                            
+                            var tierStartsParameterValueDiv = document.getElementById("tierStartsParameterValueDiv");
+                            if(tierStartsParameterValueDiv.childNodes.length > 0)
+                            {
+                                clear(tierStartsParameterValueDiv);
+                            }
+                            
+                            for(value in tierStartsParameters[currentIndex])
+                            {
+                                getParameterValues(tierStartsParameters[currentIndex][value], tierStartsParameterValueDiv, 'tierStarts', 1);
+                            }
+                        }
+                        else
+                        {
+                            tierPricesParameters[currentIndex] = [];
+                            pushParameters(tierPricesParameters[currentIndex], tierIdentifier);
+                            
+                            var tierPricesParameterValueDiv = document.getElementById("tierPricesParameterValueDiv");
+                            if(tierPricesParameterValueDiv.childNodes.length > 0)
+                            {
+                                clear(tierPricesParameterValueDiv);
+                            }
+                            
+                            for(value in tierPricesParameters[currentIndex])
+                            {
+                                getParameterValues(tierPricesParameters[currentIndex][value], tierPricesParameterValueDiv, 'tierPrices', 2);
+                            }
+                        }
                     }
                 }
                 
@@ -1415,6 +1515,52 @@ var survey = JSON.parse(surveyJSON)
                                         for(var j = 0; j < season[currentIndex][tierIdentifier].length; ++j)
                                         {
                                             if(season[currentIndex][tierIdentifier][j] == checkCheckBox.value)
+                                            {
+                                                checkCheckBox.checked = true;
+                                            }
+                                        }
+                                    }
+                            }
+                            break;
+                        case 'Meter Size': 
+                            for(var i = 0; i < survey.meterSizes.length; ++i)
+                            {   
+                                var checkboxID = identifier + "MeterSize" + i;
+                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterSizeValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.meterSizes[i] + '"/>'+
+                                '<label for = "' + checkboxID + '">' + survey.meterSizes[i] + '"</label><br/>';
+                            }
+                            DIV.appendChild(Answer);
+                            if(commodityMeterSize[currentIndex][tierIdentifier] != null)
+                            {
+                                    for(var i = 0; i < survey.meterSizes.length; ++i)
+                                    {
+                                        var checkCheckBox = document.getElementById(identifier + "MeterSize" + i);
+                                        for(var j = 0; j < commodityMeterSize[currentIndex][tierIdentifier].length; ++j)
+                                        {
+                                            if(commodityMeterSize[currentIndex][tierIdentifier][j] == checkCheckBox.value)
+                                            {
+                                                checkCheckBox.checked = true;
+                                            }
+                                        }
+                                    }
+                            }
+                            break;
+                        case 'Month': 
+                            for(var i = 0; i < survey.month.length; ++i)
+                            {   
+                                var checkboxID = identifier + "Month" + i;
+                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + (i+1) + '"/>'+
+                                '<label for = "' + checkboxID + '">' + survey.month[i] + '</label><br/>';
+                            }
+                            DIV.appendChild(Answer);
+                            if(month[currentIndex][tierIdentifier] != null)
+                            {
+                                    for(var i = 0; i < survey.month.length; ++i)
+                                    {
+                                        var checkCheckBox = document.getElementById(identifier + "Month" + i);
+                                        for(var j = 0; j < month[currentIndex][tierIdentifier].length; ++j)
+                                        {
+                                            if(month[currentIndex][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
@@ -1532,7 +1678,7 @@ var survey = JSON.parse(surveyJSON)
                         theSwitchStatement(uniformParameters[currentIndex], Identifier, 0);
                         getUniformRate();
                     }
-                    else if(commodityStructure[currentIndex] == 'Tiered')
+                    else if(commodityStructure[currentIndex] == 'Tiered' || commodityStructure[currentIndex] == 'Budget')
                     {
                         if(Identifier == "tierStarts")
                         {
@@ -1583,10 +1729,6 @@ var survey = JSON.parse(surveyJSON)
                             createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices");
                         }
                     }
-                    else if(commodityStructure[currentIndex] == 'Budget')
-                    {
-                        
-                    }
                 }
                 
                 function theSwitchStatement(theArray, Identifier, tierIdentifier)
@@ -1603,6 +1745,26 @@ var survey = JSON.parse(surveyJSON)
                                         if(checkCheckBox.checked)
                                         { 
                                             season[currentIndex][tierIdentifier].push(checkCheckBox.value); 
+                                        }
+                                    } break;
+                                case 'Meter Size': 
+                                    commodityMeterSize[currentIndex][tierIdentifier] = [];
+                                    for(var i = 0; i < survey.meterSizes.length; ++i)
+                                    {
+                                        var checkCheckBox = document.getElementById(Identifier + "MeterSize" + i);
+                                        if(checkCheckBox.checked)
+                                        { 
+                                            commodityMeterSize[currentIndex][tierIdentifier].push(checkCheckBox.value); 
+                                        }
+                                    } break;
+                                case 'Month': 
+                                    month[currentIndex][tierIdentifier] = [];
+                                    for(var i = 0; i < survey.month.length; ++i)
+                                    {
+                                        var checkCheckBox = document.getElementById(Identifier + "Month" + i);
+                                        if(checkCheckBox.checked)
+                                        { 
+                                            month[currentIndex][tierIdentifier].push(checkCheckBox.value); 
                                         }
                                     } break;
                                 case 'Temperature Zone':
@@ -1664,11 +1826,13 @@ var survey = JSON.parse(surveyJSON)
                         
                     for(var i = 0; i < parameterList.length; ++i)
                     {
-                         if(season[currentIndex] != null || temperatureZone[currentIndex] != null || elevationZone[currentIndex] != null || pressureZone[currentIndex] != null || lotSizeGroup[currentIndex] != null)
+                        if(season[currentIndex] != null || commodityMeterSize[currentIndex] != null || month[currentIndex] != null || temperatureZone[currentIndex] != null || elevationZone[currentIndex] != null || pressureZone[currentIndex] != null || lotSizeGroup[currentIndex] != null )
                         {
                             switch(parameterList[i])
                             {
                                 case 'Season': ParametersToUse[i] = season[currentIndex][identifier]; break;
+                                case 'Meter Size': ParametersToUse[i] = commodityMeterSize[currentIndex][identifier]; break;
+                                case 'Month': ParametersToUse[i] = month[currentIndex][identifier]; break;
                                 case 'Temperature Zone': ParametersToUse[i] = temperatureZone[currentIndex][identifier]; break;
                                 case 'Elevation Zone': ParametersToUse[i] = elevationZone[currentIndex][identifier]; break;
                                 case 'Pressure Zone': ParametersToUse[i] = pressureZone[currentIndex][identifier]; break;
@@ -1776,6 +1940,18 @@ var survey = JSON.parse(surveyJSON)
                                 {
                                     Continue = false;
                                     alert("No parameters selected for Season");
+                                } break;
+                            case "SMeter Size":
+                                if(commodityMeterSize[currentIndex][tierIdentifier] == null || commodityMeterSize[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                    alert("No parameters selected for Meter Size");
+                                } break;
+                            case "Month":
+                                if(month[currentIndex][tierIdentifier] == null || month[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                    alert("No parameters selected for Month");
                                 } break;
                             case "Temperature Zone":
                                 if(temperatureZone[currentIndex][tierIdentifier] == null || temperatureZone[currentIndex][tierIdentifier].length == 0)
@@ -2184,7 +2360,148 @@ var survey = JSON.parse(surveyJSON)
                                 }
                                 
                                 break;
-                                case 'Budget': break;
+                                case 'Budget':
+                                gpcd[currentIndex] = null;
+                                indoor[currentIndex] = null;
+                                outdoor[currentIndex] = null;
+                                commodityCharges[currentIndex] = [];
+                                tierStartsValues[currentIndex] = [];
+                                
+                                gpcdValue = document.getElementById("gpcd");
+                                if(gpcdValue.value != "")
+                                    gpcd[currentIndex] = gpcdValue.value;
+                                else
+                                {
+                                    alert("Gallons Per Capita Day field empty");
+                                    Continue = false;
+                                }
+                                
+                                indoorValue = document.getElementById("indoor");
+                                if(indoorValue.value != "")
+                                    indoor[currentIndex] = indoorValue.value;
+                                else
+                                {
+                                    alert("Indoor Equation field empty");
+                                    Continue = false;
+                                }
+                                
+                                outdoorValue = document.getElementById("outdoor");
+                                if(indoorValue.value != "")
+                                    outdoor[currentIndex] = outdoorValue.value;
+                                else
+                                {
+                                    alert("Outdoor Equation field empty");
+                                    Continue = false;
+                                }
+                                
+                                if(isTierStartsDepends[currentIndex])
+                                {
+                                    if(tierStartsParameters[currentIndex] != null && tierStartsParameters[currentIndex].length > 0)
+                                    {
+                                        Continue = errorCheckCommodityParameters(tierStartsParameters[currentIndex], 1, Continue);
+                                        
+                                        if(Continue)
+                                        {
+                                            if(tierStartsCategories[currentIndex] != null && tierStartsCategories[currentIndex].length > 0)
+                                            {
+                                                for(var i = 0; i < (tierStartsCategories[currentIndex].length*tierLevels[currentIndex]); ++i)
+                                                {
+                                                    var tempCharge = document.getElementById("tierStarts" + i);
+                                    
+                                                    if(tempCharge.value == "")
+                                                    {
+                                                        var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                        alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " isn't filled out");
+                                                        Continue = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        tierStartsValues[currentIndex].push(tempCharge.value);
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Continue = false;
+                                                alert("Parameter Fields are empty");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Continue = false;
+                                        alert("No parameters Selected for Tier Levels");
+                                    }
+                                }
+                                else
+                                {
+                                    for(var i = 0; i < tierLevels[currentIndex]; ++i)
+                                    {
+                                        var Level = document.getElementById("tierStarts" + i);
+                                        if(Level.value == "")
+                                        { 
+                                            alert("You must enter a CCF level for tier " + (i + 1)); 
+                                            Continue = false;
+                                        } 
+                                        else
+                                        { tierStartsValues[currentIndex][i] = Level.value; }
+                                    }
+                                }
+                                
+                                if(isTierPricesDepends[currentIndex])
+                                {
+                                    if(tierPricesParameters[currentIndex] != null && tierPricesParameters[currentIndex].length > 0)
+                                    {
+                                        Continue = errorCheckCommodityParameters(tierPricesParameters[currentIndex], 2, Continue);
+                                        
+                                        if(Continue)
+                                        {
+                                            if(commodityChargeCategories[currentIndex] != null && commodityChargeCategories[currentIndex].length > 0)
+                                            { 
+                                                for(var i = 0; i < (commodityChargeCategories[currentIndex].length*tierLevels[currentIndex]); ++i)
+                                                {
+                                                    var tempCharge = document.getElementById("tierPrices" + i);
+                                    
+                                                    if(tempCharge.value == "")
+                                                    {
+                                                        var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                        alert("The Tier Price for " + commodityChargeCategories[currentIndex][tempIndex].replace(" Rate:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " isn't filled out");
+                                                        Continue = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        commodityCharges[currentIndex].push(tempCharge.value);
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Continue = false;
+                                                alert("Parameter Fields are empty");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Continue = false;
+                                        alert("No parameters Selected for Tier Prices");
+                                    }
+                                }
+                                else
+                                {
+                                    for(var i = 0; i < tierLevels[currentIndex]; ++i)
+                                    {
+                                        var Price = document.getElementById("tierPrices" + i);
+                                        if(Price.value == "")
+                                        { 
+                                            alert("You must enter a Price for tier " + (i + 1)); 
+                                            Continue = false;
+                                        } 
+                                        else
+                                        { commodityCharges[currentIndex][i] = Price.value; }
+                                    }
+                                }                                
+                                break;
                             }
                         }
                     }
@@ -2212,6 +2529,8 @@ var survey = JSON.parse(surveyJSON)
                         case 'Elevation Zone': return 'elevation_zone'; break;
                         case 'Pressure Zone': return 'pressure_zone'; break;
                         case 'Lot Size Group': return 'lot_size_group'; break;
+                        case 'Meter Size': return 'meter_size'; break;
+                        case 'Month': return 'month'; break;
                                             }
                 }
                 
@@ -2309,12 +2628,11 @@ var survey = JSON.parse(surveyJSON)
                                                 tempComm += '"' + replacementStr.split(" ").join("|") + '": ' + commodityCharges[structure][value]+ ', ';
                                             }
                                         }
-                                        alert(tempComm);
                                         commodityJSON.flat_rate.values = JSON.parse(tempComm);
                                     } break;
                                 case 'Tiered':
                                     commodityJSON = { "commodity_charge": "Tiered" };
-                                    if(isTierStartsDepends[currentIndex])
+                                    if(isTierStartsDepends[structure])
                                     {
                                         commodityJSON.tier_starts = { "depends_on": [],
                                                                       "values": {}     };
@@ -2353,12 +2671,12 @@ var survey = JSON.parse(surveyJSON)
                                     else
                                     {
                                         commodityJSON.tier_starts = [];
-                                        for(var i = 0; i < tierLevels[currentIndex]; ++i)
+                                        for(var i = 0; i < tierLevels[structure]; ++i)
                                         {
                                             commodityJSON.tier_starts.push(Number(tierStartsValues[structure][i]));
                                         }
                                     }
-                                    if(isTierPricesDepends[currentIndex])
+                                    if(isTierPricesDepends[structure])
                                     {
                                         commodityJSON.tier_prices = { "depends_on": [],
                                                                       "values": {}     };
@@ -2397,12 +2715,107 @@ var survey = JSON.parse(surveyJSON)
                                     else
                                     {
                                         commodityJSON.tier_prices = [];
-                                        for(var i = 0; i < tierLevels[currentIndex]; ++i)
+                                        for(var i = 0; i < tierLevels[structure]; ++i)
                                         {
                                             commodityJSON.tier_prices.push(Number(commodityCharges[structure][i]));
                                         }
                                     } break;
-                                case 'Budget': break;
+                                case 'Budget':
+                                commodityJSON = { "commodity_charge": "Budget" };
+                                    
+                                    commodityJSON.gpcd = gpcd[structure];
+                                    commodityJSON.indoor = indoor[structure];
+                                    commodityJSON.outdoor = outdoor[structure];
+                                    commodityJSON.budget = "indoor + outdoor";
+                                    
+                                    if(isTierStartsDepends[structure])
+                                    {
+                                        commodityJSON.tier_starts = { "depends_on": [],
+                                                                      "values": {}     };
+                                        for(var i = 0; i < tierStartsParameters[structure].length; ++i)
+                                        {
+                                            var temp = parameterParser(tierStartsParameters[structure][i])
+                                            commodityJSON.tier_starts.depends_on.push(temp);
+                                        }
+                                        
+                                        var tempComm = "{ ", number = 0; 
+                                        for(value in tierStartsCategories[structure])
+                                        {
+                                            var replacementStr = tierStartsCategories[structure][value].replace(" Level:", "");
+                                            tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
+                                            
+                                            for(var k = 0; k < tierLevels[structure]; ++k)
+                                            {
+                                                if(k == tierLevels[structure] - 1)
+                                                {
+                                                    tempComm += '"' + tierStartsValues[structure][number] + '" ]';
+                                                }
+                                                else
+                                                {
+                                                    tempComm += '"' + tierStartsValues[structure][number] + '", ';
+                                                }
+                                                number++;
+                                            }
+                                            
+                                            if(value == tierStartsCategories[structure].length - 1)
+                                                tempComm += ' }';
+                                            else
+                                                tempComm += ', '
+                                        }
+                                        commodityJSON.tier_starts.values = JSON.parse(tempComm)
+                                    }
+                                    else
+                                    {
+                                        commodityJSON.tier_starts = [];
+                                        for(var i = 0; i < tierLevels[structure]; ++i)
+                                        {
+                                            commodityJSON.tier_starts.push(tierStartsValues[structure][i]);
+                                        }
+                                    }
+                                    if(isTierPricesDepends[structure])
+                                    {
+                                        commodityJSON.tier_prices = { "depends_on": [],
+                                                                      "values": {}     };
+                                        for(var i = 0; i < tierPricesParameters[structure].length; ++i)
+                                        {
+                                            var temp = parameterParser(tierPricesParameters[structure][i])
+                                            commodityJSON.tier_prices.depends_on.push(temp);
+                                        }
+                                        
+                                        var tempComm = "{ ", number = 0; 
+                                        for(value in commodityChargeCategories[structure])
+                                        {
+                                            var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
+                                            
+                                            for(var k = 0; k < tierLevels[structure]; ++k)
+                                            {
+                                                if(k == tierLevels[structure] - 1)
+                                                {
+                                                    tempComm += commodityCharges[structure][number] + ' ]';
+                                                }
+                                                else
+                                                {
+                                                    tempComm += commodityCharges[structure][number] + ', ';
+                                                }
+                                                number++;
+                                            }
+                                            
+                                            if(value == commodityChargeCategories[structure].length - 1)
+                                                tempComm += ' }';
+                                            else
+                                                tempComm += ', '
+                                        }
+                                        commodityJSON.tier_prices.values = JSON.parse(tempComm)
+                                    }
+                                    else
+                                    {
+                                        commodityJSON.tier_prices = [];
+                                        for(var i = 0; i < tierLevels[structure]; ++i)
+                                        {
+                                            commodityJSON.tier_prices.push(Number(commodityCharges[structure][i]));
+                                        }
+                                    } break;
                             }
                         }
                         else
@@ -2412,57 +2825,73 @@ var survey = JSON.parse(surveyJSON)
                         {
                             case "RESIDENTIAL_SINGLE": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
                                                         tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON ;
-                                                        tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON); break;
+                                                        tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON); 
+                                                        tempStructure.RESIDENTIAL_SINGLE.bill = "service_charge+commodityCharge"; break;
                             case "RESIDENTIAL_MULTI": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
                                                         tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON; 
-                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON); break;
+                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON); 
+                                                        tempStructure.RESIDENTIAL_MULTI.bill = "service_charge+commodity_charge"; break;
                             case "IRRIGATION": tempStructure = { "IRRIGATION" : { "service_charge" : {} } };
                                                         tempStructure.IRRIGATION.service_charge = serviceJSON; 
-                                                        tempStructure.IRRIGATION = jQuery.extend({}, tempStructure.IRRIGATION, commodityJSON); break;
+                                                        tempStructure.IRRIGATION = jQuery.extend({}, tempStructure.IRRIGATION, commodityJSON); 
+                                                        tempStructure.IRRIGATION.bill = "service_charge+commodity_charge"; break;
                             case "COMMERCIAL": tempStructure = { "COMMERCIAL" : { "service_charge" : {} } }; 
                                                         tempStructure.COMMERCIAL.service_charge = serviceJSON; 
-                                                        tempStructure.COMMERCIAL = jQuery.extend({}, tempStructure.COMMERCIAL, commodityJSON); break;
+                                                        tempStructure.COMMERCIAL = jQuery.extend({}, tempStructure.COMMERCIAL, commodityJSON); 
+                                                        tempStructure.COMMERCIAL.bill = "service_charge+commodity_charge"; break;
                             case "INDUSTRIAL": tempStructure = { "INDUSTRIAL" : { "service_charge" : {} } };
                                                         tempStructure.INDUSTRIAL.service_charge = serviceJSON; 
-                                                        tempStructure.INDUSTRIAL = jQuery.extend({}, tempStructure.INDUSTRIAL, commodityJSON); break;
+                                                        tempStructure.INDUSTRIAL = jQuery.extend({}, tempStructure.INDUSTRIAL, commodityJSON); 
+                                                        tempStructure.INDUSTRIAL.bill = "service_charge+commodity_charge"; break;
                             case "INSTITUTIONAL": tempStructure = { "INSTITUTIONAL" : { "service_charge" : {} } };
                                                         tempStructure.INSTITUTIONAL.service_charge = serviceJSON; 
-                                                        tempStructure.INSTITUTIONAL = jQuery.extend({}, tempStructure.INSTITUTIONAL, commodityJSON); break;
+                                                        tempStructure.INSTITUTIONAL = jQuery.extend({}, tempStructure.INSTITUTIONAL, commodityJSON); 
+                                                        tempStructure.INSTITUTIONAL.bill = "service_charge+commodity_charge"; break;
                             case "FIRE_SERVICE": tempStructure = { "FIRE_SERVICE" : { "service_charge" : {} } }; 
                                                         tempStructure.FIRE_SERVICE.service_charge = serviceJSON; 
-                                                        tempStructure.RFIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON); break;
+                                                        tempStructure.RFIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON); 
+                                                        tempStructure.RFIRE_SERVICE.bill = "service_charge+commodity_charge"; break;
                             case "NONPOTABLE": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } };
                                                         tempStructure.NONPOTABLE.service_charge = serviceJSON; 
-                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON); break;
+                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON); 
+                                                        tempStructure.NONPOTABLE.bill = "service_charge+commodity_charge"; break;
                             case "NON_RESIDENTIAL": tempStructure = { "NON_RESIDENTIAL" : { "service_charge" : {} } }; 
                                                         tempStructure.NON_RESIDENTIAL.service_charge = serviceJSON; 
-                                                        tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON); break;
+                                                        tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON); 
+                                                        tempStructure.NON_RESIDENTIAL.bill = "service_charge+commodity_charge"; break;
                             case "UNMETERED": tempStructure = { "UNMETERED" : { "service_charge" : {} } };
                                                         tempStructure.UNMETERED.service_charge = serviceJSON; 
-                                                        tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON); break;
+                                                        tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON); 
+                                                        tempStructure.UNMETERED.bill = "service_charge+commodity_charge"; break;
                             case "RECLAIMED": tempStructure = { "RECLAIMED" : { "service_charge" : {} } }; 
                                                         tempStructure.RECLAIMED.service_charge = serviceJSON; 
-                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON); break;
+                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON); 
+                                                        tempStructure.RECLAIMED.bill = "service_charge+commodity_charge"; break;
                             case "GOVERNMENTAL": tempStructure = { "GOVERNMENTAL" : { "service_charge" : {} } }; 
                                                         tempStructure.GOVERNMENTAL.service_charge = serviceJSON; 
-                                                        tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON); break;
+                                                        tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON); 
+                                                        tempStructure.GOVERNMENTAL.bill = "service_charge+commodity_charge"; break;
                             case "INTERRUPTIBLE": tempStructure = { "INTERRUPTIBLE" : { "service_charge" : {} } }; 
                                                         tempStructure.INTERRUPTIBLE.service_charge = serviceJSON; 
-                                                        tempStructure.INTERRUPTIBLE = jQuery.extend({}, tempStructure.INTERRUPTIBLE, commodityJSON); break;
+                                                        tempStructure.INTERRUPTIBLE = jQuery.extend({}, tempStructure.INTERRUPTIBLE, commodityJSON); 
+                                                        tempStructure.INTERRUPTIBLE.bill = "service_charge+commodity_charge"; break;
                             case "DOCKS SHIPPING": tempStructure = { "DOCKS_SHIPPING" : { "service_charge" : {} } }; 
                                                         tempStructure.DOCKS_SHIPPING.service_charge = serviceJSON; 
-                                                        tempStructure.DOCKS_SHIPPING = jQuery.extend({}, tempStructure.DOCKS_SHIPPING, commodityJSON); break;
+                                                        tempStructure.DOCKS_SHIPPING = jQuery.extend({}, tempStructure.DOCKS_SHIPPING, commodityJSON); 
+                                                        tempStructure.DOCKS_SHIPPING.bill = "service_charge+commodity_charge"; break;
                             case "BUILDING CONTRACTOR": tempStructure = { "BUILDING_CONTRACTOR" : { "service_charge" : {} } }; 
                                                         tempStructure.BUILDING_CONTRACTOR.service_charge = serviceJSON; 
-                                                        tempStructure.BUILDING_CONTRACTOR = jQuery.extend({}, tempStructure.BUILDING_CONTRACTOR, commodityJSON); break;
+                                                        tempStructure.BUILDING_CONTRACTOR = jQuery.extend({}, tempStructure.BUILDING_CONTRACTOR, commodityJSON); 
+                                                        tempStructure.BUILDING_CONTRACTOR.bill = "service_charge+commodity_charge"; break;
                             case "RESIDENTIAL CONSTRUCTION": tempStructure = { "RESIDENTIAL_CONSTRUCTION" : { "service_charge" : {} } }; 
                                                         tempStructure.RESIDENTIAL_CONSTRUCTION.service_charge = serviceJSON; 
-                                                        tempStructure.RESIDENTIAL_CONSTRUCTION = jQuery.extend({}, tempStructure.RESIDENTIAL_CONSTRUCTION, commodityJSON); break;
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION = jQuery.extend({}, tempStructure.RESIDENTIAL_CONSTRUCTION, commodityJSON);
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION.bill = "service_charge+commodity_charge"; break;
                             case "OTHER": tempStructure = { "OTHER" : { "service_charge" : {} } }; 
                                                         tempStructure.OTHER.service_charge = serviceJSON; 
-                                                        tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON); break;
+                                                        tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON); 
+                                                        tempStructure.OTHER.bill = "service_charge+commodity_charge"; break;
                         }
-                        
                         OWRSformat.rate_structure = jQuery.extend({}, OWRSformat.rate_structure, tempStructure);
                     }
                     
