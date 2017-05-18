@@ -1028,12 +1028,10 @@ var survey = JSON.parse(surveyJSON)
                             clear(uniformParametersValueDiv);
                         }
                     }
-                    if(!Radio.checked)
+                    else
                     {
                         isUniformDependsOn[currentIndex] = 'Yes';
                     }
-                    
-                    QuestionTxt("Enter The Cost Per CCF:", 12, uniformPriceDiv)
                     
                     if(isUniformDependsOn[currentIndex] == 'Yes')
                     {
@@ -1050,8 +1048,9 @@ var survey = JSON.parse(surveyJSON)
                                 }
                             }
                             
-                            if(Continue)
+                            if(Continue && ParametersToUse.length > 0)
                             {
+                                QuestionTxt("Enter The Cost Per CCF:", 12, uniformPriceDiv)
                                 commodityChargeCategories[currentIndex] = [];
                                 getCategories(commodityChargeCategories[currentIndex], 0, ParametersToUse.length, "", "Rate:");
                             
@@ -1085,8 +1084,10 @@ var survey = JSON.parse(surveyJSON)
                                 }
                             }
                     }
-                    else
+                    else if(isUniformDependsOn[currentIndex] == 'No')
                     {
+                        QuestionTxt("Enter The Cost Per CCF:", 12, uniformPriceDiv);
+                        
                         var label = document.createElement("label");
                         label.setAttribute("for","uniformPrice0");
                         label.innerHTML = "Rate: ";
@@ -1336,7 +1337,14 @@ var survey = JSON.parse(surveyJSON)
                     Answer.id = "numOfTiers";
                     if(tierLevels[currentIndex] != null)
                     {
-                        Answer.value = tierLevels[currentIndex];
+                        if(tierLevels[currentIndex] < 4)
+                        {
+                            Answer.value = 4;
+                        }
+                        else
+                        {
+                            Answer.value = tierLevels[currentIndex];
+                        }
                     }
                     Answer.setAttribute("onchange", "createTierLevels()");
                     commodityDependsOnDiv.appendChild(Answer);
@@ -1404,9 +1412,11 @@ var survey = JSON.parse(surveyJSON)
                         {
                             getParameterValues(uniformParameters[currentIndex][i], uniformParametersValueDiv, 'Uniform', 0);
                         }
+                        clearParametersNotUsed(uniformParameters[currentIndex], 0);
+                        commodityChargeCategories[currentIndex] = null;
                         getUniformRate();
                     }
-                    else if(commodityStructure[currentIndex] == 'Tiered')
+                    else if(commodityStructure[currentIndex] == 'Tiered' || commodityStructure[currentIndex] == 'Budget')
                     {
                         if(tierIdentifier == "tierStarts")
                         {
@@ -1419,10 +1429,14 @@ var survey = JSON.parse(surveyJSON)
                                 clear(tierStartsParameterValueDiv);
                             }
                             
+                            clearParametersNotUsed(tierStartsParameters[currentIndex], 1);
+                            tierStartsCategories[currentIndex] = null;
+                            
                             for(value in tierStartsParameters[currentIndex])
                             {
                                 getParameterValues(tierStartsParameters[currentIndex][value], tierStartsParameterValueDiv, 'tierStarts', 1);
                             }
+                            pushParameterValues('tierStarts');
                         }
                         else
                         {
@@ -1435,45 +1449,14 @@ var survey = JSON.parse(surveyJSON)
                                 clear(tierPricesParameterValueDiv);
                             }
                             
-                            for(value in tierPricesParameters[currentIndex])
-                            {
-                                getParameterValues(tierPricesParameters[currentIndex][value], tierPricesParameterValueDiv, 'tierPrices', 2);
-                            }
-                        }
-                    }
-                    else if (commodityStructure[currentIndex] == 'Budget')
-                    {
-                        if(tierIdentifier == "tierStarts")
-                        {
-                            tierStartsParameters[currentIndex] = [];
-                            pushParameters(tierStartsParameters[currentIndex], tierIdentifier);
-                            
-                            var tierStartsParameterValueDiv = document.getElementById("tierStartsParameterValueDiv");
-                            if(tierStartsParameterValueDiv.childNodes.length > 0)
-                            {
-                                clear(tierStartsParameterValueDiv);
-                            }
-                            
-                            for(value in tierStartsParameters[currentIndex])
-                            {
-                                getParameterValues(tierStartsParameters[currentIndex][value], tierStartsParameterValueDiv, 'tierStarts', 1);
-                            }
-                        }
-                        else
-                        {
-                            tierPricesParameters[currentIndex] = [];
-                            pushParameters(tierPricesParameters[currentIndex], tierIdentifier);
-                            
-                            var tierPricesParameterValueDiv = document.getElementById("tierPricesParameterValueDiv");
-                            if(tierPricesParameterValueDiv.childNodes.length > 0)
-                            {
-                                clear(tierPricesParameterValueDiv);
-                            }
+                            clearParametersNotUsed(tierPricesParameters[currentIndex], 2);
+                            commodityChargeCategories[currentIndex] = null;
                             
                             for(value in tierPricesParameters[currentIndex])
                             {
                                 getParameterValues(tierPricesParameters[currentIndex][value], tierPricesParameterValueDiv, 'tierPrices', 2);
                             }
+                            pushParameterValues('tierPrices');
                         }
                     }
                 }
@@ -1526,7 +1509,7 @@ var survey = JSON.parse(surveyJSON)
                             for(var i = 0; i < survey.meterSizes.length; ++i)
                             {   
                                 var checkboxID = identifier + "MeterSize" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterSizeValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.meterSizes[i] + '"/>'+
+                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterSizeValues" onclick = "pushParameterValues(\''+ identifier +'\')" value =\'' + survey.meterSizes[i] + '"\'/>'+
                                 '<label for = "' + checkboxID + '">' + survey.meterSizes[i] + '"</label><br/>';
                             }
                             DIV.appendChild(Answer);
@@ -1549,7 +1532,7 @@ var survey = JSON.parse(surveyJSON)
                             for(var i = 0; i < survey.month.length; ++i)
                             {   
                                 var checkboxID = identifier + "Month" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + (i+1) + '"/>'+
+                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.month[i] + '"/>'+
                                 '<label for = "' + checkboxID + '">' + survey.month[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
@@ -1595,7 +1578,7 @@ var survey = JSON.parse(surveyJSON)
                             for(var i = 0; i < survey.elevationZone.length; ++i)
                             {   
                                 var checkboxID = identifier + "ElevationZone" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'ElevationZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.elevationZone[i]+ '"/>'+
+                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'ElevationZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Elevation ' + survey.elevationZone[i]+ '"/>'+
                                 '<label for = "' + checkboxID + '">' + survey.elevationZone[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
@@ -1618,7 +1601,7 @@ var survey = JSON.parse(surveyJSON)
                             for(var i = 0; i < survey.pressureZone.length; ++i)
                             {   
                                 var checkboxID = identifier + "PressureZone" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'PressureZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.pressureZone[i]+ '"/>'+
+                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'PressureZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Pressure ' + survey.pressureZone[i]+ '"/>'+
                                 '<label for = "' + checkboxID + '">' + survey.pressureZone[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
@@ -1641,7 +1624,7 @@ var survey = JSON.parse(surveyJSON)
                             for(var i = 0; i < survey.lotSizeGroup.length; ++i)
                             {   
                                 var checkboxID = identifier + "LotSizeGroup" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'LotSizeGroupValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.lotSizeGroup[i]+ '"/>'+
+                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'LotSizeGroupValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Lot Size ' + survey.lotSizeGroup[i]+ '"/>'+
                                 '<label for = "' + checkboxID + '">' + survey.lotSizeGroup[i] + '</label><br/>';
                             }
                             DIV.appendChild(Answer);
@@ -1661,13 +1644,25 @@ var survey = JSON.parse(surveyJSON)
                             }
                             break;
                     }
-                    
-                    if(tierIdentifier > 0)
+                }
+                
+                function clearParametersNotUsed(Structure, tierIdentifier)
+                {
+                    for(value in survey.commodityDependsOn)
                     {
-                        if(tierStartsCategories[currentIndex] != null && tierIdentifier == 1)
-                            createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels");
-                        if(commodityChargeCategories[currentIndex] != null && tierIdentifier == 2)
-                            createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices");
+                        if(jQuery.inArray(survey.commodityDependsOn[value], Structure) == -1)
+                        {
+                            switch(survey.commodityDependsOn[value])
+                            {
+                                case 'Season': season[currentIndex][tierIdentifier] = []; break;
+                                case 'Meter Size': commodityMeterSize[currentIndex][tierIdentifier] = []; break;
+                                case 'Month': month[currentIndex][tierIdentifier] = []; break;
+                                case 'Temperature Zone': temperatureZone[currentIndex][tierIdentifier] = []; break;
+                                case 'Lot Size Group': lotSizeGroup[currentIndex][tierIdentifier] = []; break;
+                                case 'Pressure Zone': pressureZone[currentIndex][tierIdentifier] = []; break;
+                                case 'Elevation Zone': elevationZone[currentIndex][tierIdentifier] = []; break;
+                            }
+                        }
                     }
                 }
                 
@@ -1869,7 +1864,7 @@ var survey = JSON.parse(surveyJSON)
                     {
                         var ID = categoryArray[i].split(" ").join();
                         
-                        if(ID != "")
+                        if(ID != "" && ID != "Level:" && ID != "Rate:")
                         {
                             Answer = document.createElement("p");
                             Answer.appendChild(document.createTextNode(categoryArray[i]))
@@ -1891,6 +1886,12 @@ var survey = JSON.parse(surveyJSON)
                             if(j == 0 && identifier == "tierStarts")
                             {
                                 Answer.value = 0;
+                                Answer.readOnly = true;
+                            }
+                            
+                            if(j == 1 && identifier == "tierStarts" &&  commodityStructure[currentIndex] == 'Budget')
+                            {
+                                Answer.value = 'indoor';
                                 Answer.readOnly = true;
                             }
                             
@@ -2181,7 +2182,16 @@ var survey = JSON.parse(surveyJSON)
                                 }
                                 else
                                 {
-                                    serviceCharges[currentIndex].push(tempCharge.value);
+                                    var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                    if(regex)
+                                    {
+                                        serviceCharges[currentIndex].push(tempCharge.value);
+                                    }
+                                    else
+                                    {
+                                        alert("The service charge at row " + (i + 1) + " must be in the Format 1.00");
+                                        Continue = false;
+                                    } 
                                 }
                             }
                             
@@ -2204,9 +2214,20 @@ var survey = JSON.parse(surveyJSON)
                                 {
                                     var Charge = document.getElementById("uniformPrice0");
                                     if(Charge.value == "")
-                                        { alert("You must enter a rate"); Continue = false; } 
+                                    { alert("You must enter a rate"); Continue = false; } 
                                     else
-                                        { commodityCharges[currentIndex][0] = Charge.value; }
+                                    { 
+                                        var regex = /^\d+(?:.\d{2})$/.test(Charge.value);
+                                        if(regex)
+                                        {
+                                            commodityCharges[currentIndex].push(Charge.value);
+                                        }
+                                        else
+                                        {
+                                            alert('Rate must be in the Format 1.00');
+                                            Continue = false;
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -2229,7 +2250,16 @@ var survey = JSON.parse(surveyJSON)
                                                     }
                                                     else
                                                     {
-                                                        commodityCharges[currentIndex].push(tempCharge.value);
+                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                                        if(regex)
+                                                        {
+                                                            commodityCharges[currentIndex].push(tempCharge.value);
+                                                        }
+                                                        else
+                                                        {
+                                                            alert("Commodity Charge at row " + (i + 1) + " must be in the Format 1.00");
+                                                            Continue = false;
+                                                        }
                                                     }
                                                 }   
                                             }  
@@ -2273,7 +2303,17 @@ var survey = JSON.parse(surveyJSON)
                                                     }
                                                     else
                                                     {
-                                                        tierStartsValues[currentIndex].push(tempCharge.value);
+                                                        var regex = /^\d+$/.test(tempCharge.value);
+                                                        if(regex)
+                                                        {
+                                                            tierStartsValues[currentIndex].push(tempCharge.value);
+                                                        }
+                                                        else
+                                                        {
+                                                            var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be an integer");
+                                                            Continue = false;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -2301,7 +2341,18 @@ var survey = JSON.parse(surveyJSON)
                                             Continue = false;
                                         } 
                                         else
-                                        { tierStartsValues[currentIndex][i] = Level.value; }
+                                        { 
+                                            var regex = /^\d+$/.test(Level.value);
+                                            if(regex)
+                                            {
+                                                tierStartsValues[currentIndex].push(Level.value);
+                                            }
+                                            else
+                                            {
+                                                alert("The Tier Level for tier " + (i % tierLevels[currentIndex] + 1) + " must be an integer");
+                                                Continue = false;
+                                            } 
+                                        }
                                     }
                                 }
                                 
@@ -2327,7 +2378,17 @@ var survey = JSON.parse(surveyJSON)
                                                     }
                                                     else
                                                     {
-                                                        commodityCharges[currentIndex].push(tempCharge.value);
+                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                                        if(regex)
+                                                        {
+                                                            commodityCharges[currentIndex].push(tempCharge.value);
+                                                        }
+                                                        else
+                                                        {
+                                                            var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][tempIndex].replace(" Rate:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be in the Format 1.00");
+                                                            Continue = false;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -2355,7 +2416,18 @@ var survey = JSON.parse(surveyJSON)
                                             Continue = false;
                                         } 
                                         else
-                                        { commodityCharges[currentIndex][i] = Price.value; }
+                                        { 
+                                            var regex = /^\d+(?:.\d{2})$/.test(Price.value);
+                                            if(regex)
+                                            {
+                                                commodityCharges[currentIndex].push(Price.value);
+                                            }
+                                            else
+                                            {
+                                                alert("The Tier Price for tier " + (i % tierLevels[currentIndex] + 1) + " must be in the Format 1.00");
+                                                Continue = false;
+                                            } 
+                                        }
                                     }
                                 }
                                 
@@ -2416,7 +2488,24 @@ var survey = JSON.parse(surveyJSON)
                                                     }
                                                     else
                                                     {
-                                                        tierStartsValues[currentIndex].push(tempCharge.value);
+                                                        if(i % tierLevels[currentIndex] + 1 > 2)
+                                                        {
+                                                            var regex = /^\d+(?:%)$/.test(tempCharge.value);
+                                                            if(regex)
+                                                            {
+                                                                tierStartsValues[currentIndex].push(tempCharge.value);
+                                                            }
+                                                            else
+                                                            {
+                                                                var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                                alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be in the format 100% or 1%");
+                                                                Continue = false;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            tierStartsValues[currentIndex].push(tempCharge.value);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -2444,7 +2533,23 @@ var survey = JSON.parse(surveyJSON)
                                             Continue = false;
                                         } 
                                         else
-                                        { tierStartsValues[currentIndex][i] = Level.value; }
+                                        { 
+                                            if(i > 1)
+                                            {
+                                                var regex = /^\d+(?:%)$/.test(Level.value);
+                                                if(regex)
+                                                {
+                                                    tierStartsValues[currentIndex].push(Level.value);
+                                                }
+                                                else
+                                                {
+                                                    alert("The Tier Level for tier " + (i % tierLevels[currentIndex] + 1) + " must be in the format 100% or 1%");
+                                                    Continue = false;
+                                                }
+                                            }
+                                            else
+                                               tierStartsValues[currentIndex].push(Level.value); 
+                                        }
                                     }
                                 }
                                 
@@ -2470,7 +2575,17 @@ var survey = JSON.parse(surveyJSON)
                                                     }
                                                     else
                                                     {
-                                                        commodityCharges[currentIndex].push(tempCharge.value);
+                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                                        if(regex)
+                                                        {
+                                                            commodityCharges[currentIndex].push(tempCharge.value);
+                                                        }
+                                                        else
+                                                        {
+                                                            var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][tempIndex].replace(" Rate:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be in the Format 1.00");
+                                                            Continue = false;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -2498,7 +2613,18 @@ var survey = JSON.parse(surveyJSON)
                                             Continue = false;
                                         } 
                                         else
-                                        { commodityCharges[currentIndex][i] = Price.value; }
+                                        { 
+                                            var regex = /^\d+(?:.\d{2})$/.test(Price.value);
+                                            if(regex)
+                                            {
+                                                commodityCharges[currentIndex].push(Price.value);
+                                            }
+                                            else
+                                            {
+                                                alert("The Tier Price for tier " + (i % tierLevels[currentIndex] + 1) + " must be in the Format 1.00");
+                                                Continue = false;
+                                            } 
+                                        }
                                     }
                                 }                                
                                 break;
@@ -2531,7 +2657,7 @@ var survey = JSON.parse(surveyJSON)
                         case 'Lot Size Group': return 'lot_size_group'; break;
                         case 'Meter Size': return 'meter_size'; break;
                         case 'Month': return 'month'; break;
-                                            }
+                    }
                 }
                 
                 function Complete()
@@ -2603,7 +2729,7 @@ var survey = JSON.parse(surveyJSON)
                                     
                                     if(isUniformDependsOn[structure] == 'No')
                                     {
-                                        commodityJSON.flat_rate = commodityCharges[structure][0];
+                                        commodityJSON.flat_rate = Number(commodityCharges[structure][0]);
                                     }
                                     else
                                     {
@@ -2619,6 +2745,13 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in commodityChargeCategories[structure])
                                         {
                                             var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            for(var i = 0; i < survey.month.length; ++i)
+                                            {
+                                                replacementStr = replacementStr.replace(survey.month[i], i + 1);
+                                            }
+                                            
                                             if(value == commodityChargeCategories[structure].length - 1)
                                             {
                                                 tempComm += '"' + replacementStr.split(" ").join("|") + '": ' + commodityCharges[structure][value]+ ' }';
@@ -2646,6 +2779,13 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in tierStartsCategories[structure])
                                         {
                                             var replacementStr = tierStartsCategories[structure][value].replace(" Level:", "");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            for(var i = 0; i < survey.month.length; ++i)
+                                            {
+                                                replacementStr = replacementStr.replace(survey.month[i], i + 1);
+                                            }
+                                            
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
                                             for(var k = 0; k < tierLevels[structure]; ++k)
@@ -2690,6 +2830,13 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in commodityChargeCategories[structure])
                                         {
                                             var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            for(var i = 0; i < survey.month.length; ++i)
+                                            {
+                                                replacementStr = replacementStr.replace(survey.month[i], i + 1);
+                                            }
+                                            
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
                                             for(var k = 0; k < tierLevels[structure]; ++k)
@@ -2742,6 +2889,13 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in tierStartsCategories[structure])
                                         {
                                             var replacementStr = tierStartsCategories[structure][value].replace(" Level:", "");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            for(var i = 0; i < survey.month.length; ++i)
+                                            {
+                                                replacementStr = replacementStr.replace(survey.month[i], i + 1);
+                                            }
+                                            
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
                                             for(var k = 0; k < tierLevels[structure]; ++k)
@@ -2786,6 +2940,13 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in commodityChargeCategories[structure])
                                         {
                                             var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            for(var i = 0; i < survey.month.length; ++i)
+                                            {
+                                                replacementStr = replacementStr.replace(survey.month[i], i + 1);
+                                            }
+                                            
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
                                             for(var k = 0; k < tierLevels[structure]; ++k)
@@ -2826,7 +2987,7 @@ var survey = JSON.parse(surveyJSON)
                             case "RESIDENTIAL_SINGLE": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
                                                         tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON ;
                                                         tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON); 
-                                                        tempStructure.RESIDENTIAL_SINGLE.bill = "service_charge+commodityCharge"; break;
+                                                        tempStructure.RESIDENTIAL_SINGLE.bill = "service_charge+commodity_charge"; break;
                             case "RESIDENTIAL_MULTI": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
                                                         tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON; 
                                                         tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON); 
