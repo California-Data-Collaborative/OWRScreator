@@ -550,10 +550,14 @@ var survey = JSON.parse(surveyJSON)
                         form.appendChild(BREAK);
                     }
                     
+                    var ButtonDiv = document.createElement("div");
+                    ButtonDiv.style.marginTop = "15px";
+                    form.appendChild(ButtonDiv);
+                    
                     var Button = document.createElement("span");
                     Button.id = "nextButton";
                     Button.innerHTML = '<button type = "button" onclick = "GetMainPageAnswers()">Next</button>';
-                    form.appendChild(Button);
+                    ButtonDiv.appendChild(Button);
                     
                     if(UtilityName != "")
                     {
@@ -682,18 +686,23 @@ var survey = JSON.parse(surveyJSON)
                         commodityList.appendChild(Answer);
                     }
                     
+                    var ButtonDiv = document.createElement("div");
+                    ButtonDiv.style.marginTop = "15px";
+                    form.appendChild(ButtonDiv);
+                    
+                    
                     var Button = document.createElement("span");
                     if(currentIndex == SelectedRateStructures.length - 1)
                     {
-                        Button.innerHTML = '<button type = "button" onclick = "PreviousGetAnswers()">Previous</button>' + 
+                        Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()">Previous</button>' + 
                         '<button type = "button" onclick = "NextGetAnswers()">Complete</button>';
                     }
                     else
                     {
-                        Button.innerHTML = '<button type = "button" onclick = "PreviousGetAnswers()">Previous</button>' + 
+                        Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()">Previous</button>' + 
                         '<button type = "button" onclick = "NextGetAnswers()">Next</button>';
                     }
-                    form.appendChild(Button);
+                    ButtonDiv.appendChild(Button);
                 }
                 
                 
@@ -1059,6 +1068,7 @@ var survey = JSON.parse(surveyJSON)
                                 {
                                     Answer = document.createElement("label");
                                     Answer.setAttribute("for", "commodityCharge" + i);
+                                    Answer.setAttribute("style", "float: left; width: 150px;");
                                     Answer.appendChild(document.createTextNode(commodityChargeCategories[currentIndex][i]));
                                     uniformPriceDiv.appendChild(Answer);
                                 
@@ -1090,6 +1100,7 @@ var survey = JSON.parse(surveyJSON)
                         
                         var label = document.createElement("label");
                         label.setAttribute("for","uniformPrice0");
+                        Answer.setAttribute("style", "float: left; width: 150px;");
                         label.innerHTML = "Rate: ";
                         uniformPriceDiv.appendChild(label);
                         
@@ -1287,7 +1298,7 @@ var survey = JSON.parse(surveyJSON)
                 {
                     Answer = document.createElement("label");
                     Answer.setAttribute("for", id);
-                    Answer.style.width = '250px';
+                    Answer.setAttribute("style", "float: left; width: 150px;");
                     Answer.appendChild(document.createTextNode(Text));
                     DIV.appendChild(Answer);
                     
@@ -2044,6 +2055,7 @@ var survey = JSON.parse(surveyJSON)
                                 
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
+                                Answer.setAttribute("style", "float: left; width: 150px;");
                                 Answer.innerHTML = meterTypes[currentIndex][i] + ' ' + meterSizes[currentIndex][j] +'"';
                                 serviceChargesDiv.appendChild(Answer);
                                 
@@ -2068,6 +2080,7 @@ var survey = JSON.parse(surveyJSON)
                                 
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
+                                Answer.setAttribute("style", "float: left; width: 150px;");
                                 Answer.innerHTML = meterSizes[currentIndex][i] + '"';
                                 serviceChargesDiv.appendChild(Answer);
                                 
@@ -2091,11 +2104,13 @@ var survey = JSON.parse(surveyJSON)
                                 
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
+                                Answer.setAttribute("style", "float: left; width: 150px; margin-bottom: 10px");
                                 Answer.innerHTML = meterTypes[currentIndex][i];
                                 serviceChargesDiv.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
                                 Answer.setAttribute("type", "text");
+                                Answer.setAttribute("style", "margin-bottom: 10px");
                                 Answer.id = "charge" + i;
                                 serviceChargesDiv.appendChild(Answer);
                                 
