@@ -417,16 +417,16 @@ var surveyJSON = '{"title": "Create OWRS files",' +
 '"Does this Uniform Commodity Charge Depend On Anything?", "How Many Tiers are There?",' +
 ' "Do the Tier Levels Depend On Anything?", "Select the parameters to include:",'+
 ' "Do the Tier Prices Depend On Anything?"],'+
-'"billFrequency": ["Monthly", "BiMonthly", "Other"],'+
+'"billFrequency": ["Monthly", "BiMonthly", "Quarterly", "Annually", "Other"],'+
 '"rateStructures":['+
-'"RESIDENTIAL_SINGLE", "RESIDENTIAL_MULTI",'+
-'"IRRIGATION", "COMMERCIAL",'+
-'"INDUSTRIAL", "INSTITUTIONAL",'+
-'"FIRE_SERVICE", "NONPOTABLE",'+
-'"NON_RESIDENTIAL", "UNMETERED",'+
-'"RECLAIMED", "GOVERNMENTAL",'+
-'"INTERRUPTIBLE", "DOCKS SHIPPING",'+
-'"BUILDING CONTRACTOR", "RESIDENTIAL CONSTRUCTION",'+
+'"Residential Single", "Residential Multi",'+
+'"Irrigation", "Commercial",'+
+'"Industrial", "Institutional",'+
+'"Fire Service", "Non-Potable",'+
+'"Non-Residential", "Unmetered",'+
+'"Reclaimed", "Governmental",'+
+'"Interruptible", "Docks Shipping",'+
+'"Building Contractor", "Residential Construction",'+
 '"Other"],'+
 '"serviceDependsOn": ["Meter Size", "Meter Type"],'+
 '"commodityDependsOn": ["Season", "Temperature Zone", "Elevation Zone", "Pressure Zone", "Lot Size Group", "Meter Size", "Month"],'+
@@ -1068,7 +1068,7 @@ var survey = JSON.parse(surveyJSON)
                                 {
                                     Answer = document.createElement("label");
                                     Answer.setAttribute("for", "commodityCharge" + i);
-                                    Answer.setAttribute("style", "float: left; width: 150px;");
+                                    Answer.setAttribute("style", "float: left; width: 250px;");
                                     Answer.appendChild(document.createTextNode(commodityChargeCategories[currentIndex][i]));
                                     uniformPriceDiv.appendChild(Answer);
                                 
@@ -1298,7 +1298,7 @@ var survey = JSON.parse(surveyJSON)
                 {
                     Answer = document.createElement("label");
                     Answer.setAttribute("for", id);
-                    Answer.setAttribute("style", "float: left; width: 150px;");
+                    Answer.setAttribute("style", "float: left; width: 250px;");
                     Answer.appendChild(document.createTextNode(Text));
                     DIV.appendChild(Answer);
                     
@@ -2999,71 +2999,71 @@ var survey = JSON.parse(surveyJSON)
                         
                         switch(SelectedRateStructures[structure])
                         {
-                            case "RESIDENTIAL_SINGLE": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
+                            case "Residential Single": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
                                                         tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON ;
                                                         tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON); 
                                                         tempStructure.RESIDENTIAL_SINGLE.bill = "service_charge+commodity_charge"; break;
-                            case "RESIDENTIAL_MULTI": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
+                            case "Residential Multi": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
                                                         tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON; 
                                                         tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON); 
                                                         tempStructure.RESIDENTIAL_MULTI.bill = "service_charge+commodity_charge"; break;
-                            case "IRRIGATION": tempStructure = { "IRRIGATION" : { "service_charge" : {} } };
+                            case "Irrigation": tempStructure = { "IRRIGATION" : { "service_charge" : {} } };
                                                         tempStructure.IRRIGATION.service_charge = serviceJSON; 
                                                         tempStructure.IRRIGATION = jQuery.extend({}, tempStructure.IRRIGATION, commodityJSON); 
                                                         tempStructure.IRRIGATION.bill = "service_charge+commodity_charge"; break;
-                            case "COMMERCIAL": tempStructure = { "COMMERCIAL" : { "service_charge" : {} } }; 
+                            case "Commercial": tempStructure = { "COMMERCIAL" : { "service_charge" : {} } }; 
                                                         tempStructure.COMMERCIAL.service_charge = serviceJSON; 
                                                         tempStructure.COMMERCIAL = jQuery.extend({}, tempStructure.COMMERCIAL, commodityJSON); 
                                                         tempStructure.COMMERCIAL.bill = "service_charge+commodity_charge"; break;
-                            case "INDUSTRIAL": tempStructure = { "INDUSTRIAL" : { "service_charge" : {} } };
+                            case "Industrial": tempStructure = { "INDUSTRIAL" : { "service_charge" : {} } };
                                                         tempStructure.INDUSTRIAL.service_charge = serviceJSON; 
                                                         tempStructure.INDUSTRIAL = jQuery.extend({}, tempStructure.INDUSTRIAL, commodityJSON); 
                                                         tempStructure.INDUSTRIAL.bill = "service_charge+commodity_charge"; break;
-                            case "INSTITUTIONAL": tempStructure = { "INSTITUTIONAL" : { "service_charge" : {} } };
+                            case "Institutional": tempStructure = { "INSTITUTIONAL" : { "service_charge" : {} } };
                                                         tempStructure.INSTITUTIONAL.service_charge = serviceJSON; 
                                                         tempStructure.INSTITUTIONAL = jQuery.extend({}, tempStructure.INSTITUTIONAL, commodityJSON); 
                                                         tempStructure.INSTITUTIONAL.bill = "service_charge+commodity_charge"; break;
-                            case "FIRE_SERVICE": tempStructure = { "FIRE_SERVICE" : { "service_charge" : {} } }; 
+                            case "Fire Service": tempStructure = { "FIRE_SERVICE" : { "service_charge" : {} } }; 
                                                         tempStructure.FIRE_SERVICE.service_charge = serviceJSON; 
                                                         tempStructure.RFIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON); 
                                                         tempStructure.RFIRE_SERVICE.bill = "service_charge+commodity_charge"; break;
-                            case "NONPOTABLE": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } };
+                            case "Non-Potable": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } };
                                                         tempStructure.NONPOTABLE.service_charge = serviceJSON; 
                                                         tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON); 
                                                         tempStructure.NONPOTABLE.bill = "service_charge+commodity_charge"; break;
-                            case "NON_RESIDENTIAL": tempStructure = { "NON_RESIDENTIAL" : { "service_charge" : {} } }; 
+                            case "Non-Residential": tempStructure = { "NON_RESIDENTIAL" : { "service_charge" : {} } }; 
                                                         tempStructure.NON_RESIDENTIAL.service_charge = serviceJSON; 
                                                         tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON); 
                                                         tempStructure.NON_RESIDENTIAL.bill = "service_charge+commodity_charge"; break;
-                            case "UNMETERED": tempStructure = { "UNMETERED" : { "service_charge" : {} } };
+                            case "Unmetered": tempStructure = { "UNMETERED" : { "service_charge" : {} } };
                                                         tempStructure.UNMETERED.service_charge = serviceJSON; 
                                                         tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON); 
                                                         tempStructure.UNMETERED.bill = "service_charge+commodity_charge"; break;
-                            case "RECLAIMED": tempStructure = { "RECLAIMED" : { "service_charge" : {} } }; 
+                            case "Reclaimed": tempStructure = { "RECLAIMED" : { "service_charge" : {} } }; 
                                                         tempStructure.RECLAIMED.service_charge = serviceJSON; 
                                                         tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON); 
                                                         tempStructure.RECLAIMED.bill = "service_charge+commodity_charge"; break;
-                            case "GOVERNMENTAL": tempStructure = { "GOVERNMENTAL" : { "service_charge" : {} } }; 
+                            case "Governmental": tempStructure = { "GOVERNMENTAL" : { "service_charge" : {} } }; 
                                                         tempStructure.GOVERNMENTAL.service_charge = serviceJSON; 
                                                         tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON); 
                                                         tempStructure.GOVERNMENTAL.bill = "service_charge+commodity_charge"; break;
-                            case "INTERRUPTIBLE": tempStructure = { "INTERRUPTIBLE" : { "service_charge" : {} } }; 
+                            case "Interruptible": tempStructure = { "INTERRUPTIBLE" : { "service_charge" : {} } }; 
                                                         tempStructure.INTERRUPTIBLE.service_charge = serviceJSON; 
                                                         tempStructure.INTERRUPTIBLE = jQuery.extend({}, tempStructure.INTERRUPTIBLE, commodityJSON); 
                                                         tempStructure.INTERRUPTIBLE.bill = "service_charge+commodity_charge"; break;
-                            case "DOCKS SHIPPING": tempStructure = { "DOCKS_SHIPPING" : { "service_charge" : {} } }; 
+                            case "Docks Shipping": tempStructure = { "DOCKS_SHIPPING" : { "service_charge" : {} } }; 
                                                         tempStructure.DOCKS_SHIPPING.service_charge = serviceJSON; 
                                                         tempStructure.DOCKS_SHIPPING = jQuery.extend({}, tempStructure.DOCKS_SHIPPING, commodityJSON); 
                                                         tempStructure.DOCKS_SHIPPING.bill = "service_charge+commodity_charge"; break;
-                            case "BUILDING CONTRACTOR": tempStructure = { "BUILDING_CONTRACTOR" : { "service_charge" : {} } }; 
+                            case "Building Contractor": tempStructure = { "BUILDING_CONTRACTOR" : { "service_charge" : {} } }; 
                                                         tempStructure.BUILDING_CONTRACTOR.service_charge = serviceJSON; 
                                                         tempStructure.BUILDING_CONTRACTOR = jQuery.extend({}, tempStructure.BUILDING_CONTRACTOR, commodityJSON); 
                                                         tempStructure.BUILDING_CONTRACTOR.bill = "service_charge+commodity_charge"; break;
-                            case "RESIDENTIAL CONSTRUCTION": tempStructure = { "RESIDENTIAL_CONSTRUCTION" : { "service_charge" : {} } }; 
+                            case "Residential Construction": tempStructure = { "RESIDENTIAL_CONSTRUCTION" : { "service_charge" : {} } }; 
                                                         tempStructure.RESIDENTIAL_CONSTRUCTION.service_charge = serviceJSON; 
                                                         tempStructure.RESIDENTIAL_CONSTRUCTION = jQuery.extend({}, tempStructure.RESIDENTIAL_CONSTRUCTION, commodityJSON);
                                                         tempStructure.RESIDENTIAL_CONSTRUCTION.bill = "service_charge+commodity_charge"; break;
-                            case "OTHER": tempStructure = { "OTHER" : { "service_charge" : {} } }; 
+                            case "Other": tempStructure = { "OTHER" : { "service_charge" : {} } }; 
                                                         tempStructure.OTHER.service_charge = serviceJSON; 
                                                         tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON); 
                                                         tempStructure.OTHER.bill = "service_charge+commodity_charge"; break;
