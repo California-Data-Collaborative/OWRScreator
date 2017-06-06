@@ -1042,7 +1042,7 @@ var survey = JSON.parse(surveyJSON)
                             
                             if(Continue && ParametersToUse.length > 0)
                             {
-                                QuestionTxt("Enter The Cost Per CCF(In form of 15.99):", 12, uniformPriceDiv)
+                                QuestionTxt("Enter The Cost Per CCF(In the form of 15.99):", 12, uniformPriceDiv)
                                 commodityChargeCategories[currentIndex] = [];
                                 getCategories(commodityChargeCategories[currentIndex], 0, ParametersToUse.length, "", "Rate:");
                             
@@ -1090,7 +1090,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                     else if(isUniformDependsOn[currentIndex] == 'No')
                     {
-                        QuestionTxt("Enter The Cost Per CCF(In form of 15.99):", 12, uniformPriceDiv);
+                        QuestionTxt("Enter The Cost Per CCF(In the form of 15.99):", 12, uniformPriceDiv);
                        
                         inputGroup = document.createElement("div");
                         inputGroup.classList.add("input-group");
@@ -1730,7 +1730,12 @@ var survey = JSON.parse(surveyJSON)
                             
                             var tierStartsValuesDiv = document.getElementById("tierStartsValuesDiv");
                             
-                            createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels");
+                            if(commodityStructure[currentIndex] == 'Tiered')
+                                var tempText = "(as Integer)";
+                            else
+                                var tempText = " (as Pecentage like 5%)"
+                            
+                            createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels " + tempText);
                         }
                         else
                         {
@@ -1754,7 +1759,7 @@ var survey = JSON.parse(surveyJSON)
                             
                             var tierPricesValuesDiv = document.getElementById("tierPricesValuesDiv");
                             
-                            createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices");
+                            createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices (In The Form of 15.99)");
                         }
                     }
                 }
@@ -1782,7 +1787,7 @@ var survey = JSON.parse(surveyJSON)
                                         var checkCheckBox = document.getElementById(Identifier + "MeterSize" + i);
                                         if(checkCheckBox.checked)
                                         { 
-                                            commodityMeterSize[currentIndex][tierIdentifier].push(checkCheckBox.value); 
+                                            commodityMeterSize[currentIndex][tierIdentifier].push(checkCheckBox.value + "?"); 
                                         }
                                     } break;
                                 case 'Month': 
@@ -1897,7 +1902,7 @@ var survey = JSON.parse(surveyJSON)
                     {
                         var ID = categoryArray[i].split(" ").join();
                         
-                        if(ID != "" && ID != "Level:" && ID != "Rate:")
+                        if(ID != "" && ID != "Level :" && ID != "Rate:")
                         {
                             Answer = document.createElement("h5");
                             Answer.appendChild(document.createTextNode(categoryArray[i]));
@@ -2081,12 +2086,12 @@ var survey = JSON.parse(surveyJSON)
                     serviceChargeCategories[currentIndex] = [];
                     if(meterTypes[currentIndex].length > 0 && meterSizes[currentIndex].length > 0)
                     {
-                        QuestionTxt("Enter the Service Charges in the Field(s) Below:", 8, serviceChargesDiv);
+                        QuestionTxt("Enter the Service Charges in the Field(s) Below (In The Form of 15.99):", 8, serviceChargesDiv);
                         for(var i = 0; i < meterTypes[currentIndex].length; ++i)
                         {
                             for(var j = 0; j < meterSizes[currentIndex].length; ++j)
                             {
-                                var tempCategory = meterTypes[currentIndex][i] + '|' + meterSizes[currentIndex][j]
+                                var tempCategory = meterTypes[currentIndex][i] + '|' + meterSizes[currentIndex][j] + "<QUOTE>";
                                 serviceChargeCategories[currentIndex].push(tempCategory);
                                 
                                 var divider = document.createElement("div");
@@ -2117,10 +2122,10 @@ var survey = JSON.parse(surveyJSON)
                     }
                     else if (meterSizes[currentIndex].length > 0)
                     {
-                        QuestionTxt("Enter the Service Charges in the Field(s) Below:", 8, serviceChargesDiv);
+                        QuestionTxt("Enter the Service Charges in the Field(s) Below (In the Form of 15.99):", 8, serviceChargesDiv);
                         for(var i = 0; i < meterSizes[currentIndex].length; ++i)
                             {
-                                var tempCategory = meterSizes[currentIndex][i]
+                                var tempCategory = meterSizes[currentIndex][i] + "<QUOTE>";
                                 serviceChargeCategories[currentIndex].push(tempCategory);
                                 
                                 
@@ -3137,15 +3142,16 @@ var survey = JSON.parse(surveyJSON)
                     }
                     
                     var YAML = jsyaml.safeDump(OWRSformat);
+                    YAML = YAML.split('<QUOTE>').join('"');
                     
-                    var cleared = document.getElementById("surveyContainer");
+                    var cleared = document.getElementById("panel");
                     clear(cleared);
                     
-                    var TheEnd = document.createElement("h1");
-                    TheEnd.appendChild(document.createTextNode("Thank You"));
+                    var TheEnd = document.createElement("pre");
+                    TheEnd.innerHTML = YAML;
                     cleared.appendChild(TheEnd);
                     
-                    alert(YAML);
+                   
                 }
                 
                 
