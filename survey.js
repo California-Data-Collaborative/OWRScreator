@@ -1103,9 +1103,15 @@ var survey = JSON.parse(surveyJSON)
                                 
                         Answer = document.createElement("input");
                         Answer.setAttribute("type", "text");
-                        Answer.id = "commodityCharge" + i;
+                        Answer.id = "commodityCharge0";
                         Answer.classList.add("form-control");
                         inputGroup.appendChild(Answer);
+                        
+                        if(commodityCharges[currentIndex] != null)
+                        {
+                            Answer = document.getElementById("commodityCharge0");
+                            Answer.value = commodityCharges[currentIndex][0];
+                        }
                     }
                 }
                 
@@ -2297,7 +2303,7 @@ var survey = JSON.parse(surveyJSON)
                                 commodityCharges[currentIndex] = []
                                 if(isUniformDependsOn[currentIndex] == "No")
                                 {
-                                    var Charge = document.getElementById("uniformPrice0");
+                                    var Charge = document.getElementById("commodityCharge0");
                                     if(Charge.value == "")
                                     { alert("You must enter a rate"); Continue = false; } 
                                     else
