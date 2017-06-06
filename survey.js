@@ -1900,10 +1900,8 @@ var survey = JSON.parse(surveyJSON)
                         if(ID != "" && ID != "Level:" && ID != "Rate:")
                         {
                             Answer = document.createElement("h5");
-                            Answer.appendChild(document.createTextNode(categoryArray[i]))
-                            var bold = document.createElement("b");
-                            bold.appendChild(Answer);
-                            DIV.appendChild(bold);
+                            Answer.appendChild(document.createTextNode(categoryArray[i]));
+                            DIV.appendChild(Answer);
                         }
                         
                         for(var j = 0; j < tierLevels[currentIndex]; ++j)
