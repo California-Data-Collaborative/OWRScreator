@@ -1106,6 +1106,12 @@ var survey = JSON.parse(surveyJSON)
                         Answer.id = "commodityCharge0";
                         Answer.classList.add("form-control");
                         inputGroup.appendChild(Answer);
+                        
+                        if(commodityCharges[currentIndex] != null)
+                        {
+                            Answer = document.getElementById("commodityCharge0");
+                            Answer.value = commodityCharges[currentIndex][0];
+                        }
                     }
                 }
                 
