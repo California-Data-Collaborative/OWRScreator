@@ -1,0 +1,17 @@
+body {
+  background-color: #222;
+  /*scroll lock*/
+  /*overflow: hidden; */
+  font-size: 130%;
+}
+
+.centered {
+  text-align: center;
+}
+
+.equation{
+/*  margin-top: 30px;
+margin-bottom: 30px;*/
+overflow: hidden;
+}
+

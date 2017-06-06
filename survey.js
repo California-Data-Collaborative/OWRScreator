@@ -1,4 +1,4 @@
-var surveyJSON = '{"title": "Create OWRS files",' +
+var surveyJSON = '{"title": "CaDC OWRS Creation Application",' +
 '"utilities": [' +
 '"Irvine Ranch Water District",'+
 '"Eastern Municipal Water District",'+
@@ -513,6 +513,7 @@ var survey = JSON.parse(surveyJSON)
                         Answer.appendChild(new Option(survey.utilities[i], survey.utilities[i]));
                     }
                     Answer.id = "utilityName";
+                    Answer.classList.add("form-control");
                     form.appendChild(Answer);
                 
                     QuestionTxt(survey.questions[1], 2, form);
@@ -524,12 +525,14 @@ var survey = JSON.parse(surveyJSON)
                         Answer.appendChild(new Option(survey.billFrequency[i], survey.billFrequency[i]));
                     }
                     Answer.id = "billFrequency";
+                    Answer.classList.add("form-control");
                     form.appendChild(Answer);
                     
                     QuestionTxt(survey.questions[2], 3, form);
                     
                     Answer = document.createElement("input");
                     Answer.setAttribute("type", "date");
+                    Answer.classList.add("form-control");
                     Answer.id = "effectiveDate";
                     form.appendChild(Answer);
                     
@@ -537,17 +540,14 @@ var survey = JSON.parse(surveyJSON)
                     
                     for(var i = 0; i < survey.rateStructures.length; ++i)
                     {
-                        Answer = document.createElement("input");
-                        Answer.setAttribute("type", "checkbox"); Answer.class = "custClass";
-                        Answer.id = "custClass" + i; Answer.Value = survey.rateStructures[i];
-                        form.appendChild(Answer);
+                        DIV = document.createElement("div");
+                        DIV.classList.add("checkbox");
+                        form.appendChild(DIV);
                         
                         Answer = document.createElement("label");
-                        Answer.setAttribute("for", "custClass" + i);
-                        Answer.appendChild(document.createTextNode(survey.rateStructures[i]));
-                        form.appendChild(Answer); 
-                        var BREAK = document. createElement("br");
-                        form.appendChild(BREAK);
+                        Answer.setAttribute("for", "custClass" + i); 
+                        Answer.innerHTML = '<input type = "checkbox" id = "custClass'+ i +'" value = "' + survey.rateStructures[i] +'"/> ' + survey.rateStructures[i] + '';
+                        DIV.appendChild(Answer); 
                     }
                     
                     var ButtonDiv = document.createElement("div");
@@ -556,7 +556,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     var Button = document.createElement("span");
                     Button.id = "nextButton";
-                    Button.innerHTML = '<button type = "button" onclick = "GetMainPageAnswers()">Next</button>';
+                    Button.innerHTML = '<button type = "button" onclick = "GetMainPageAnswers()" class = "btn">Next</button>';
                     ButtonDiv.appendChild(Button);
                     
                     if(UtilityName != "")
@@ -641,19 +641,15 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(isServiceCharge[currentIndex])
                     {
-                        Answer.innerHTML = '<input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" checked = "true"/>'+
-                        '<label for = "YesServiceCharge">Yes</label>'+
-                        '<input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No" />'+
-                        '<label for = "NoServiceCharge">No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge" class = "radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
                         getServiceChargeInfo();
                     }
                     else
                     {  
-                        Answer.innerHTML = '<input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" />'+
-                        '<label for = "YesServiceCharge">Yes</label>'+
-                        '<input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No"  checked = "true"/>'+
-                        '<label for = "NoServiceCharge">No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge" class ="radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
                     
@@ -670,19 +666,15 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(isCommodityCharge[currentIndex])
                     {
-                        Answer.innerHTML = '<input type = "radio" id = "YesCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "Yes" checked = "true"/>'+
-                        '<label for = "YesCommodityCharge">Yes</label>'+
-                        '<input type = "radio" id = "NoCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "No" />'+
-                        '<label for = "NoCommodityCharge">No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
                         getCommodityChargeInfo();
                     }
                     else
                     {  
-                        Answer.innerHTML = '<input type = "radio" id = "YesCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "Yes" />'+
-                        '<label for = "YesCommodityCharge">Yes</label>'+
-                        '<input type = "radio" id = "NoCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "No"  checked = "true"/>'+
-                        '<label for = "NoCommodityCharge">No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -694,13 +686,13 @@ var survey = JSON.parse(surveyJSON)
                     var Button = document.createElement("span");
                     if(currentIndex == SelectedRateStructures.length - 1)
                     {
-                        Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()">Previous</button>' + 
-                        '<button type = "button" onclick = "NextGetAnswers()">Complete</button>';
+                        Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()" class ="btn">Previous</button>' + 
+                        '<button type = "button" onclick = "NextGetAnswers()" class = "btn">Complete</button>';
                     }
                     else
                     {
-                        Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()">Previous</button>' + 
-                        '<button type = "button" onclick = "NextGetAnswers()">Next</button>';
+                        Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()" class = "btn">Previous</button>' + 
+                        '<button type = "button" onclick = "NextGetAnswers()"class = "btn">Next</button>';
                     }
                     ButtonDiv.appendChild(Button);
                 }
@@ -725,8 +717,8 @@ var survey = JSON.parse(surveyJSON)
                         for(var i = 0; i < survey.serviceDependsOn.length; ++i)
                         {
                             var checkboxID = "dependsOn" + i;
-                            Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "getServiceChargeDepends()" value ="' + survey.serviceDependsOn[i]+ '"/>'+
-                            '<label for = checkboxID>' + survey.serviceDependsOn[i] + '</label>';
+                            Answer.innerHTML += '<label for = "' + checkboxID + '" class = "checkbox-inline"><input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "getServiceChargeDepends()" value ="' + survey.serviceDependsOn[i]+ '"/>'+
+                            '' + survey.serviceDependsOn[i] + '</label>';
                         }
                         
                         serviceList.appendChild(Answer);
@@ -761,11 +753,8 @@ var survey = JSON.parse(surveyJSON)
                         
                         Answer = document.createElement("span");
                     
-                        Answer.innerHTML = '<input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes"/>'+
-                        '<label for = "YesServiceCharge">Yes</label>'+
-                        '<input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No" checked = "true"/>'+
-                        '<label for = "NoServiceCharge">No</label>';
-                    
+                        Answer.innerHTML = '<label for = "YesServiceCharge" class ="radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
                 }
@@ -781,12 +770,9 @@ var survey = JSON.parse(surveyJSON)
                         QuestionTxt(survey.questions[7], 10, commodityList);
                         
                         Answer = document.createElement("span");
-                        Answer.innerHTML = '<input type = "radio" id = "Uniform" name = "CommodityStructure" onclick = "UniformDepends()" value = "Uniform"/>'+
-                        '<label for = "Uniform">Uniform</label>'+
-                        '<input type = "radio" id = "Tiered" name = "CommodityStructure" onclick = "TieredDepends()" value = "Tiered"/>'+
-                        '<label for = "Tiered">Tiered</label>'+
-                        '<input type = "radio" id = "Budget" name = "CommodityStructure" onclick = "BudgetDepends()" value = "Budget"/>'+
-                        '<label for = "Uniform">Budget</label>';
+                        Answer.innerHTML = '<label for = "Uniform" class = "radio-inline"><input type = "radio" id = "Uniform" name = "CommodityStructure" onclick = "UniformDepends()" value = "Uniform"/>Uniform</label>'+
+                        '<label for = "Tiered" class = "radio-inline"><input type = "radio" id = "Tiered" name = "CommodityStructure" onclick = "TieredDepends()" value = "Tiered"/>Tiered</label>'+
+                        '<label for = "Budget" class = "radio-inline"><input type = "radio" id = "Budget" name = "CommodityStructure" onclick = "BudgetDepends()" value = "Budget"/>Budget</label>';
                         
                         commodityList.appendChild(Answer);
                         
@@ -803,11 +789,8 @@ var survey = JSON.parse(surveyJSON)
                         
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<input type = "radio" id = "YesCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "Yes" />'+
-                        '<label for = "YesCommodityCharge">Yes</label>'+
-                        '<input type = "radio" id = "NoCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "No"  checked = "true"/>'+
-                        '<label for = "NoCommodityCharge">No</label>';
-                        
+                        Answer.innerHTML = '<label for = "YesCommodityCharge" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge" name = "isCommodityCharge" onclick = "getCommodityChargeInfo()" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -878,14 +861,14 @@ var survey = JSON.parse(surveyJSON)
                         {
                             QuestionTxt(text, 6, serviceDependsOnDiv);
                             
-                            Answer = document.createElement("span");
+                            Answer = document.createElement("div");
                             Answer.innerHTML = "";
                             
                             for(var j = 0; j  < survey.meterSizes.length; ++j)
                             {
                                 var checkboxID = "meterSize" + j;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "createServiceChargeField()" value ="' + survey.meterSizes[j] + '"/>'+
-                                '<label for = checkboxID>' + survey.meterSizes[j] + '"</label></br>';
+                                Answer.innerHTML += '<div class = "checkbox"><label for = checkboxID><input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "createServiceChargeField()" value ="' + survey.meterSizes[j] + '"/>'+
+                                '' + survey.meterSizes[j] + '"</label></div>';
                             }
                             serviceDependsOnDiv.appendChild(Answer);
                         }
@@ -893,13 +876,13 @@ var survey = JSON.parse(surveyJSON)
                         {
                             QuestionTxt(text, 7, serviceDependsOnDiv);
                             
-                            Answer = document.createElement("span");
+                            Answer = document.createElement("div");
                             Answer.innerHTML = "";
                              for(var j = 0; j  < survey.meterTypes.length; ++j)
                             {
                                 var checkboxID = "meterType" + j;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "createServiceChargeField()" value ="' + survey.meterTypes[j] + '"/>'+
-                                '<label for = checkboxID>' + survey.meterTypes[j] + '</label></br>';
+                                Answer.innerHTML += '<div class = "checkbox"><label for = checkboxID><input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "createServiceChargeField()" value ="' + survey.meterTypes[j] + '"/>'+
+                                '' + survey.meterTypes[j] + '</label></div>';
                             }
                             serviceDependsOnDiv.appendChild(Answer);
                         }
@@ -981,10 +964,10 @@ var survey = JSON.parse(surveyJSON)
                     
                     Answer = document.createElement("span");
                         
-                    Answer.innerHTML = '<input type = "radio" id = "YesUniformDepends" name = "isUniformDependsOn" onclick = "getDepends(uniformParametersDiv, uniformParameters[currentIndex], \'uniform\')" value = "Yes" />'+
-                    '<label for = "YesUniformDepends">Yes</label>'+
-                    '<input type = "radio" id = "NoUniformDepends" name = "isUniformDependsOn" onclick = "getUniformRate()" value = "No"/>'+
-                    '<label for = "NoCommodityCharge">No</label>';
+                    Answer.innerHTML = '<label for = "YesUniformDepends" class = "radio-inline"><input type = "radio" id = "YesUniformDepends" name = "isUniformDependsOn" onclick = "getDepends(uniformParametersDiv, uniformParameters[currentIndex], \'uniform\')" value = "Yes" />'+
+                    'Yes</label>'+
+                    '<label for = "NoUniformDepends" class = "radio-inline"><input type = "radio" id = "NoUniformDepends" name = "isUniformDependsOn" onclick = "getUniformRate()" value = "No"/>'+
+                    'No</label>';
                         
                     commodityDependsOnDiv.appendChild(Answer);
                     
@@ -1059,26 +1042,37 @@ var survey = JSON.parse(surveyJSON)
                             
                             if(Continue && ParametersToUse.length > 0)
                             {
-                                QuestionTxt("Enter The Cost Per CCF:", 12, uniformPriceDiv)
+                                QuestionTxt("Enter The Cost Per CCF(In form of 15.99):", 12, uniformPriceDiv)
                                 commodityChargeCategories[currentIndex] = [];
                                 getCategories(commodityChargeCategories[currentIndex], 0, ParametersToUse.length, "", "Rate:");
                             
                         
                                 for(var i = 0; i < commodityChargeCategories[currentIndex].length; ++i)
                                 {
+                                    divider = document.createElement("div");
+                                    divider.classList.add("form-group");
+                                    uniformPriceDiv.appendChild(divider);
+                                    
                                     Answer = document.createElement("label");
                                     Answer.setAttribute("for", "commodityCharge" + i);
-                                    Answer.setAttribute("style", "float: left; width: 250px;");
+                                    Answer.style = "paddingTop = '15px'"
                                     Answer.appendChild(document.createTextNode(commodityChargeCategories[currentIndex][i]));
-                                    uniformPriceDiv.appendChild(Answer);
+                                    divider.appendChild(Answer);
+                                
+                                    inputGroup = document.createElement("div");
+                                    inputGroup.classList.add("input-group");
+                                    divider.appendChild(inputGroup);
+                                    
+                                    Answer = document.createElement("span");
+                                    Answer.classList.add("input-group-addon");
+                                    Answer.innerHTML = '<i class="glyphicon glyphicon-usd"></i>';
+                                    inputGroup.appendChild(Answer);
                                 
                                     Answer = document.createElement("input");
                                     Answer.setAttribute("type", "text");
                                     Answer.id = "commodityCharge" + i;
-                                    uniformPriceDiv.appendChild(Answer);
-                                
-                                    var BREAK = document.createElement("br");
-                                    uniformPriceDiv.appendChild(BREAK);
+                                    Answer.classList.add("form-control");
+                                    inputGroup.appendChild(Answer);
                                 }
                             
                                 if(commodityCharges[currentIndex] != null && commodityChargeCategories[currentIndex] != null)
@@ -1096,18 +1090,22 @@ var survey = JSON.parse(surveyJSON)
                     }
                     else if(isUniformDependsOn[currentIndex] == 'No')
                     {
-                        QuestionTxt("Enter The Cost Per CCF:", 12, uniformPriceDiv);
-                        
-                        var label = document.createElement("label");
-                        label.setAttribute("for","uniformPrice0");
-                        Answer.setAttribute("style", "float: left; width: 150px;");
-                        label.innerHTML = "Rate: ";
-                        uniformPriceDiv.appendChild(label);
-                        
+                        QuestionTxt("Enter The Cost Per CCF(In form of 15.99):", 12, uniformPriceDiv);
+                       
+                        inputGroup = document.createElement("div");
+                        inputGroup.classList.add("input-group");
+                        uniformPriceDiv.appendChild(inputGroup);
+                                    
+                        Answer = document.createElement("span");
+                        Answer.classList.add("input-group-addon");
+                        Answer.innerHTML = '<i class="glyphicon glyphicon-usd"></i>';
+                        inputGroup.appendChild(Answer);
+                                
                         Answer = document.createElement("input");
                         Answer.setAttribute("type", "text");
-                        Answer.id = "uniformPrice0";
-                        uniformPriceDiv.appendChild(Answer);
+                        Answer.id = "commodityCharge" + i;
+                        Answer.classList.add("form-control");
+                        inputGroup.appendChild(Answer);
                     }
                 }
                 
@@ -1125,6 +1123,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
                     Answer = document.createElement("select");
+                    Answer.classList.add("form-control");
                     for(var i = 2; i <= 6; ++i)
                     {
                         Answer.appendChild(new Option(i, i));
@@ -1172,10 +1171,10 @@ var survey = JSON.parse(surveyJSON)
                     {
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<input type = "radio" id = "Yes' + Identifier + '" name = "is' + Identifier + 'Depends" onclick = "get' + Identifier + 'Info()" value = "Yes" checked = "true"/>'+
-                        '<label for = "Yes' + Identifier + '">Yes</label>'+
-                        '<input type = "radio" id = "No' + Identifier + '" name = "is' + Identifier + 'Depends" onclick = "get' + Identifier + 'Info()" value = "No" />'+
-                        '<label for = "No' + Identifier + '">No</label>';
+                        Answer.innerHTML = '<label for = "Yes' + Identifier + '" class = "radio-inline"><input type = "radio" id = "Yes' + Identifier + '" name = "is' + Identifier + 'Depends" onclick = "get' + Identifier + 'Info()" value = "Yes" checked = "true"/>'+
+                        'Yes</label>'+
+                        '<label for = "No' + Identifier + '" class = "radio-inline"><input type = "radio" id = "No' + Identifier + '" name = "is' + Identifier + 'Depends" onclick = "get' + Identifier + 'Info()" value = "No" />'+
+                        'No</label>';
                         
                         tierDiv.appendChild(Answer);
                         
@@ -1185,10 +1184,10 @@ var survey = JSON.parse(surveyJSON)
                     {
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<input type = "radio" id = "Yes' + Identifier + '" name = "is' + Identifier + 'Depends" onclick = "get' + Identifier + 'Info()" value = "Yes"/>'+
-                        '<label for = "Yes' + Identifier + '">Yes</label>'+
-                        '<input type = "radio" id = "No' + Identifier + '" name = "is' + Identifier + 'Depends" onclick = "get' + Identifier + 'Info()" value = "No" checked = "true"/>'+
-                        '<label for = "No' + Identifier + '">No</label>';
+                        Answer.innerHTML = '<label for = "Yes' + Identifier + '" class = "radio-inline"><input type = "radio" id = "Yes' + Identifier + '" name = "is' + Identifier + 'Depends" onclick = "get' + Identifier + 'Info()" value = "Yes"/>'+
+                        'Yes</label>'+
+                        '<label for = "No' + Identifier + '" class = "radio-inline"><input type = "radio" id = "No' + Identifier + '" name = "is' + Identifier + 'Depends" onclick = "get' + Identifier + 'Info()" value = "No" checked = "true"/>'+
+                        'No</label>';
                         
                         tierDiv.appendChild(Answer);
                     }
@@ -1208,10 +1207,10 @@ var survey = JSON.parse(surveyJSON)
                         QuestionTxt(survey.questions[10], 14,tierStartsDiv)
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<input type = "radio" id = "YesTierStarts" name = "isTierStartsDepends" onclick = "getTierStartsInfo()" value = "Yes" checked = "true"/>'+
-                        '<label for = "YesTierStarts">Yes</label>'+
-                        '<input type = "radio" id = "NoTierStarts" name = "isTierStartsDepends" onclick = "getTierStartsInfo()" value = "No" />'+
-                        '<label for = "NoTierStarts">No</label>';
+                        Answer.innerHTML = '<label for = "YesTierStarts" class = "radio-inline"><input type = "radio" id = "YesTierStarts" name = "isTierStartsDepends" onclick = "getTierStartsInfo()" value = "Yes" checked = "true"/>'+
+                        'Yes</label>'+
+                        '<label for = "NoTierStarts" class = "radio-inline"><input type = "radio" id = "NoTierStarts" name = "isTierStartsDepends" onclick = "getTierStartsInfo()" value = "No" />'+
+                        'No</label>';
                         
                         tierStartsDiv.appendChild(Answer);
                         
@@ -1258,10 +1257,10 @@ var survey = JSON.parse(surveyJSON)
                         QuestionTxt(survey.questions[12], 15,tierPricesDiv)
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<input type = "radio" id = "YesTierPrices" name = "isTierPricesDepends" onclick = "getTierPricesInfo()" value = "Yes" checked = "true"/>'+
-                        '<label for = "YesTierPrices">Yes</label>'+
-                        '<input type = "radio" id = "NoTierPrices" name = "isTierPricesDepends" onclick = "getTierPricesInfo()" value = "No" />'+
-                        '<label for = "NoTierPrices">No</label>';
+                        Answer.innerHTML = '<label for = "YesTierPrices" class = "radio-inline"><input type = "radio" id = "YesTierPrices" name = "isTierPricesDepends" onclick = "getTierPricesInfo()" value = "Yes" checked = "true"/>'+
+                        'Yes</label>'+
+                        '<label for = "NoTierPrices" class = "radio-inline"><input type = "radio" id = "NoTierPrices" name = "isTierPricesDepends" onclick = "getTierPricesInfo()" value = "No" />'+
+                        'No</label>';
                         
                         tierPricesDiv.appendChild(Answer);
                         
@@ -1296,15 +1295,18 @@ var survey = JSON.parse(surveyJSON)
                 
                 function budgetVariableFieldCreator(DIV, id, Text, valueArray, defaultValue)
                 {
+                    divider = document.createElement("div");
+                    divider.classList.add("form-group");
+                    DIV.appendChild(divider);
+                   
                     Answer = document.createElement("label");
                     Answer.setAttribute("for", id);
-                    Answer.setAttribute("style", "float: left; width: 250px;");
                     Answer.appendChild(document.createTextNode(Text));
-                    DIV.appendChild(Answer);
+                    divider.appendChild(Answer);
                     
                     Answer = document.createElement("input");
                     Answer.setAttribute("type", "text");
-                    Answer.style.width = '300px';
+                    Answer.classList.add("form-control");
                     Answer.id = id;
                     if(valueArray != null)
                     {
@@ -1314,10 +1316,8 @@ var survey = JSON.parse(surveyJSON)
                     {
                         Answer.value = defaultValue;
                     }
-                    DIV.appendChild(Answer);
+                    divider.appendChild(Answer);
                     
-                    var BREAK = document.createElement("br");
-                    DIV.appendChild(BREAK);
                 }
                 
                 function BudgetDepends()
@@ -1346,6 +1346,7 @@ var survey = JSON.parse(surveyJSON)
                         Answer.appendChild(new Option(i, i));
                     }
                     Answer.id = "numOfTiers";
+                    Answer.classList.add("form-control");
                     if(tierLevels[currentIndex] != null)
                     {
                         if(tierLevels[currentIndex] < 4)
@@ -1380,14 +1381,16 @@ var survey = JSON.parse(surveyJSON)
                     }
                     QuestionTxt(survey.questions[11] ,13, DIV);
                     
-                    Answer = document.createElement("span");
                     for(var i = 0; i < survey.commodityDependsOn.length; ++i)
                     {
+                        var divider = document.createElement("div");
+                        divider.classList.add("checkbox");
                         var checkboxID = Structure + "DependsOn" + i;
-                            Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "CommodityDependsOn" onclick = "storeCommodityDepends(\'' + Structure + '\')" value ="' + survey.commodityDependsOn[i]+ '"/>'+
-                            '<label for = "' + checkboxID + '">' + survey.commodityDependsOn[i] + '</label><br/>';
+                        divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "CommodityDependsOn" onclick = "storeCommodityDepends(\'' + Structure + '\')" value ="' + survey.commodityDependsOn[i]+ '"/>'+
+                        '' + survey.commodityDependsOn[i] + '</label>';
+                        DIV.appendChild(divider);
                     }
-                    DIV.appendChild(Answer);
+                    
                     
                     if(identifier != null)
                     {
@@ -1489,18 +1492,19 @@ var survey = JSON.parse(surveyJSON)
                 {
                     QuestionTxt("Select the values for " + parameter ,13 , DIV)
                     
-                    Answer = document.createElement("span");
-                    
                     switch(parameter)
                     {
                         case 'Season': 
                             for(var i = 0; i < survey.season.length; ++i)
                             {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
                                 var checkboxID = identifier + "Season" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.season[i]+ '"/>'+
-                                '<label for = "' + checkboxID + '">' + survey.season[i] + '</label><br/>';
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.season[i]+ '"/>'+
+                                '' + survey.season[i] + '</label>';
+                                DIV.appendChild(divider);
                             }
-                            DIV.appendChild(Answer);
+                            
                             if(season[currentIndex][tierIdentifier] != null)
                             {
                                     for(var i = 0; i < survey.season.length; ++i)
@@ -1519,11 +1523,14 @@ var survey = JSON.parse(surveyJSON)
                         case 'Meter Size': 
                             for(var i = 0; i < survey.meterSizes.length; ++i)
                             {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
                                 var checkboxID = identifier + "MeterSize" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterSizeValues" onclick = "pushParameterValues(\''+ identifier +'\')" value =\'' + survey.meterSizes[i] + '"\'/>'+
-                                '<label for = "' + checkboxID + '">' + survey.meterSizes[i] + '"</label><br/>';
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterSizeValues" onclick = "pushParameterValues(\''+ identifier +'\')" value =\'' + survey.meterSizes[i] + '"\'/>'+
+                                '' + survey.meterSizes[i] + '"</label>';
+                                DIV.appendChild(divider);
                             }
-                            DIV.appendChild(Answer);
+                            
                             if(commodityMeterSize[currentIndex][tierIdentifier] != null)
                             {
                                     for(var i = 0; i < survey.meterSizes.length; ++i)
@@ -1542,11 +1549,14 @@ var survey = JSON.parse(surveyJSON)
                         case 'Month': 
                             for(var i = 0; i < survey.month.length; ++i)
                             {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
                                 var checkboxID = identifier + "Month" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.month[i] + '"/>'+
-                                '<label for = "' + checkboxID + '">' + survey.month[i] + '</label><br/>';
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.month[i] + '"/>'+
+                                '' + survey.month[i] + '</label>';
+                                DIV.appendChild(divider);
                             }
-                            DIV.appendChild(Answer);
+                            
                             if(month[currentIndex][tierIdentifier] != null)
                             {
                                     for(var i = 0; i < survey.month.length; ++i)
@@ -1565,11 +1575,14 @@ var survey = JSON.parse(surveyJSON)
                         case 'Temperature Zone':
                             for(var i = 0; i < survey.temperatureZone.length; ++i)
                             {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
                                 var checkboxID = identifier + "TemperatureZone" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'TemperatureZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.temperatureZone[i]+ '"/>'+
-                                '<label for = "' + checkboxID + '">' + survey.temperatureZone[i] + '</label><br/>';
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'TemperatureZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="' + survey.temperatureZone[i]+ '"/>'+
+                                '' + survey.temperatureZone[i] + '</label>';
+                                DIV.appendChild(divider);
                             }
-                            DIV.appendChild(Answer);
+                            
                             if(temperatureZone[currentIndex][tierIdentifier] != null)
                             {
                                     for(var i = 0; i < survey.temperatureZone.length; ++i)
@@ -1588,11 +1601,14 @@ var survey = JSON.parse(surveyJSON)
                         case 'Elevation Zone':
                             for(var i = 0; i < survey.elevationZone.length; ++i)
                             {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
                                 var checkboxID = identifier + "ElevationZone" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'ElevationZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Elevation ' + survey.elevationZone[i]+ '"/>'+
-                                '<label for = "' + checkboxID + '">' + survey.elevationZone[i] + '</label><br/>';
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'ElevationZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Elevation ' + survey.elevationZone[i]+ '"/>'+
+                                '' + survey.elevationZone[i] + '</label>';
+                                DIV.appendChild(divider);
                             }
-                            DIV.appendChild(Answer);
+                            
                             if(elevationZone[currentIndex][tierIdentifier] != null)
                             {
                                     for(var i = 0; i < survey.elevationZone.length; ++i)
@@ -1611,11 +1627,14 @@ var survey = JSON.parse(surveyJSON)
                         case 'Pressure Zone':
                             for(var i = 0; i < survey.pressureZone.length; ++i)
                             {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
                                 var checkboxID = identifier + "PressureZone" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'PressureZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Pressure ' + survey.pressureZone[i]+ '"/>'+
-                                '<label for = "' + checkboxID + '">' + survey.pressureZone[i] + '</label><br/>';
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'PressureZoneValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Pressure ' + survey.pressureZone[i]+ '"/>'+
+                                '' + survey.pressureZone[i] + '</label>';
+                                DIV.appendChild(divider);
                             }
-                            DIV.appendChild(Answer);
+                            
                             if(pressureZone[currentIndex][tierIdentifier] != null)
                             {
                                     for(var i = 0; i < survey.pressureZone.length; ++i)
@@ -1634,11 +1653,14 @@ var survey = JSON.parse(surveyJSON)
                         case 'Lot Size Group':
                             for(var i = 0; i < survey.lotSizeGroup.length; ++i)
                             {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
                                 var checkboxID = identifier + "LotSizeGroup" + i;
-                                Answer.innerHTML += '<input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'LotSizeGroupValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Lot Size ' + survey.lotSizeGroup[i]+ '"/>'+
-                                '<label for = "' + checkboxID + '">' + survey.lotSizeGroup[i] + '</label><br/>';
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'LotSizeGroupValues" onclick = "pushParameterValues(\''+ identifier +'\')" value ="Lot Size ' + survey.lotSizeGroup[i]+ '"/>'+
+                                '' + survey.lotSizeGroup[i] + '</label>';
+                                DIV.appendChild(divider);
                             }
-                            DIV.appendChild(Answer);
+                            
                             if(lotSizeGroup[currentIndex][tierIdentifier] != null)
                             {
                                     for(var i = 0; i < survey.lotSizeGroup.length; ++i)
@@ -1877,20 +1899,40 @@ var survey = JSON.parse(surveyJSON)
                         
                         if(ID != "" && ID != "Level:" && ID != "Rate:")
                         {
-                            Answer = document.createElement("p");
+                            Answer = document.createElement("h5");
                             Answer.appendChild(document.createTextNode(categoryArray[i]))
-                            DIV.appendChild(Answer);
+                            var bold = document.createElement("b");
+                            bold.appendChild(Answer);
+                            DIV.appendChild(bold);
                         }
                         
                         for(var j = 0; j < tierLevels[currentIndex]; ++j)
                         {
+                            var divider = document.createElement("div");
+                            divider.classList.add("form-group");
+                            DIV.appendChild(divider);
+                            
                             Answer = document.createElement("label");
                             Answer.setAttribute("for", identifier + number);
                             Answer.appendChild(document.createTextNode("Tier " + (j + 1) + ": "));
-                            DIV.appendChild(Answer);
+                            divider.appendChild(Answer);
+                            
+                            var itemGroup = document.createElement("div");
+                            itemGroup.classList.add("input-group");
+                            divider.appendChild(itemGroup);
+                            
+                            Answer = document.createElement("span");
+                            Answer.classList.add("input-group-addon");
+                            
+                            if(identifier == "tierStarts")
+                                Answer.innerHTML = '<i class = "glyphicon glyphicon-tint"></i>'
+                            else
+                                Answer.innerHTML = '<i class = "glyphicon glyphicon-usd"></i>'
+                            itemGroup.appendChild(Answer);
                             
                             Answer = document.createElement("input");
                             Answer.setAttribute("type", "text");
+                            Answer.classList.add("form-control");
                             Answer.id = identifier + number;
                             number++;
                             
@@ -1906,10 +1948,7 @@ var survey = JSON.parse(surveyJSON)
                                 Answer.readOnly = true;
                             }
                             
-                            DIV.appendChild(Answer);
-                            
-                            Answer = document.createElement("br");
-                            DIV.appendChild(Answer);
+                            itemGroup.appendChild(Answer);
                         }
                     }
                     
@@ -2052,20 +2091,29 @@ var survey = JSON.parse(surveyJSON)
                                 var tempCategory = meterTypes[currentIndex][i] + '|' + meterSizes[currentIndex][j]
                                 serviceChargeCategories[currentIndex].push(tempCategory);
                                 
+                                var divider = document.createElement("div");
+                                divider.classList.add("form-group");
+                                serviceChargesDiv.appendChild(divider);
                                 
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
-                                Answer.setAttribute("style", "float: left; width: 150px;");
                                 Answer.innerHTML = meterTypes[currentIndex][i] + ' ' + meterSizes[currentIndex][j] +'"';
-                                serviceChargesDiv.appendChild(Answer);
+                                divider.appendChild(Answer);
+                                
+                                var itemGroup = document.createElement("div");
+                                itemGroup.classList.add("input-group");
+                                divider.appendChild(itemGroup);
+                            
+                                Answer = document.createElement("span");
+                                Answer.classList.add("input-group-addon");
+                                Answer.innerHTML = '<i class = "glyphicon glyphicon-usd"></i>'
+                                itemGroup.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
                                 Answer.setAttribute("type", "text");
+                                Answer.classList.add("form-control");
                                 Answer.id = "charge" + (j + i * meterSizes[currentIndex].length);
-                                serviceChargesDiv.appendChild(Answer);
-                                
-                                var BREAK = document.createElement("br");
-                                serviceChargesDiv.appendChild(BREAK);
+                                itemGroup.appendChild(Answer);
                             }
                         }
                     }
@@ -2078,19 +2126,29 @@ var survey = JSON.parse(surveyJSON)
                                 serviceChargeCategories[currentIndex].push(tempCategory);
                                 
                                 
+                                var divider = document.createElement("div");
+                                divider.classList.add("form-group");
+                                serviceChargesDiv.appendChild(divider);
+                                
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
-                                Answer.setAttribute("style", "float: left; width: 150px;");
                                 Answer.innerHTML = meterSizes[currentIndex][i] + '"';
-                                serviceChargesDiv.appendChild(Answer);
+                                divider.appendChild(Answer);
+                                
+                                var itemGroup = document.createElement("div");
+                                itemGroup.classList.add("input-group");
+                                divider.appendChild(itemGroup);
+                            
+                                Answer = document.createElement("span");
+                                Answer.classList.add("input-group-addon");
+                                Answer.innerHTML = '<i class = "glyphicon glyphicon-usd"></i>'
+                                itemGroup.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
                                 Answer.setAttribute("type", "text");
                                 Answer.id = "charge" + i;
-                                serviceChargesDiv.appendChild(Answer);
-                                
-                                var BREAK = document.createElement("br");
-                                serviceChargesDiv.appendChild(BREAK);
+                                Answer.classList.add("form-control");
+                                itemGroup.appendChild(Answer);
                             }
                     }
                     else if (meterTypes[currentIndex].length > 0)
@@ -2102,20 +2160,29 @@ var survey = JSON.parse(surveyJSON)
                                 serviceChargeCategories[currentIndex].push(tempCategory);
                                 
                                 
+                                var divider = document.createElement("div");
+                                divider.classList.add("form-group");
+                                serviceChargesDiv.appendChild(divider);
+                                
                                 Answer = document.createElement("label");
                                 Answer.setAttribute("for", tempCategory);
-                                Answer.setAttribute("style", "float: left; width: 150px; margin-bottom: 10px");
                                 Answer.innerHTML = meterTypes[currentIndex][i];
-                                serviceChargesDiv.appendChild(Answer);
+                                divider.appendChild(Answer);
+                                
+                                var itemGroup = document.createElement("div");
+                                itemGroup.classList.add("input-group");
+                                divider.appendChild(itemGroup);
+                            
+                                Answer = document.createElement("span");
+                                Answer.classList.add("input-group-addon");
+                                Answer.innerHTML = '<i class = "glyphicon glyphicon-usd"></i>'
+                                itemGroup.appendChild(Answer);
                                 
                                 Answer = document.createElement("input");
                                 Answer.setAttribute("type", "text");
-                                Answer.setAttribute("style", "margin-bottom: 10px");
+                                Answer.classList.add("form-control");
                                 Answer.id = "charge" + i;
-                                serviceChargesDiv.appendChild(Answer);
-                                
-                                var BREAK = document.createElement("br");
-                                serviceChargesDiv.appendChild(BREAK);
+                                itemGroup.appendChild(Answer);
                             }
                     }
                     
@@ -3086,7 +3153,7 @@ var survey = JSON.parse(surveyJSON)
                 
                 function QuestionTxt(question, number, Parent)
                 {
-                    Question = document.createElement("p");
+                    Question = document.createElement("h5");
                     Question.appendChild(document.createTextNode(question));
                     Question.setAttribute("id", "question" + number);
                     Parent.appendChild(Question);
