@@ -428,8 +428,7 @@ var surveyJSON = '{"title": "CaDC OWRS Creation Application",' +
 '"Interruptible", "Docks Shipping",'+
 '"Building Contractor", "Residential Construction",'+
 '"Other"],'+
-'"serviceDependsOn": ["Meter Size", "Meter Type"],'+
-'"commodityDependsOn": ["Season", "Temperature Zone", "Elevation Zone", "Pressure Zone", "Lot Size Group", "Meter Size", "Month"],'+
+'"commodityDependsOn": ["Meter Size", "Meter Type", "Season", "Temperature Zone", "Elevation Zone", "Pressure Zone", "Lot Size Group", "Month", "Area"],'+
 '"meterSizes": ["5/8","3/4", "1", "1 1/2", "2", "3", "4", "6", "8", "10", "12", "14", "16", "18"],'+
 '"meterTypes": ["Disc", "Compound", "Turbo", "Magnetic Meter", "Propeller", "Omni F2"],'+
 '"season": ["Summer", "Winter"],'+
@@ -437,7 +436,8 @@ var surveyJSON = '{"title": "CaDC OWRS Creation Application",' +
 '"elevationZone":["1", "2", "3", "4", "5"],'+
 '"pressureZone":["1", "2", "3", "4", "5"],'+
 '"lotSizeGroup":["1", "2", "3", "4", "5"],'+
-'"month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]}'
+'"month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],'+
+'"area": ["Inside City", "Outside City"]}'
 var survey = JSON.parse(surveyJSON)
 
                 var form = document.getElementById("survey");
@@ -448,6 +448,7 @@ var survey = JSON.parse(surveyJSON)
                 var Question;
                 var Answer;
                 var text;
+                var OWRSformat;
                 
                 var UtilityName = "";
                 var BillFrequency = "";
@@ -455,11 +456,10 @@ var survey = JSON.parse(surveyJSON)
                 var SelectedRateStructures = [];
                 
                 var serviceParameters = [];
-                var meterSizes = [];
-                var meterTypes = [];
                 var serviceChargeCategories = [];
                 var serviceCharges = [];
                 var isServiceCharge = [];
+                var isServiceDepends = [];
                 var ParametersToUse = [];
                 
                 var uniformParameters = [];
@@ -494,6 +494,8 @@ var survey = JSON.parse(surveyJSON)
                 var pressureZone = [];
                 var temperatureZone = [];
                 var lotSizeGroup = [];
+                var meterType = [];
+                var area = [];
                 
                 
                 
@@ -641,20 +643,17 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(isServiceCharge[currentIndex])
                     {
-                        Answer.innerHTML = '<label for = "YesServiceCharge" class = "radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge" class = "radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "serviceChargeDepends()" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "serviceChargeDepends()" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
-                        getServiceChargeInfo();
+                        serviceChargeDepends();
                     }
                     else
                     {  
-                        Answer.innerHTML = '<label for = "YesServiceCharge" class ="radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge" class ="radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "serviceChargeDepends()" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "serviceChargeDepends()" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
-                    
-                    var BREAK = document.createElement("br");
-                    serviceList.appendChild(BREAK);
                     
                     var commodityList = document.createElement("div");
                     commodityList.id = "commodityList";
@@ -698,51 +697,31 @@ var survey = JSON.parse(surveyJSON)
                 }
                 
                 
-                
-                
-                
-                function getServiceChargeInfo()
+                function serviceChargeDepends()
                 {
                     var RadioButton = document.getElementById("YesServiceCharge");
-                    
                     isServiceCharge[currentIndex] = RadioButton.checked;
                     
                     if(RadioButton.checked == true)
                     {
-                        QuestionTxt(survey.questions[5], 6, serviceList);
-                        
+                        QuestionTxt("Does the service charge depend on anything?", 25, serviceList);
                         Answer = document.createElement("span");
-                        Answer.innerHTML = "";
                         
-                        for(var i = 0; i < survey.serviceDependsOn.length; ++i)
-                        {
-                            var checkboxID = "dependsOn" + i;
-                            Answer.innerHTML += '<label for = "' + checkboxID + '" class = "checkbox-inline"><input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "getServiceChargeDepends()" value ="' + survey.serviceDependsOn[i]+ '"/>'+
-                            '' + survey.serviceDependsOn[i] + '</label>';
-                        }
-                        
+                        Answer.innerHTML = '<label for = "YesServiceDepends" class = "radio-inline"><input type = "radio" id = "YesServiceDepends" name = "isServiceDepends" onclick = "getServiceChargeInfo()" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceDepends" class ="radio-inline"><input type = "radio" id = "NoServiceDepends" name = "isServiceDepends" onclick = "getServiceChargeInfo()" value = "No" checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                         
-                        var serviceDependsOnDiv = document.createElement("div");
-                        serviceDependsOnDiv.id = "serviceDependsOnDiv";
-                        serviceList.appendChild(serviceDependsOnDiv);
+                        var service = document.createElement("div");
+                        service.id = "serviceStuffDiv";
+                        serviceList.appendChild(service);
                         
-                        if(serviceParameters[currentIndex] != null)
+                        if(isServiceDepends[currentIndex])
                         {
-                            for(var i = 0; i < survey.serviceDependsOn.length; ++i)
-                            {
-                                var isChecked = document.getElementById("dependsOn" + i);
-                                for(var j = 0; j < serviceParameters[currentIndex].length; ++j)
-                                {
-                                    if(serviceParameters[currentIndex][j] == isChecked.value)
-                                    {
-                                        isChecked.checked = true;
-                                    }
-                                }
-                            }
-                            
-                            getServiceChargeDepends();
+                            var temp = document.getElementById("YesServiceDepends");
+                            temp.checked = true;
                         }
+                        
+                        getServiceChargeInfo();
                     }
                     else
                     {
@@ -753,10 +732,136 @@ var survey = JSON.parse(surveyJSON)
                         
                         Answer = document.createElement("span");
                     
-                        Answer.innerHTML = '<label for = "YesServiceCharge" class ="radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "getServiceChargeInfo()" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge" class ="radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "serviceChargeDepends()" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge" class ="radio-inline"><input type = "radio" id = "NoServiceCharge" name = "isServiceCharge" onclick = "serviceChargeDepends()" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
+                }
+                
+                
+                function getServiceChargeInfo()
+                {
+                    var RadioButton = document.getElementById("YesServiceDepends");
+                    isServiceDepends[currentIndex] = RadioButton.checked;
+                    
+                    var service = document.getElementById("serviceStuffDiv");
+                    
+                    if(RadioButton.checked == true)
+                    {
+                        primeParamArrays();
+                        
+                        if(service.childNodes.length > 0)
+                            clear(service);
+                        
+                        var serviceParametersDiv = document.createElement("div");
+                        serviceParametersDiv.id = "serviceParametersDiv";
+                        service.appendChild(serviceParametersDiv);
+                    
+                        var serviceParametersValueDiv = document.createElement("div");
+                        serviceParametersValueDiv.id = "serviceParametersValueDiv";
+                        service.appendChild(serviceParametersValueDiv);
+                    
+                        var servicePriceDiv = document.createElement("div");
+                        servicePriceDiv.id = "servicePriceDiv";
+                        service.appendChild(servicePriceDiv);
+                        
+                        getDepends(serviceParametersDiv, serviceParameters[currentIndex], "service");
+                    }
+                    else
+                    {
+                        serviceParameters[currentIndex] = [];
+                        
+                        if(service.childNodes.length > 0)
+                            clear(service);
+                        
+                        QuestionTxt("Enter the Service Charge (In the form of 15.99):", 512, service);
+                        
+                        Answer = document.createElement("input");
+                        Answer.setAttribute("type", "text");
+                        Answer.id = "ServiceCharge";
+                        Answer.classList.add("form-control");
+                        service.appendChild(Answer);
+                        
+                        if(serviceCharges[currentIndex] != null)
+                        {
+                            if(serviceCharges[currentIndex].length == 1)
+                            {
+                                Answer.value = serviceCharges[currentIndex][0];
+                            }
+                            else
+                                serviceCharges[currentIndex] = [];
+                        }
+                    }
+                }
+                
+                function getServiceRate()
+                {
+                    
+                    if(servicePriceDiv.childNodes.length > 0)
+                    {
+                        clear(servicePriceDiv);
+                    }
+                    
+                    createUsedParameters(serviceParameters[currentIndex], 3);
+                        
+                    var Continue = true;
+                            
+                    for(var i = 0; i < ParametersToUse.length; ++i)
+                    {
+                        if(ParametersToUse[i] == null)
+                        {
+                            Continue = false;
+                            i = ParametersToUse.length;
+                        }
+                    }
+                            
+                    if(Continue && ParametersToUse.length > 0)
+                    {
+                        QuestionTxt("Enter The Service Charge(In the form of 15.99):", 43, servicePriceDiv)
+                        serviceChargeCategories[currentIndex] = [];
+                        getCategories(serviceChargeCategories[currentIndex], 0, ParametersToUse.length, "", "Rate:");
+                            
+                        
+                        for(var i = 0; i < serviceChargeCategories[currentIndex].length; ++i)
+                        {
+                            divider = document.createElement("div");
+                            divider.classList.add("form-group");
+                            servicePriceDiv.appendChild(divider);
+                                    
+                            Answer = document.createElement("label");
+                            Answer.setAttribute("for", "serviceCharge" + i);
+                            Answer.appendChild(document.createTextNode(serviceChargeCategories[currentIndex][i].split("<QUOTE>").join("")));
+                            divider.appendChild(Answer);
+                                
+                            inputGroup = document.createElement("div");
+                            inputGroup.classList.add("input-group");
+                            divider.appendChild(inputGroup);
+                                    
+                            Answer = document.createElement("span");
+                            Answer.classList.add("input-group-addon");
+                            Answer.innerHTML = '<i class="glyphicon glyphicon-usd"></i>';
+                            inputGroup.appendChild(Answer);
+                                
+                            Answer = document.createElement("input");
+                            Answer.setAttribute("type", "text");
+                            Answer.id = "serviceCharge" + i;
+                            Answer.classList.add("form-control");
+                            inputGroup.appendChild(Answer);
+                        }
+                            
+                        if(serviceCharges[currentIndex] != null && serviceChargeCategories[currentIndex] != null)
+                        {
+                            if(serviceCharges[currentIndex].length == serviceChargeCategories[currentIndex].length)
+                            {
+                                for(var i = 0; i < serviceCharges[currentIndex].length; ++i)
+                                {
+                                    var input = document.getElementById("serviceCharge" + i);
+                                    input.value = serviceCharges[currentIndex][i];
+                                }
+                            }
+                         }
+                    }
+                    
                 }
                 
                 function getCommodityChargeInfo()
@@ -817,119 +922,6 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
-                
-                
-                function getServiceChargeDepends()
-                {
-                    serviceParameters[currentIndex] = [];
-                    
-                    for(var i = 0; i < survey.serviceDependsOn.length; ++i)
-                    {
-                        var tempID = "dependsOn" + i + "";
-                        
-                        var checkCheckBox = document.getElementById(tempID);
-                        
-                        if(checkCheckBox.checked == true)
-                        {
-                            serviceParameters[currentIndex].push(survey.serviceDependsOn[i]);
-                        }
-                        else
-                        {
-                            if(survey.serviceDependsOn[i] == "Meter Type")
-                            {
-                                meterTypes[currentIndex] = null;
-                            }
-                            else if(survey.serviceDependsOn[i] == "Meter Size")
-                            {
-                                meterSizes[currentIndex] = null;
-                            }
-                        }
-                    }
-                    
-                    var serviceDependsOnDiv = document.getElementById("serviceDependsOnDiv");
-                    
-                    if(serviceDependsOnDiv.childNodes.length > 0)
-                    {
-                        clear(serviceDependsOnDiv);
-                    }
-                    
-                    for(var i = 0; i < serviceParameters[currentIndex].length; ++i)
-                    {
-                        text = "Select The " + serviceParameters[currentIndex][i] + "s to include:";
-                        
-                        if(serviceParameters[currentIndex][i] == "Meter Size")
-                        {
-                            QuestionTxt(text, 6, serviceDependsOnDiv);
-                            
-                            Answer = document.createElement("div");
-                            Answer.innerHTML = "";
-                            
-                            for(var j = 0; j  < survey.meterSizes.length; ++j)
-                            {
-                                var checkboxID = "meterSize" + j;
-                                Answer.innerHTML += '<div class = "checkbox"><label for = checkboxID><input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "createServiceChargeField()" value ="' + survey.meterSizes[j] + '"/>'+
-                                '' + survey.meterSizes[j] + '"</label></div>';
-                            }
-                            serviceDependsOnDiv.appendChild(Answer);
-                        }
-                        else
-                        {
-                            QuestionTxt(text, 7, serviceDependsOnDiv);
-                            
-                            Answer = document.createElement("div");
-                            Answer.innerHTML = "";
-                             for(var j = 0; j  < survey.meterTypes.length; ++j)
-                            {
-                                var checkboxID = "meterType" + j;
-                                Answer.innerHTML += '<div class = "checkbox"><label for = checkboxID><input type = "checkbox" id = "' + checkboxID + '" name = "ServiceDependsOn" onclick = "createServiceChargeField()" value ="' + survey.meterTypes[j] + '"/>'+
-                                '' + survey.meterTypes[j] + '</label></div>';
-                            }
-                            serviceDependsOnDiv.appendChild(Answer);
-                        }
-                    }
-                    
-                    Answer = document.createElement("div");
-                    Answer.id = "serviceChargesDiv";
-                    serviceDependsOnDiv.appendChild(Answer);
-                    
-                    if(meterSizes[currentIndex] != null)
-                    {
-                        for(var i = 0; i < survey.meterSizes.length; ++i)
-                        {
-                            var isChecked = document.getElementById("meterSize" + i);
-                            
-                            for(var j = 0; j < meterSizes[currentIndex].length; ++j)
-                            {
-                                if(meterSizes[currentIndex][j] ==isChecked.value)
-                                {
-                                    isChecked.checked = true;
-                                }
-                            }
-                        }
-                    }
-                    
-                    if(meterTypes[currentIndex] != null)
-                    {
-                        for(var i = 0; i < survey.meterTypes.length; ++i)
-                        {
-                            var isChecked = document.getElementById("meterType" + i);
-                            
-                            for(var j = 0; j < meterTypes[currentIndex].length; ++j)
-                            {
-                                if(meterTypes[currentIndex][j] ==isChecked.value)
-                                {
-                                    isChecked.checked = true;
-                                }
-                            }
-                        }
-                    }
-                    
-                    if(meterTypes[currentIndex] != null || meterSizes[currentIndex] != null)
-                    {
-                        createServiceChargeField();
-                    }
-                }
-                
                 function primeParamArrays()
                 {
                     if(season[currentIndex] == null)
@@ -946,6 +938,10 @@ var survey = JSON.parse(surveyJSON)
                         month[currentIndex] = [];
                     if(commodityMeterSize[currentIndex] == null)
                         commodityMeterSize[currentIndex] = [];
+                    if(meterType[currentIndex] == null)
+                        meterType[currentIndex] = [];
+                    if(area[currentIndex] == null)
+                        area[currentIndex] = [];
                 }
                 
                 function UniformDepends()
@@ -1055,8 +1051,7 @@ var survey = JSON.parse(surveyJSON)
                                     
                                     Answer = document.createElement("label");
                                     Answer.setAttribute("for", "commodityCharge" + i);
-                                    Answer.style = "paddingTop = '15px'"
-                                    Answer.appendChild(document.createTextNode(commodityChargeCategories[currentIndex][i]));
+                                    Answer.appendChild(document.createTextNode(commodityChargeCategories[currentIndex][i].split("<QUOTE>").join("")));
                                     divider.appendChild(Answer);
                                 
                                     inputGroup = document.createElement("div");
@@ -1245,7 +1240,14 @@ var survey = JSON.parse(surveyJSON)
                         
                         tierStartsCategories[currentIndex] = [""];
                         
-                        createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels:")
+                        if(commodityStructure == "Tiered")
+                        {
+                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels (As an Integer):");
+                        }
+                        else
+                        {
+                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels (As a percent like 100%):");
+                        }
                     }
                 }
                 
@@ -1295,7 +1297,7 @@ var survey = JSON.parse(surveyJSON)
                         
                         commodityChargeCategories[currentIndex] = [""];
                         
-                        createTierFields(Answer, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices:")
+                        createTierFields(Answer, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices (In the Form of 15.99):")
                     }
                 }
                 
@@ -1418,7 +1420,7 @@ var survey = JSON.parse(surveyJSON)
                 
                 function storeCommodityDepends(tierIdentifier)
                 {
-                    if(commodityStructure[currentIndex] == 'Uniform')
+                    if(tierIdentifier == 'uniform')
                     {
                         uniformParameters[currentIndex] = [];
                         pushParameters(uniformParameters[currentIndex], 'uniform');
@@ -1436,7 +1438,7 @@ var survey = JSON.parse(surveyJSON)
                         commodityChargeCategories[currentIndex] = null;
                         getUniformRate();
                     }
-                    else if(commodityStructure[currentIndex] == 'Tiered' || commodityStructure[currentIndex] == 'Budget')
+                    else if(tierIdentifier == 'tierStarts' || tierIdentifier == 'tierPrices')
                     {
                         if(tierIdentifier == "tierStarts")
                         {
@@ -1478,6 +1480,23 @@ var survey = JSON.parse(surveyJSON)
                             }
                             pushParameterValues('tierPrices');
                         }
+                    }
+                    else if(tierIdentifier == "service")
+                    {
+                        serviceParameters[currentIndex] = [];
+                        pushParameters(serviceParameters[currentIndex], tierIdentifier);
+                        if(serviceParametersValueDiv.childNodes.length >  0)
+                        {
+                            clear(serviceParametersValueDiv);
+                        }
+                        
+                        for(var i = 0; i < serviceParameters[currentIndex].length; ++i)
+                        {
+                            getParameterValues(serviceParameters[currentIndex][i], serviceParametersValueDiv, 'service', 3);
+                        }
+                        clearParametersNotUsed(serviceParameters[currentIndex], 3);
+                        serviceChargeCategories[currentIndex] = null;
+                        getServiceRate();
                     }
                 }
                 
@@ -1545,6 +1564,58 @@ var survey = JSON.parse(surveyJSON)
                                         for(var j = 0; j < commodityMeterSize[currentIndex][tierIdentifier].length; ++j)
                                         {
                                             if(commodityMeterSize[currentIndex][tierIdentifier][j] == checkCheckBox.value)
+                                            {
+                                                checkCheckBox.checked = true;
+                                            }
+                                        }
+                                    }
+                            }
+                            break;
+                        case 'Meter Type': 
+                            for(var i = 0; i < survey.meterTypes.length; ++i)
+                            {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
+                                var checkboxID = identifier + "MeterType" + i;
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterTypeValues" onclick = "pushParameterValues(\''+ identifier +'\')" value =\'' + survey.meterTypes[i] + '\'/>'+
+                                '' + survey.meterTypes[i] + '</label>';
+                                DIV.appendChild(divider);
+                            }
+                            
+                            if(meterType[currentIndex][tierIdentifier] != null)
+                            {
+                                    for(var i = 0; i < survey.meterTypes.length; ++i)
+                                    {
+                                        var checkCheckBox = document.getElementById(identifier + "MeterType" + i);
+                                        for(var j = 0; j < meterType[currentIndex][tierIdentifier].length; ++j)
+                                        {
+                                            if(meterType[currentIndex][tierIdentifier][j] == checkCheckBox.value)
+                                            {
+                                                checkCheckBox.checked = true;
+                                            }
+                                        }
+                                    }
+                            }
+                            break;
+                        case 'Area': 
+                            for(var i = 0; i < survey.area.length; ++i)
+                            {   
+                                var divider = document.createElement("div");
+                                divider.classList.add("checkbox");
+                                var checkboxID = identifier + "Area" + i;
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'AreaValues" onclick = "pushParameterValues(\''+ identifier +'\')" value =\'' + survey.area[i] + '\'/>'+
+                                '' + survey.area[i] + '</label>';
+                                DIV.appendChild(divider);
+                            }
+                            
+                            if(area[currentIndex][tierIdentifier] != null)
+                            {
+                                    for(var i = 0; i < survey.area.length; ++i)
+                                    {
+                                        var checkCheckBox = document.getElementById(identifier + "Area" + i);
+                                        for(var j = 0; j < area[currentIndex][tierIdentifier].length; ++j)
+                                        {
+                                            if(area[currentIndex][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
@@ -1700,6 +1771,8 @@ var survey = JSON.parse(surveyJSON)
                                 case 'Lot Size Group': lotSizeGroup[currentIndex][tierIdentifier] = []; break;
                                 case 'Pressure Zone': pressureZone[currentIndex][tierIdentifier] = []; break;
                                 case 'Elevation Zone': elevationZone[currentIndex][tierIdentifier] = []; break;
+                                case 'Meter Type': meterType[currentIndex][tierIdentifier] = []; break;
+                                case 'Area': area[currentIndex][tierIdentifier] = []; break;
                             }
                         }
                     }
@@ -1707,12 +1780,12 @@ var survey = JSON.parse(surveyJSON)
                 
                 function pushParameterValues(Identifier)
                 {
-                    if(commodityStructure[currentIndex] == 'Uniform')
+                    if(Identifier == 'Uniform')
                     {
                         theSwitchStatement(uniformParameters[currentIndex], Identifier, 0);
                         getUniformRate();
                     }
-                    else if(commodityStructure[currentIndex] == 'Tiered' || commodityStructure[currentIndex] == 'Budget')
+                    else if(Identifier == 'tierStarts' || Identifier == 'tierPrices')
                     {
                         if(Identifier == "tierStarts")
                         {
@@ -1736,12 +1809,7 @@ var survey = JSON.parse(surveyJSON)
                             
                             var tierStartsValuesDiv = document.getElementById("tierStartsValuesDiv");
                             
-                            if(commodityStructure[currentIndex] == 'Tiered')
-                                var tempText = "(as Integer)";
-                            else
-                                var tempText = " (as Pecentage like 5%)"
-                            
-                            createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels " + tempText);
+                            createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels ");
                         }
                         else
                         {
@@ -1765,8 +1833,13 @@ var survey = JSON.parse(surveyJSON)
                             
                             var tierPricesValuesDiv = document.getElementById("tierPricesValuesDiv");
                             
-                            createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices (In The Form of 15.99)");
+                            createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices");
                         }
+                    }
+                    else if (Identifier == "service")
+                    {
+                        theSwitchStatement(serviceParameters[currentIndex], Identifier, 3);
+                        getServiceRate();
                     }
                 }
                 
@@ -1793,7 +1866,27 @@ var survey = JSON.parse(surveyJSON)
                                         var checkCheckBox = document.getElementById(Identifier + "MeterSize" + i);
                                         if(checkCheckBox.checked)
                                         { 
-                                            commodityMeterSize[currentIndex][tierIdentifier].push(checkCheckBox.value + "?"); 
+                                            commodityMeterSize[currentIndex][tierIdentifier].push(checkCheckBox.value + "<QUOTE>"); 
+                                        }
+                                    } break;
+                                case 'Meter Type': 
+                                    meterType[currentIndex][tierIdentifier] = [];
+                                    for(var i = 0; i < survey.meterTypes.length; ++i)
+                                    {
+                                        var checkCheckBox = document.getElementById(Identifier + "MeterType" + i);
+                                        if(checkCheckBox.checked)
+                                        { 
+                                            meterType[currentIndex][tierIdentifier].push(checkCheckBox.value); 
+                                        }
+                                    } break;
+                                case 'Area': 
+                                    area[currentIndex][tierIdentifier] = [];
+                                    for(var i = 0; i < survey.area.length; ++i)
+                                    {
+                                        var checkCheckBox = document.getElementById(Identifier + "Area" + i);
+                                        if(checkCheckBox.checked)
+                                        { 
+                                            area[currentIndex][tierIdentifier].push(checkCheckBox.value); 
                                         }
                                     } break;
                                 case 'Month': 
@@ -1876,6 +1969,8 @@ var survey = JSON.parse(surveyJSON)
                                 case 'Elevation Zone': ParametersToUse[i] = elevationZone[currentIndex][identifier]; break;
                                 case 'Pressure Zone': ParametersToUse[i] = pressureZone[currentIndex][identifier]; break;
                                 case 'Lot Size Group': ParametersToUse[i] = lotSizeGroup[currentIndex][identifier]; break;
+                                case 'Meter Type': ParametersToUse[i] = meterType[currentIndex][identifier]; break;
+                                case 'Area': ParametersToUse[i] = area[currentIndex][identifier]; break;
                             }
                         }
                     }
@@ -1911,7 +2006,7 @@ var survey = JSON.parse(surveyJSON)
                         if(ID != "" && ID != "Level :" && ID != "Rate:")
                         {
                             Answer = document.createElement("h5");
-                            Answer.appendChild(document.createTextNode(categoryArray[i]));
+                            Answer.appendChild(document.createTextNode(categoryArray[i].split("<QUOTE>").join("")));
                             DIV.appendChild(Answer);
                         }
                         
@@ -1954,7 +2049,6 @@ var survey = JSON.parse(surveyJSON)
                             if(j == 1 && identifier == "tierStarts" &&  commodityStructure[currentIndex] == 'Budget')
                             {
                                 Answer.value = 'indoor';
-                                Answer.readOnly = true;
                             }
                             
                             itemGroup.appendChild(Answer);
@@ -2037,180 +2131,24 @@ var survey = JSON.parse(surveyJSON)
                                     Continue = false;
                                     alert("No parameters selected for Lot Size Group");
                                 } break;
+                            case "Lot Size Group":
+                                if(meterType[currentIndex][tierIdentifier] == null || meterType[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                    alert("No parameters selected for Meter Type");
+                                } break;
+                            case "Area":
+                                if(area[currentIndex][tierIdentifier] == null || area[currentIndex][tierIdentifier].length == 0)
+                                {
+                                    Continue = false;
+                                    alert("No parameters selected for Area");
+                                } break;
                         }
                     }
                     
                     
                     return Continue;
                 }
-                
-                function createServiceChargeField()
-                {
-                    var serviceChargesDiv = document.getElementById("serviceChargesDiv")
-                    
-                    if(serviceChargesDiv.childNodes.length > 0)
-                    {
-                        clear(serviceChargesDiv);
-                    }
-                    
-                    meterSizes[currentIndex] = [];
-                    
-                    for(var i = 0; i < survey.meterSizes.length; ++i)
-                    {
-                        var tempID = "meterSize" + i;
-                        
-                        var checkCheckBox = document.getElementById(tempID);
-                        
-                        if(checkCheckBox == null)
-                        {
-                            i = survey.meterSizes.length;
-                        }
-                        else if(checkCheckBox.checked == true)
-                        {
-                            meterSizes[currentIndex].push(survey.meterSizes[i]);
-                        }
-                    }
-                    
-                    meterTypes[currentIndex] = []
-                    
-                    for(var i = 0; i < survey.meterTypes.length; ++i)
-                    {
-                        var tempID = "meterType" + i;
-                        
-                        var checkCheckBox = document.getElementById(tempID);
-                        
-                        if(checkCheckBox == null)
-                        {
-                            i = survey.meterTypes.length;
-                        }
-                        else if(checkCheckBox.checked == true)
-                        {
-                            meterTypes[currentIndex].push(survey.meterTypes[i]);
-                        }
-                    }
-                    
-                    serviceChargeCategories[currentIndex] = [];
-                    if(meterTypes[currentIndex].length > 0 && meterSizes[currentIndex].length > 0)
-                    {
-                        QuestionTxt("Enter the Service Charges in the Field(s) Below (In The Form of 15.99):", 8, serviceChargesDiv);
-                        for(var i = 0; i < meterTypes[currentIndex].length; ++i)
-                        {
-                            for(var j = 0; j < meterSizes[currentIndex].length; ++j)
-                            {
-                                var tempCategory = meterTypes[currentIndex][i] + '|' + meterSizes[currentIndex][j] + "<QUOTE>";
-                                serviceChargeCategories[currentIndex].push(tempCategory);
-                                
-                                var divider = document.createElement("div");
-                                divider.classList.add("form-group");
-                                serviceChargesDiv.appendChild(divider);
-                                
-                                Answer = document.createElement("label");
-                                Answer.setAttribute("for", tempCategory);
-                                Answer.innerHTML = meterTypes[currentIndex][i] + ' ' + meterSizes[currentIndex][j] +'"';
-                                divider.appendChild(Answer);
-                                
-                                var itemGroup = document.createElement("div");
-                                itemGroup.classList.add("input-group");
-                                divider.appendChild(itemGroup);
-                            
-                                Answer = document.createElement("span");
-                                Answer.classList.add("input-group-addon");
-                                Answer.innerHTML = '<i class = "glyphicon glyphicon-usd"></i>'
-                                itemGroup.appendChild(Answer);
-                                
-                                Answer = document.createElement("input");
-                                Answer.setAttribute("type", "text");
-                                Answer.classList.add("form-control");
-                                Answer.id = "charge" + (j + i * meterSizes[currentIndex].length);
-                                itemGroup.appendChild(Answer);
-                            }
-                        }
-                    }
-                    else if (meterSizes[currentIndex].length > 0)
-                    {
-                        QuestionTxt("Enter the Service Charges in the Field(s) Below (In the Form of 15.99):", 8, serviceChargesDiv);
-                        for(var i = 0; i < meterSizes[currentIndex].length; ++i)
-                            {
-                                var tempCategory = meterSizes[currentIndex][i] + "<QUOTE>";
-                                serviceChargeCategories[currentIndex].push(tempCategory);
-                                
-                                
-                                var divider = document.createElement("div");
-                                divider.classList.add("form-group");
-                                serviceChargesDiv.appendChild(divider);
-                                
-                                Answer = document.createElement("label");
-                                Answer.setAttribute("for", tempCategory);
-                                Answer.innerHTML = meterSizes[currentIndex][i] + '"';
-                                divider.appendChild(Answer);
-                                
-                                var itemGroup = document.createElement("div");
-                                itemGroup.classList.add("input-group");
-                                divider.appendChild(itemGroup);
-                            
-                                Answer = document.createElement("span");
-                                Answer.classList.add("input-group-addon");
-                                Answer.innerHTML = '<i class = "glyphicon glyphicon-usd"></i>'
-                                itemGroup.appendChild(Answer);
-                                
-                                Answer = document.createElement("input");
-                                Answer.setAttribute("type", "text");
-                                Answer.id = "charge" + i;
-                                Answer.classList.add("form-control");
-                                itemGroup.appendChild(Answer);
-                            }
-                    }
-                    else if (meterTypes[currentIndex].length > 0)
-                    {
-                        QuestionTxt("Enter the Service Charge(s) in the Field(s) Below:", 8, serviceChargesDiv);
-                        for(var i = 0; i < meterTypes[currentIndex].length; ++i)
-                            {
-                                var tempCategory = meterTypes[currentIndex][i]
-                                serviceChargeCategories[currentIndex].push(tempCategory);
-                                
-                                
-                                var divider = document.createElement("div");
-                                divider.classList.add("form-group");
-                                serviceChargesDiv.appendChild(divider);
-                                
-                                Answer = document.createElement("label");
-                                Answer.setAttribute("for", tempCategory);
-                                Answer.innerHTML = meterTypes[currentIndex][i];
-                                divider.appendChild(Answer);
-                                
-                                var itemGroup = document.createElement("div");
-                                itemGroup.classList.add("input-group");
-                                divider.appendChild(itemGroup);
-                            
-                                Answer = document.createElement("span");
-                                Answer.classList.add("input-group-addon");
-                                Answer.innerHTML = '<i class = "glyphicon glyphicon-usd"></i>'
-                                itemGroup.appendChild(Answer);
-                                
-                                Answer = document.createElement("input");
-                                Answer.setAttribute("type", "text");
-                                Answer.classList.add("form-control");
-                                Answer.id = "charge" + i;
-                                itemGroup.appendChild(Answer);
-                            }
-                    }
-                    
-                    if(serviceCharges[currentIndex] != null && serviceCharges[currentIndex].length == serviceChargeCategories[currentIndex].length)
-                    {
-                        for(var i = 0; i < serviceChargeCategories[currentIndex].length; ++i)
-                        {
-                            var tempCharge = document.getElementById("charge" + i);
-                            
-                            tempCharge.value = serviceCharges[currentIndex][i];
-                        }
-                    }
-                    else
-                    {
-                        serviceCharges[currentIndex] = [];
-                    }
-                }
-                
-                
                 
                 
                 function PreviousGetAnswers()
@@ -2232,62 +2170,79 @@ var survey = JSON.parse(surveyJSON)
                     var Continue = true;
                     if(isServiceCharge[currentIndex])
                     {
-                        if(serviceParameters[currentIndex] == null)
+                        if(isServiceDepends[currentIndex])
                         {
-                            alert("You must select what the Service Charge Depends On");
-                            Continue = false;
+                            if(serviceParameters[currentIndex] != null)
+                            {
+                                Continue = errorCheckCommodityParameters(serviceParameters[currentIndex], 3, Continue);
+                                        
+                                if(Continue)
+                                {
+                                    if(serviceChargeCategories[currentIndex] != null)
+                                    {
+                                        serviceCharges[currentIndex] = []
+                                        for(var i = 0; i < serviceChargeCategories[currentIndex].length; ++i)
+                                        {
+                                            var tempCharge = document.getElementById("serviceCharge" + i);
+                            
+                                            if(tempCharge.value == "")
+                                            {
+                                                alert("Service Charge at row " + (i + 1) + " isn't filled out");
+                                                Continue = false;
+                                            }
+                                            else
+                                            {
+                                                var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                                if(regex)
+                                                {
+                                                    serviceCharges[currentIndex].push(tempCharge.value);
+                                                }
+                                                else
+                                                {
+                                                    alert("Service Charge at row " + (i + 1) + " must be in the Format 1.00");
+                                                    Continue = false;
+                                                }
+                                            }
+                                        }   
+                                    }  
+                                    else
+                                    {
+                                        Continue = false;
+                                        alert("Please Select a Parameter");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Continue = false;
+                                alert('You must select a parameter for the Service Charge or select "No" the Service Charge does not depend on anything');
+                            }
                         }
                         else
                         {
-                            for(var i = 0; i < serviceParameters[currentIndex].length; ++i)
+                            var temp = document.getElementById("ServiceCharge");
+                            if(temp.value == "")
                             {
-                                if(serviceParameters[currentIndex][i] == "Meter Size")
-                                {
-                                    if(meterSizes[currentIndex] == null)
-                                    {
-                                        alert("Select A Meter Size or Deselect The Meter Size Option");
-                                        Continue = false;
-                                    }
-                                }
-                                else if(serviceParameters[currentIndex][i] == "Meter Type")
-                                {
-                                    if(meterTypes[currentIndex] == null)
-                                    {
-                                        alert("Select A Meter Type or Deselect The Meter Type Option");
-                                        Continue = false;
-                                    }
-                                }
+                                alert("The Service Charge Field is Empty");
+                                Continue = false;
                             }
-                        }
-                        if(Continue)
-                        {
-                            serviceCharges[currentIndex] = []
-                            for(var i = 0; i < serviceChargeCategories[currentIndex].length; ++i)
+                            else
                             {
-                                var tempCharge = document.getElementById("charge" + i);
-                        
-                                if(tempCharge.value == "")
+                                var regex = /^\d+(?:.\d{2})$/.test(temp.value);
+                                if(regex)
                                 {
-                                    alert("Service Charge at row " + (i + 1) + " isn't filled out");
-                                    Continue = false;
+                                    serviceCharges[currentIndex] = []
+                                    serviceCharges[currentIndex].push(temp.value);
                                 }
                                 else
                                 {
-                                    var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
-                                    if(regex)
-                                    {
-                                        serviceCharges[currentIndex].push(tempCharge.value);
-                                    }
-                                    else
-                                    {
-                                        alert("The service charge at row " + (i + 1) + " must be in the Format 1.00");
-                                        Continue = false;
-                                    } 
+                                    alert("The service charge must be in the Format 1.00");
+                                    Continue = false;
                                 }
                             }
-                            
                         }
                     }
+                        
                     if(isCommodityCharge[currentIndex])
                     {
                         if(commodityStructure[currentIndex] == null)
@@ -2748,12 +2703,14 @@ var survey = JSON.parse(surveyJSON)
                         case 'Lot Size Group': return 'lot_size_group'; break;
                         case 'Meter Size': return 'meter_size'; break;
                         case 'Month': return 'month'; break;
+                        case 'Meter Type': return 'meter_type'; break;
+                        case 'Area': return 'area'; break;
                     }
                 }
                 
                 function Complete()
                 {
-                    var OWRSformat = {
+                    OWRSformat = {
                        "metadata" : {
                             "effective_date" : "" + EffectiveDate + "",
                             "utility_name" : "" + UtilityName + "",
@@ -2773,36 +2730,46 @@ var survey = JSON.parse(surveyJSON)
                         
                         if(isServiceCharge[structure])
                         {
-                            serviceJSON = {
-                                "depends_on" : [],
-                                "values" : {}
-                            };
-                            
-                            for(var parameter in serviceParameters[structure])
+                            if(!isServiceDepends[structure])
                             {
-                                if(serviceParameters[structure][parameter] == "Meter Size")
-                                {
-                                    serviceJSON.depends_on.push("meter_size");
-                                }
-                                else if(serviceParameters[structure][parameter] == "Meter Type")
-                                {
-                                    serviceJSON.depends_on.push("meter_type");
-                                }
+                                serviceJSON = Number(serviceCharges[currentIndex][0]);
                             }
-                            
-                            var valueStorage = '{';
-                            for(var value in serviceCharges[structure])
+                            else
                             {
-                                if(value == serviceCharges[structure].length - 1)
+                                serviceJSON = {
+                                    "depends_on" : [],
+                                    "values" : {}
+                                };
+                            
+                                for(var i = 0; i < serviceParameters[structure].length; ++i)
                                 {
-                                    valueStorage += '"' + serviceChargeCategories[structure][value] + '" : ' + serviceCharges[structure][value] + ' }'
+                                    var temp = parameterParser(serviceParameters[structure][i]);
+                                    serviceJSON.depends_on.push(temp);
                                 }
-                                else
+                            
+                                var valueStorage = '{';
+                                for(var value in serviceCharges[structure])
                                 {
-                                    valueStorage += '"' + serviceChargeCategories[structure][value] + '" : ' + serviceCharges[structure][value] + ', '
+                                    var replacementStr = serviceChargeCategories[structure][value].replace(" Rate:", "");
+                                    replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
+                                    replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                    replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                    replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
+                                    for(var i = 0; i < survey.month.length; ++i)
+                                    {
+                                        replacementStr = replacementStr.replace(survey.month[i], i + 1);
+                                    }
+                                    if(value == serviceCharges[structure].length - 1)
+                                    {
+                                        valueStorage += '"' + replacementStr.split(" ").join("|") + '" : ' + serviceCharges[structure][value] + ' }'
+                                    }
+                                    else
+                                    {
+                                        valueStorage += '"' + replacementStr.split(" ").join("|") + '" : ' + serviceCharges[structure][value] + ', '
+                                    }
                                 }
+                                serviceJSON.values = JSON.parse(valueStorage);
                             }
-                            serviceJSON.values = JSON.parse(valueStorage);
                         }
                         else
                         { serviceJSON = 0; }
@@ -2835,9 +2802,12 @@ var survey = JSON.parse(surveyJSON)
                                         var tempComm = "{ "
                                         for(value in commodityChargeCategories[structure])
                                         {
-                                            var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            var replacementStr = serviceChargeCategories[structure][value].replace(" Rate:", "");
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
+                                            
                                             for(var i = 0; i < survey.month.length; ++i)
                                             {
                                                 replacementStr = replacementStr.replace(survey.month[i], i + 1);
@@ -2869,9 +2839,12 @@ var survey = JSON.parse(surveyJSON)
                                         var tempComm = "{ ", number = 0; 
                                         for(value in tierStartsCategories[structure])
                                         {
-                                            var replacementStr = tierStartsCategories[structure][value].replace(" Level:", "");
+                                            var replacementStr = serviceChargeCategories[structure][value].replace(" Rate:", "");
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
+                                            
                                             for(var i = 0; i < survey.month.length; ++i)
                                             {
                                                 replacementStr = replacementStr.replace(survey.month[i], i + 1);
@@ -2920,9 +2893,12 @@ var survey = JSON.parse(surveyJSON)
                                         var tempComm = "{ ", number = 0; 
                                         for(value in commodityChargeCategories[structure])
                                         {
-                                            var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            var replacementStr = serviceChargeCategories[structure][value].replace(" Rate:", "");
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
+                                            
                                             for(var i = 0; i < survey.month.length; ++i)
                                             {
                                                 replacementStr = replacementStr.replace(survey.month[i], i + 1);
@@ -2979,9 +2955,12 @@ var survey = JSON.parse(surveyJSON)
                                         var tempComm = "{ ", number = 0; 
                                         for(value in tierStartsCategories[structure])
                                         {
-                                            var replacementStr = tierStartsCategories[structure][value].replace(" Level:", "");
+                                            var replacementStr = serviceChargeCategories[structure][value].replace(" Rate:", "");
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
+                                            
                                             for(var i = 0; i < survey.month.length; ++i)
                                             {
                                                 replacementStr = replacementStr.replace(survey.month[i], i + 1);
@@ -3030,9 +3009,12 @@ var survey = JSON.parse(surveyJSON)
                                         var tempComm = "{ ", number = 0; 
                                         for(value in commodityChargeCategories[structure])
                                         {
-                                            var replacementStr = commodityChargeCategories[structure][value].replace(" Rate:", "");
+                                            var replacementStr = serviceChargeCategories[structure][value].replace(" Rate:", "");
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
+                                            
                                             for(var i = 0; i < survey.month.length; ++i)
                                             {
                                                 replacementStr = replacementStr.replace(survey.month[i], i + 1);
@@ -3149,6 +3131,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     var YAML = jsyaml.safeDump(OWRSformat);
                     YAML = YAML.split('<QUOTE>').join('"');
+                    YAML = YAML.split("'").join("");
                     
                     var cleared = document.getElementById("panel");
                     clear(cleared);
