@@ -434,7 +434,7 @@ var surveyJSON = '{"title": "CaDC OWRS Creation Application",' +
 '"meterTypes": ["Disc", "Compound", "Turbo", "Magnetic Meter", "Propeller", "Omni F2", "Displacement"],'+
 '"season": ["Summer", "Winter"],'+
 '"temperatureZone": ["Low", "Medium", "High"], '+
-'"elevationZone":["1", "2", "3", "4", "5"],'+
+'"elevationZone":["1", "2", "3", "4", "5", "6"],'+
 '"pressureZone":["1", "2", "3", "4", "5", "6"],'+
 '"lotSizeGroup":["1", "2", "3", "4", "5"],'+
 '"month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],'+
