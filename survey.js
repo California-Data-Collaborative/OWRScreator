@@ -435,7 +435,7 @@ var surveyJSON = '{"title": "CaDC OWRS Creation Application",' +
 '"season": ["Summer", "Winter"],'+
 '"temperatureZone": ["Low", "Medium", "High"], '+
 '"elevationZone":["1", "2", "3", "4", "5"],'+
-'"pressureZone":["1", "2", "3", "4", "5"],'+
+'"pressureZone":["1", "2", "3", "4", "5", "6"],'+
 '"lotSizeGroup":["1", "2", "3", "4", "5"],'+
 '"month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],'+
 '"area": ["Inside City", "Outside City"]}'
