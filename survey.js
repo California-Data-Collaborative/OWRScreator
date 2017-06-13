@@ -487,8 +487,10 @@ var survey = JSON.parse(surveyJSON)
                 var tierPricesDependsOn = [];
                 
                 var gpcd = [];
+                var landscape_factor = [];
                 var indoor = [];
                 var outdoor = [];
+                var budget = [];
                 
                 var uniformDependsOn = [];
                 var commodityMeterSize = [];
@@ -1493,13 +1495,15 @@ var survey = JSON.parse(surveyJSON)
                     
                     
                     budgetVariableFieldCreator(commodityDependsOnDiv, "gpcd", "Gallons Per Capita Day:", gpcd[currentIndex], "60");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, "indoor", "Indoor Budget Equation:", indoor[currentIndex], "hhsize*gpcd*days_in_period*(1/178)");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "landscape_factor", "Landscape Factor:", landscape_factor[currentIndex], ".7");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "indoor", "Indoor Budget Equation:", indoor[currentIndex], "hhsize*gpcd*days_in_period*(1/748)");
                     budgetVariableFieldCreator(commodityDependsOnDiv, "outdoor", "Outdoor Budget Equation:", gpcd[currentIndex], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "budget", "Budget:", budget[currentIndex], "indoor+outdoor");
                     
                     
                     QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
                     Answer = document.createElement("select");
-                    for(var i = 4; i <= 6; ++i)
+                    for(var i = 3; i <= 6; ++i)
                     {
                         Answer.appendChild(new Option(i, i));
                     }
@@ -1507,9 +1511,9 @@ var survey = JSON.parse(surveyJSON)
                     Answer.classList.add("form-control");
                     if(tierLevels[currentIndex] != null)
                     {
-                        if(tierLevels[currentIndex] < 4)
+                        if(tierLevels[currentIndex] < 3)
                         {
-                            Answer.value = 4;
+                            Answer.value = 3;
                         }
                         else
                         {
@@ -2506,7 +2510,7 @@ var survey = JSON.parse(surveyJSON)
                                                     if(tempCharge.value == "")
                                                     {
                                                         var tempIndex = Math.floor(i/tierLevels[currentIndex]);
-                                                        alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " isn't filled out");
+                                                        alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " isn't filled out");
                                                         Continue = false;
                                                     }
                                                     else
@@ -2519,7 +2523,7 @@ var survey = JSON.parse(surveyJSON)
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(i/tierLevels[currentIndex]);
-                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be an integer");
+                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be an integer");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2581,7 +2585,7 @@ var survey = JSON.parse(surveyJSON)
                                                     if(tempCharge.value == "")
                                                     {
                                                         var tempIndex = Math.floor(i/tierLevels[currentIndex]);
-                                                        alert("The Tier Price for " + commodityChargeCategories[currentIndex][tempIndex].replace(" Rate:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " isn't filled out");
+                                                        alert("The Tier Price for " + commodityChargeCategories[currentIndex][tempIndex].replace(" Rate:", "").replace("<QUOTE>", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " isn't filled out");
                                                         Continue = false;
                                                     }
                                                     else
@@ -2594,7 +2598,7 @@ var survey = JSON.parse(surveyJSON)
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(i/tierLevels[currentIndex]);
-                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][tempIndex].replace(" Rate:", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be in the Format 1.00");
+                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][tempIndex].replace(" Rate:", "").replace("<QUOTE>", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be in the Format 1.00");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2644,12 +2648,24 @@ var survey = JSON.parse(surveyJSON)
                                 gpcd[currentIndex] = null;
                                 indoor[currentIndex] = null;
                                 outdoor[currentIndex] = null;
+                                landscape_factor[currentIndex] = null;
+                                budget[currentIndex] = null;
                                 commodityCharges[currentIndex] = [];
                                 tierStartsValues[currentIndex] = [];
                                 
                                 gpcdValue = document.getElementById("gpcd");
                                 if(gpcdValue.value != "")
-                                    gpcd[currentIndex] = gpcdValue.value;
+                                {
+                                    try
+                                    {
+                                        gpcd[currentIndex] = Number(gpcdValue.value);
+                                    }
+                                    catch (err)
+                                    {
+                                        alert("Gallons Per Capita Daily must be a number");
+                                        Continue = false;
+                                    }
+                                }
                                 else
                                 {
                                     alert("Gallons Per Capita Day field empty");
@@ -2668,6 +2684,24 @@ var survey = JSON.parse(surveyJSON)
                                 outdoorValue = document.getElementById("outdoor");
                                 if(indoorValue.value != "")
                                     outdoor[currentIndex] = outdoorValue.value;
+                                else
+                                {
+                                    alert("Outdoor Equation field empty");
+                                    Continue = false;
+                                }
+                                
+                                landscape_factorValue = document.getElementById("landscape_factor");
+                                if(landscape_factorValue.value != "")
+                                    landscape_factor[currentIndex] = landscape_factorValue.value;
+                                else
+                                {
+                                    alert("Landscape Factor field empty");
+                                    Continue = false;
+                                }
+                                
+                                budgetValue = document.getElementById("budget");
+                                if(budgetValue.value != "")
+                                    budget[currentIndex] = budgetValue.value;
                                 else
                                 {
                                     alert("Outdoor Equation field empty");
@@ -2696,9 +2730,23 @@ var survey = JSON.parse(surveyJSON)
                                                     }
                                                     else
                                                     {
-                                                        if(i % tierLevels[currentIndex] + 1 > 2)
+                                                        var regex = /^\d+(?:%)$/.test(tempCharge.value);
+                                                        alert(i % tierLevels[currentIndex] + 1);
+                                                        if(i % tierLevels[currentIndex] + 1 == 2)
                                                         {
-                                                            var regex = /^\d+(?:%)$/.test(tempCharge.value);
+                                                            if(tempCharge.value == "indoor" || regex)
+                                                            {
+                                                                tierStartsValues[currentIndex].push(tempCharge.value);
+                                                            }
+                                                            else
+                                                            {
+                                                                var tempIndex = Math.floor(i/tierLevels[currentIndex]);
+                                                                alert("The Tier Level for " + tierStartsCategories[currentIndex][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (i % tierLevels[currentIndex] + 1) + " must be in the format 100% or say indoor");
+                                                                Continue = false;
+                                                            }
+                                                        }
+                                                        else if(i % tierLevels[currentIndex] + 1 > 2)
+                                                        {
                                                             if(regex)
                                                             {
                                                                 tierStartsValues[currentIndex].push(tempCharge.value);
@@ -2742,21 +2790,31 @@ var survey = JSON.parse(surveyJSON)
                                         } 
                                         else
                                         { 
+                                            var regex = /^\d+(?:%)$/.test(Level.value);
                                             if(i > 1)
                                             {
-                                                var regex = /^\d+(?:%)$/.test(Level.value);
                                                 if(regex)
                                                 {
                                                     tierStartsValues[currentIndex].push(Level.value);
                                                 }
                                                 else
                                                 {
-                                                    alert("The Tier Level for tier " + (i % tierLevels[currentIndex] + 1) + " must be in the format 100% or 1%");
+                                                    alert("The Tier Level for tier " + (i + 1) + " must be in the format 100% or 1%");
                                                     Continue = false;
                                                 }
                                             }
                                             else
-                                               tierStartsValues[currentIndex].push(Level.value); 
+                                            {
+                                                if(i == 1)
+                                                {
+                                                    if(Level.value == "indoor" || regex)
+                                                        tierStartsValues[currentIndex].push(Level.value);
+                                                    else
+                                                        alert("The Tier Level for tier " + (i + 1) + " must be in the format 100% or say indoor");
+                                                }
+                                                else
+                                                    tierStartsValues[currentIndex].push(Level.value); 
+                                            }
                                         }
                                     }
                                 }
@@ -3065,7 +3123,8 @@ var survey = JSON.parse(surveyJSON)
                                     commodityJSON.gpcd = gpcd[structure];
                                     commodityJSON.indoor = indoor[structure];
                                     commodityJSON.outdoor = outdoor[structure];
-                                    commodityJSON.budget = "indoor + outdoor";
+                                    commodityJSON.budget = budget[structure];
+                                    commodityJSON.landscape_factor = landscape_factor[structure];
                                     
                                     if(isTierStartsDepends[structure])
                                     {
