@@ -596,6 +596,10 @@ var survey = JSON.parse(surveyJSON)
                         }
                     }
                     
+                    $(document).ready(function() {
+                    $(".select").select2();
+                    });
+                    
                 }
                 
                 function GetMainPageAnswers()
@@ -929,11 +933,24 @@ var survey = JSON.parse(surveyJSON)
                         
                         QuestionTxt("Enter the Service Charge (In the form of 15.99):", 512, service);
                         
+                        divider = document.createElement("div");
+                        divider.classList.add("form-group");
+                        service.appendChild(divider);
+                        
+                        inputGroup = document.createElement("div");
+                        inputGroup.classList.add("input-group");
+                        divider.appendChild(inputGroup);
+                        
+                        Answer = document.createElement("span");
+                        Answer.classList.add("input-group-addon");
+                        Answer.innerHTML = '<i class="glyphicon glyphicon-usd"></i>';
+                        inputGroup.appendChild(Answer);
+                        
                         Answer = document.createElement("input");
                         Answer.setAttribute("type", "text");
                         Answer.id = "ServiceCharge";
                         Answer.classList.add("form-control");
-                        service.appendChild(Answer);
+                        inputGroup.appendChild(Answer);
                         
                         if(serviceCharges[currentIndex] != null)
                         {
@@ -1454,7 +1471,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
-                function budgetVariableFieldCreator(DIV, id, Text, valueArray, defaultValue)
+                function budgetVariableFieldCreator(DIV, id, Text, glyphicon, valueArray, defaultValue)
                 {
                     divider = document.createElement("div");
                     divider.classList.add("form-group");
@@ -1464,6 +1481,15 @@ var survey = JSON.parse(surveyJSON)
                     Answer.setAttribute("for", id);
                     Answer.appendChild(document.createTextNode(Text));
                     divider.appendChild(Answer);
+                        
+                    inputGroup = document.createElement("div");
+                    inputGroup.classList.add("input-group");
+                    divider.appendChild(inputGroup);
+                        
+                    Answer = document.createElement("span");
+                    Answer.classList.add("input-group-addon");
+                    Answer.innerHTML = '<i class="glyphicon glyphicon-tint"></i><i class="glyphicon ' + glyphicon + '"></i>';
+                    inputGroup.appendChild(Answer);
                     
                     Answer = document.createElement("input");
                     Answer.setAttribute("type", "text");
@@ -1477,7 +1503,7 @@ var survey = JSON.parse(surveyJSON)
                     {
                         Answer.value = defaultValue;
                     }
-                    divider.appendChild(Answer);
+                    inputGroup.appendChild(Answer);
                     
                 }
                 
@@ -1495,11 +1521,11 @@ var survey = JSON.parse(surveyJSON)
                     QuestionTxt("Enter the Values Below:", 17, commodityDependsOnDiv);
                     
                     
-                    budgetVariableFieldCreator(commodityDependsOnDiv, "gpcd", "Gallons Per Capita Day:", gpcd[currentIndex], "60");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, "landscape_factor", "Landscape Factor:", landscape_factor[currentIndex], ".7");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, "indoor", "Indoor Budget Equation:", indoor[currentIndex], "hhsize*gpcd*days_in_period*(1/748)");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, "outdoor", "Outdoor Budget Equation:", gpcd[currentIndex], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, "budget", "Budget:", budget[currentIndex], "indoor+outdoor");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "gpcd", "Gallons Per Capita Day:", "glyphicon-user", gpcd[currentIndex], "60");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "landscape_factor", "Landscape Factor:", "glyphicon-grain", landscape_factor[currentIndex], ".7");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "indoor", "Indoor Budget Equation:", "glyphicon-home", indoor[currentIndex], "hhsize*gpcd*days_in_period*(1/748)");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "outdoor", "Outdoor Budget Equation:", "glyphicon-globe", gpcd[currentIndex], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, "budget", "Budget:", "glyphicon-usd", budget[currentIndex], "indoor+outdoor");
                     
                     
                     QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
