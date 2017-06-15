@@ -1,4 +1,4 @@
-var surveyJSON = '{"title": "CaDC OWRS Creation Application",' +
+var surveyJSON = '{"title": "CaDC Open Water Rate Specification Tool",' +
 '"utilities": [' +
 '"Irvine Ranch Water District",'+
 '"Eastern Municipal Water District",'+
@@ -3247,8 +3247,8 @@ var survey = JSON.parse(surveyJSON)
                                                         tempStructure.INSTITUTIONAL.bill = "service_charge+commodity_charge"; break;
                             case "Fire Service": tempStructure = { "FIRE_SERVICE" : { "service_charge" : {} } }; 
                                                         tempStructure.FIRE_SERVICE.service_charge = serviceJSON; 
-                                                        tempStructure.RFIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON); 
-                                                        tempStructure.RFIRE_SERVICE.bill = "service_charge+commodity_charge"; break;
+                                                        tempStructure.FIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON); 
+                                                        tempStructure.FIRE_SERVICE.bill = "service_charge+commodity_charge"; break;
                             case "Non-Potable": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } };
                                                         tempStructure.NONPOTABLE.service_charge = serviceJSON; 
                                                         tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON); 
@@ -3306,13 +3306,29 @@ var survey = JSON.parse(surveyJSON)
                     YAML = YAML.split("'").join("");
                     
                     var cleared = document.getElementById("panel");
+                    
+                    
                     clear(cleared);
                     
-                    var TheEnd = document.createElement("pre");
-                    TheEnd.innerHTML = YAML;
-                    cleared.appendChild(TheEnd);
-                    
+                    var YAMLfile = document.createElement("pre");
+                    YAMLfile.innerHTML = YAML;
+                    cleared.appendChild(YAMLfile);
                    
+                    /*
+                    var submitForm = document.createElement("form");
+                    submitForm.id = "survey";
+                    submitForm.method = "POST";
+                    submitForm.action = "/"
+                    cleared.appendChild(submitForm);
+                    
+                    var TheEnd = document.createElement("input");
+                    TheEnd.setAttribute("type", "hidden");
+                    TheEnd.name = "YAML";
+                    TheEnd.value = YAML;
+                    submitForm.appendChild(TheEnd);
+                    
+                    submitForm.submit();
+                    */
                 }
                 
                 function stringFormatter(theString)
