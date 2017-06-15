@@ -522,6 +522,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                     Answer.id = "utilityName";
                     Answer.classList.add("form-control");
+                    Answer.classList.add("select");
                     form.appendChild(Answer);
                 
                     QuestionTxt(survey.questions[1], 2, form);
@@ -1503,7 +1504,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
                     Answer = document.createElement("select");
-                    for(var i = 3; i <= 6; ++i)
+                    for(var i = 2; i <= 6; ++i)
                     {
                         Answer.appendChild(new Option(i, i));
                     }
@@ -1511,9 +1512,9 @@ var survey = JSON.parse(surveyJSON)
                     Answer.classList.add("form-control");
                     if(tierLevels[currentIndex] != null)
                     {
-                        if(tierLevels[currentIndex] < 3)
+                        if(tierLevels[currentIndex] < 2)
                         {
-                            Answer.value = 3;
+                            Answer.value = 2;
                         }
                         else
                         {
@@ -1964,7 +1965,17 @@ var survey = JSON.parse(surveyJSON)
                             
                             var tierStartsValuesDiv = document.getElementById("tierStartsValuesDiv");
                             
-                            createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels ");
+                            if(tierStartsCategories[currentIndex].length  > 0)
+                            {
+                                if(commodityStructure[currentIndex] == "Tiered")
+                                {
+                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels (Must be an Integer): ");
+                                }
+                                else
+                                {
+                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex], "Tier Levels (Must be in the format 100%): ");
+                                }
+                            }
                         }
                         else
                         {
@@ -1988,7 +1999,10 @@ var survey = JSON.parse(surveyJSON)
                             
                             var tierPricesValuesDiv = document.getElementById("tierPricesValuesDiv");
                             
-                            createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices");
+                            if(commodityChargeCategories[currentIndex].length > 0)
+                            {
+                                createTierFields(tierPricesValuesDiv, "tierPrices", commodityChargeCategories[currentIndex], "Tier Prices (Must be in the format 15.99):");
+                            }
                         }
                     }
                     else if (Identifier == "service")
