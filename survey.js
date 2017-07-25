@@ -1,415 +1,415 @@
 var surveyJSON = '{"title": "CaDC Open Water Rate Specification Tool",' +
 '"utilities": [' +
-'"Irvine Ranch Water District",'+
-'"Eastern Municipal Water District",'+
-'"Santa Margarita Water District",'+
-'"Western Municipal Water District of Riverside",'+
-'"Monte Vista Water District",'+
-'"Santa Rosa  City of",'+
-'"Las Virgenes Municipal Water District",'+
-'"Sacramento  City of",'+
-'"Los Angeles Department of Water and Power",'+
-'"East Bay Municipal Utilities District",'+
-'"San Diego  City of",'+
-'"San Jose Water Company",'+
-'"San Francisco Public Utilities Commission",'+
-'"Fresno  City of",'+
-'"Long Beach  City of",'+
-'"Anaheim  City of",'+
-'"Alameda County Water District",'+
-'"Riverside  City of",'+
-'"Santa Ana  City of",'+
-'"Coachella Valley Water District",'+
-'"California Water Service Company Bakersfield",'+
-'"San Gabriel Valley Water Company",'+
-'"Helix Water District",'+
-'"Golden State Water Company Southwest",'+
-'"Modesto, City of",'+
-'"Otay Water District",'+
-'"San Gabriel Valley Fontana Water Company",'+
-'"Los Angeles County Public Works Waterworks District 40",'+
-'"Oxnard  City of",'+
-'"Cucamonga Valley Water District",'+
-'"California-American Water Company Sacramento District",'+
-'"Contra Costa Water District",'+
-'"San Bernardino  City of",'+
-'"Huntington Beach  City of",'+
-'"Glendale  City of",'+
-'"Sweetwater Authority",'+
-'"Marin Municipal Water District",'+
-'"Corona  City of",'+
-'"Suburban Water Systems San Jose Hills",'+
-'"Stockton  City of",'+
-'"Sacramento County Water Agency",'+
-'"Garden Grove  City of",'+
-'"Sacramento Suburban Water District",'+
-'"Oceanside  City of",'+
-'"California Water Service Company Stockton",'+
-'"Moulton Niguel Water District",'+
-'"Ontario  City of",'+
-'"Pasadena  City of",'+
-'"Rancho California Water District",'+
-'"California Water Service Company East Los Angeles",'+
-'"Hayward  City of",'+
 '"Pomona  City of",'+
-'"Elsinore Valley Municipal Water District",'+
-'"Sunnyvale  City of",'+
-'"Escondido  City of",'+
-'"Bakersfield  City of",'+
-'"California Water Service Company Dominguez",'+
-'"California Water Service Company Visalia",'+
-'"Orange  City of",'+
-'"Fullerton  City of",'+
-'"California Water Service Company Mid Peninsula",'+
-'"Park Water Company",'+
-'"Roseville  City of",'+
-'"El Dorado Irrigation District",'+
-'"Vista Irrigation District",'+
-'"Victorville Water District",'+
-'"Vallejo  City of",'+
-'"Castaic Lake Water Agency Santa Clarita Water Division",'+
-'"California Water Service Company Salinas District",'+
-'"Santa Clara  City of",'+
-'"Valencia Water Company",'+
-'"Jurupa Community Service District",'+
-'"San Jose  City of",'+
-'"Palmdale Water District",'+
-'"Inglewood  City of",'+
-'"Suburban Water Systems Whittier/La Mirada",'+
-'"San Buenaventura  City of",'+
-'"Walnut Valley Water District",'+
-'"Downey  City of",'+
-'"Clovis  City of",'+
-'"Golden State Water Company West Orange",'+
-'"Mesa Water District",'+
-'"Azusa  City of",'+
-'"Daly City  City of",'+
-'"Fairfield  City of",'+
-'"Antioch  City of",'+
-'"Burbank  City of",'+
-'"Torrance  City of",'+
-'"Desert Water Agency",'+
-'"East Valley Water District",'+
-'"California Water Service Company Chico District",'+
-'"California-American Water Company Los Angeles District",'+
-'"South Gate  City of",'+
-'"Santa Maria  City of",'+
-'"California-American Water Company Monterey District",'+
-'"Great Oaks Water Company Incorporated",'+
-'"Placer County Water Agency",'+
-'"Vallecitos Water District",'+
-'"California Water Service Company Hermosa/Redondo",'+
-'"California-American Water Company San Diego District",'+
-'"Santa Cruz  City of",'+
-'"Westminster  City of",'+
-'"Santa Monica  City of",'+
-'"Santa Barbara  City of",'+
-'"Hesperia Water District City of",'+
-'"Redding  City of",'+
-'"Ventura County Waterworks District No. 8",'+
-'"Vacaville  City of",'+
-'"Padre Dam Municipal Water District",'+
-'"Indio  City of",'+
-'"Redwood City  City of",'+
-'"Goleta Water District",'+
-'"Napa  City of",'+
-'"Carlsbad Municipal Water District",'+
-'"Tracy  City of",'+
-'"Redlands  City of",'+
-'"Alhambra  City of",'+
-'"Olivenhain Municipal Water District",'+
 '"Merced  City of",'+
-'"Buena Park  City of",'+
-'"Compton  City of",'+
-'"Dublin San Ramon Services District",'+
-'"Yorba Linda Water District",'+
-'"Chino  City of",'+
-'"Chino Hills  City of",'+
-'"Mountain View  City of",'+
-'"Upland  City of",'+
-'"Manteca  City of",'+
-'"Pleasanton  City of",'+
-'"West Valley Water District",'+
-'"California Water Service Company Bear Gulch",'+
-'"Lynwood  City of",'+
-'"Turlock  City of",'+
-'"Valley County Water District",'+
-'"Milpitas  City of",'+
-'"California Water Service Company Los Altos/Suburban",'+
-'"California Water Service Company Palos Verdes",'+
-'"Yuba City  City of",'+
-'"Davis  City of",'+
-'"Tustin  City of",'+
-'"Citrus Heights Water District",'+
-'"Folsom  City of",'+
-'"Newport Beach  City of",'+
-'"Pittsburg  City of",'+
-'"Watsonville  City of",'+
-'"Golden State Water Company Florence Graham",'+
-'"Madera  City of",'+
-'"Whittier  City of",'+
-'"Palo Alto  City of",'+
-'"Huntington Park  City of",'+
-'"Lodi  City of Public Works Department",'+
-'"La Habra  City of Public Works",'+
-'"Apple Valley Ranchos Water Company",'+
-'"Tulare, City of",'+
-'"Monterey Park  City of",'+
-'"California-American Water Ventura District",'+
-'"Rowland Water District",'+
-'"North Marin Water District",'+
-'"Petaluma  City of",'+
-'"Porterville  City of",'+
-'"California Water Service Company South San Francisco",'+
-'"Hanford  City of",'+
-'"Fountain Valley  City of",'+
-'"Lakewood  City of",'+
-'"California Water Service Company Livermore",'+
-'"Brentwood  City of",'+
-'"Paramount  City of",'+
-'"Golden State Water Company Bell-Bell Gardens",'+
-'"Arcadia  City of",'+
-'"Woodland  City of",'+
-'"Delano  City of",'+
-'"San Clemente  City of",'+
-'"Gilroy  City of",'+
-'"Golden State Water Company San Dimas",'+
-'"Rialto  City of",'+
-'"Colton, City of",'+
-'"Lake Hemet Municipal Water District",'+
-'"Poway  City of",'+
-'"Thousand Oaks  City of",'+
-'"Glendora  City of",'+
-'"Beverly Hills  City of",'+
-'"West Sacramento  City of",'+
-'"Cerritos  City of",'+
-'"Calaveras County Water District",'+
-'"El Toro Water District",'+
-'"Golden State Water Company Artesia",'+
-'"Ceres  City of",'+
-'"Camarillo  City of",'+
-'"Golden State Water Company Placentia",'+
-'"Bellflower-Somerset Mutual Water Company",'+
-'"Lincoln  City of",'+
-'"San Luis Obispo  City of",'+
-'"Coachella  City of",'+
-'"Newhall County Water District",'+
-'"San Gabriel County Water District",'+
-'"Yucaipa Valley Water District",'+
-'"El Centro  City of",'+
-'"Nevada Irrigation District",'+
-'"Hawthorne  City of",'+
-'"Elk Grove Water Service",'+
-'"Golden State Water Company Norwalk",'+
-'"San Bruno  City of",'+
-'"Golden State Water Company Cordova",'+
-'"Morgan Hill  City of",'+
-'"Rohnert Park  City of",'+
-'"Golden State Water Company Simi Valley",'+
-'"Brea  City of",'+
-'"Lake Arrowhead Community Services District",'+
-'"Beaumont-Cherry Valley Water District",'+
-'"Lompoc  City of",'+
-'"Calexico  City of",'+
-'"Diablo Water District",'+
-'"Soquel Creek Water District",'+
-'"San Juan Capistrano  City of",'+
-'"Covina  City of ",'+
-'"Monrovia  City of",'+
-'"Pico Rivera  City of",'+
-'"North Coast County Water District",'+
-'"Ventura County Waterworks District No 1",'+
-'"Carmichael Water District",'+
-'"Mission Springs Water District",'+
-'"San Dieguito Water District",'+
-'"Estero Municipal Improvement District",'+
-'"Los Banos, City of",'+
-'"Golden State Water Company Claremont",'+
-'"San Juan Water District",'+
-'"Ramona Municipal Water District",'+
-'"Fair Oaks Water District",'+
-'"Golden State Water Company Culver City",'+
-'"Manhattan Beach  City of",'+
-'"Camrosa Water District",'+
-'"Lakeside Water District",'+
-'"Martinez  City of",'+
-'"South Coast Water District",'+
-'"Fallbrook Public Utility District",'+
-'"Marina Coast Water District",'+
-'"Oildale Mutual Water Company",'+
-'"South Tahoe Public Utilities District",'+
-'"Truckee-Donner Public Utilities District",'+
-'"Adelanto City of",'+
-'"La Verne  City of",'+
-'"Montebello Land and Water Company",'+
-'"Crescenta Valley Water District",'+
-'"Rubidoux Community Service District",'+
-'"Livermore  City of Division of Water Resources",'+
-'"Golden State Water Company Orcutt",'+
-'"Atascadero Mutual Water Company",'+
-'"East Niles Community Service District",'+
-'"Vaughn Water Company",'+
-'"Golden State Water Company Barstow",'+
-'"Indian Wells Valley Water District",'+
-'"Burlingame  City of",'+
-'"Tuolumne Utilities District",'+
-'"Sunny Slope Water Company",'+
-'"Paso Robles  City of",'+
-'"Banning  City of",'+
-'"Santa Paula  City of",'+
-'"Hemet  City of",'+
-'"Rincon Del Diablo Municipal Water District",'+
-'"Suisun-Solano Water Authority",'+
-'"Atwater  City of",'+
-'"Alco Water Service",'+
-'"East Palo Alto, City of",'+
-'"Windsor, Town of",'+
-'"Benicia  City of",'+
-'"Brawley  City of",'+
-'"Golden State Water Company S San Gabriel",'+
-'"Norco  City of",'+
-'"Eureka  City of",'+
-'"Golden State Water Company S Arcadia",'+
-'"Mid-Peninsula Water District",'+
-'"South Pasadena  City of",'+
-'"Wasco  City of",'+
-'"Paradise Irrigation District",'+
-'"City of Big Bear Lake, Dept of Water & Power",'+
-'"Sanger  City of",'+
-'"Orchard Dale Water District",'+
-'"Seal Beach  City of",'+
-'"Valley Center Municipal Water District",'+
-'"Lemoore  City of",'+
-'"Pico Water District",'+
-'"Phelan Pinon Hills Community Services District",'+
-'"California Water Service Company Selma",'+
-'"Hi-Desert Water District",'+
-'"Dinuba  City of",'+
-'"Galt  City of",'+
-'"Reedley  City of",'+
-'"Corcoran, City of",'+
-'"Valley of the Moon Water District",'+
-'"Loma Linda  City of *",'+
-'"Riverbank  City of",'+
-'"San Fernando  City of",'+
-'"Amador Water Agency",'+
-'"Hollister  City of",'+
-'"El Monte  City of",'+
-'"Golden State Water Company Bay Point",'+
-'"Los Angeles County Public Works Waterworks District 29",'+
-'"Oakdale  City of",'+
-'"Port Hueneme  City of",'+
-'"Millbrae  City of",'+
-'"Fruitridge Vista Water Company",'+
-'"West Kern Water District",'+
-'"Patterson  City of",'+
-'"Laguna Beach County Water District",'+
-'"Arvin Community Services District",'+
-'"Lomita  City of",'+
-'"Lathrop, City of ",'+
-'"Quartz Hill Water District",'+
-'"American Canyon, City of",'+
-'"Humboldt Community Service District",'+
-'"Lamont Public Utility District",'+
-'"Santa Fe Irrigation District",'+
-'"Sunnyslope County Water District",'+
-'"Rainbow Municipal Water District",'+
-'"Olivehurst Public Utility District",'+
-'"California Water Service Company Westlake",'+
-'"Shafter  City of",'+
-'"San Lorenzo Valley Water District",'+
-'"Linda County Water District",'+
-'"Twentynine Palms Water District",'+
-'"Arcata  City of",'+
-'"Bella Vista Water District",'+
-'"Crescent City  City of",'+
-'"Norwalk City of",'+
-'"South Feather Water and Power Agency",'+
-'"Santa Fe Springs  City of",'+
-'"Imperial, City of",'+
-'"San Jacinto  City of",'+
-'"Greenfield, City of",'+
-'"Rosamond Community Service District",'+
-'"Tahoe City Public Utilities District",'+
-'"Arroyo Grande  City of",'+
-'"McKinleyville Community Service District",'+
-'"Bakman Water Company",'+
-'"Soledad, City of",'+
-'"Mammoth Community Water District",'+
-'"Pinedale County Water District",'+
-'"Coastside County Water District",'+
-'"El Segundo  City of",'+
-'"Coalinga City of",'+
-'"Orange Vale Water Company",'+
-'"Lincoln Avenue Water Company",'+
-'"Ukiah  City of",'+
 '"Menlo Park  City of",'+
-'"Mountain House Community Services District",'+
-'"La Palma  City of",'+
-'"Lee Lake Water District",'+
-'"Riverside Highland Water Company",'+
-'"Ripon  City of",'+
-'"Fillmore  City of",'+
-'"California Water Service Company King City",'+
-'"Discovery Bay Community Services District",'+
-'"Livingston  City of",'+
-'"Carpinteria Valley Water District",'+
-'"Kerman, City of",'+
-'"California City  City of",'+
-'"San Bernardino County Service Area 64",'+
-'"Red Bluff  City of",'+
-'"Westborough Water District",'+
-'"Blythe  City of",'+
-'"Montecito Water District",'+
-'"Nipomo Community Services District",'+
-'"Trabuco Canyon Water District",'+
-'"Grover Beach  City of",'+
-'"Big Bear City Community Services District",'+
-'"California Water Service Company Marysville",'+
-'"Triunfo Sanitation District / Oak Park Water Service",'+
-'"Fortuna  City of",'+
-'"Healdsburg  City of",'+
-'"Kingsburg, City of",'+
-'"Sonoma  City of",'+
-'"San Bernardino County Service Area 70J",'+
-'"California Water Service Company Oroville",'+
-'"Anderson, City of",'+
-'"Sierra Madre  City of",'+
-'"Rio Linda - Elverta Community Water District",'+
-'"Hillsborough  Town of",'+
-'"City of Newman Water Department",'+
-'"Morro Bay  City of",'+
-'"Exeter  City of",'+
-'"Scotts Valley Water District",'+
-'"Shasta Lake  City of",'+
-'"California Water Service Company Dixon, City of",'+
-'"Casitas Municipal Water District",'+
-'"Valley Water Company",'+
-'"Georgetown Divide Public Utilities District",'+
-'"Del Oro Water Company",'+
-'"Rubio Canyon Land and Water Association",'+
-'"Joshua Basin Water District",'+
-'"Susanville  City of",'+
-'"Myoma Dunes Mutual Water Company",'+
-'"Perris, City of",'+
-'"Tehachapi, City of",'+
-'"Winton Water & Sanitary District",'+
-'"Rio Vista, city of",'+
-'"Pismo Beach  City of",'+
-'"Yreka, City of",'+
-'"Sweetwater Springs Water District",'+
-'"Crestline Village Water District",'+
-'"North Tahoe Public Utility District",'+
-'"Golden State Water Company Cowan Heights",'+
-'"California Water Service Company Willows",'+
-'"Cambria Community Services District",'+
-'"California Water Service Company Kern River Valley",'+
-'"East Orange County Water District",'+
-'"California Water Service Company Redwood Valley",'+
-'"California Water Service Company Antelope Valley",'+
-'"Groveland Community Services District",'+
+'"Coachella Valley Water District",'+
+'"Vallecitos Water District",'+
+'"Alhambra  City of",'+
+'"Poway  City of",'+
+'"American Canyon, City of",'+
+'"San Bernardino  City of",'+
+'"Ontario  City of",'+
+'"Rainbow Municipal Water District",'+
 '"Humboldt Bay Municipal Water District",'+
-'"Vernon  City of"],'+
+'"Fountain Valley  City of",'+
+'"Hollister  City of",'+
+'"Alameda County Water District",'+
+'"Suburban Water Systems San Jose Hills",'+
+'"Valley County Water District",'+
+'"San Gabriel Valley Fontana Water Company",'+
+'"Los Angeles Department of Water and Power",'+
+'"San Bruno  City of",'+
+'"Los Banos, City of",'+
+'"Stockton  City of",'+
+'"Golden State Water Company Placentia",'+
+'"Lomita  City of",'+
+'"Big Bear City Community Services District",'+
+'"Santa Ana  City of",'+
+'"Pasadena  City of",'+
+'"San Buenaventura  City of",'+
+'"Sacramento  City of",'+
+'"Inglewood  City of",'+
+'"Greenfield, City of",'+
+'"Hanford  City of",'+
+'"North Tahoe Public Utility District",'+
+'"Linda County Water District",'+
+'"Indian Wells Valley Water District",'+
+'"Great Oaks Water Company Incorporated",'+
+'"Yuba City  City of",'+
+'"Golden State Water Company Artesia",'+
+'"Burlingame  City of",'+
+'"Carmichael Water District",'+
+'"San Lorenzo Valley Water District",'+
+'"Vaughn Water Company",'+
+'"West Valley Water District",'+
+'"Nevada Irrigation District",'+
+'"Ramona Municipal Water District",'+
+'"Carlsbad Municipal Water District",'+
+'"Imperial, City of",'+
+'"Crescenta Valley Water District",'+
+'"Santa Maria  City of",'+
+'"Tuolumne Utilities District",'+
+'"Orange  City of",'+
+'"Atascadero Mutual Water Company",'+
+'"Eastern Municipal Water District",'+
+'"Buena Park  City of",'+
+'"Calaveras County Water District",'+
+'"Montecito Water District",'+
+'"Discovery Bay Community Services District",'+
+'"Fullerton  City of",'+
+'"San Fernando  City of",'+
+'"Rowland Water District",'+
+'"Corona  City of",'+
+'"Modesto, City of",'+
+'"Lodi  City of Public Works Department",'+
+'"Covina  City of",'+
+'"Contra Costa Water District",'+
+'"Lakeside Water District",'+
+'"Oakdale  City of",'+
+'"California-American Water Company Monterey District",'+
+'"California-American Water Company Los Angeles District",'+
+'"Paradise Irrigation District",'+
+'"East Valley Water District",'+
+'"Golden State Water Company Bell-Bell Gardens",'+
+'"Fair Oaks Water District",'+
+'"Reedley  City of",'+
+'"Fallbrook Public Utility District",'+
+'"Gilroy  City of",'+
+'"Torrance  City of",'+
+'"Nipomo Community Services District",'+
+'"California Water Service Company East Los Angeles",'+
+'"Rubidoux Community Service District",'+
+'"Newhall County Water District",'+
+'"Lake Hemet Municipal Water District",'+
+'"Lake Arrowhead Community Services District",'+
+'"El Segundo  City of",'+
+'"Ripon  City of",'+
+'"Golden State Water Company Orcutt",'+
+'"Sunnyvale  City of",'+
+'"Paramount  City of",'+
+'"California Water Service Company Willows",'+
+'"Rincon Del Diablo Municipal Water District",'+
+'"California Water Service Company Selma",'+
+'"Coastside County Water District",'+
+'"Garden Grove  City of",'+
+'"Rosamond Community Service District",'+
+'"Grover Beach  City of",'+
+'"Diablo Water District",'+
+'"Chino Hills  City of",'+
+'"California-American Water Ventura District",'+
+'"Coalinga City of",'+
+'"Bella Vista Water District",'+
+'"Benicia  City of",'+
+'"California Water Service Company Stockton",'+
+'"Walnut Valley Water District",'+
+'"Escondido  City of",'+
+'"San Dieguito Water District",'+
+'"Cerritos  City of",'+
+'"Golden State Water Company West Orange",'+
+'"Vallejo  City of",'+
+'"Valley Center Municipal Water District",'+
+'"Atwater  City of",'+
+'"Banning  City of",'+
+'"Sunnyslope County Water District",'+
+'"California Water Service Company Marysville",'+
+'"Healdsburg  City of",'+
+'"California Water Service Company Westlake",'+
+'"Ventura County Waterworks District No. 8",'+
+'"Castaic Lake Water Agency Santa Clarita Water Division",'+
+'"Yorba Linda Water District",'+
+'"City of Big Bear Lake, Dept of Water & Power",'+
+'"Valley of the Moon Water District",'+
+'"Perris, City of",'+
+'"Beaumont-Cherry Valley Water District",'+
+'"Palmdale Water District",'+
+'"Thousand Oaks  City of",'+
+'"Seal Beach  City of",'+
+'"Fairfield  City of",'+
+'"Azusa  City of",'+
+'"Hemet  City of",'+
+'"San Jacinto  City of",'+
+'"Riverside Highland Water Company",'+
+'"Oildale Mutual Water Company",'+
+'"Olivehurst Public Utility District",'+
+'"Pittsburg  City of",'+
+'"Citrus Heights Water District",'+
+'"Orchard Dale Water District",'+
+'"Golden State Water Company Culver City",'+
+'"Watsonville  City of",'+
+'"Millbrae  City of",'+
+'"California City  City of",'+
+'"California Water Service Company South San Francisco",'+
+'"Compton  City of",'+
+'"Western Municipal Water District of Riverside",'+
+'"Lamont Public Utility District",'+
+'"Shasta Lake  City of",'+
+'"Madera  City of",'+
+'"Golden State Water Company San Dimas",'+
+'"Moulton Niguel Water District",'+
+'"Vernon  City of",'+
+'"Alco Water Service",'+
+'"California Water Service Company Palos Verdes",'+
+'"Rio Linda - Elverta Community Water District",'+
+'"Pinedale County Water District",'+
+'"Sanger  City of",'+
+'"Mesa Water District",'+
+'"Rohnert Park  City of",'+
+'"Otay Water District",'+
+'"Santa Barbara  City of",'+
+'"Scotts Valley Water District",'+
+'"Lompoc  City of",'+
+'"Santa Rosa  City of",'+
+'"East Orange County Water District",'+
+'"Lakewood  City of",'+
+'"Golden State Water Company Claremont",'+
+'"Anaheim  City of",'+
+'"Vacaville  City of",'+
+'"San Juan Water District",'+
+'"Riverside  City of",'+
+'"Ventura County Waterworks District No 1",'+
+'"Joshua Basin Water District",'+
+'"Calexico  City of",'+
+'"Placer County Water Agency",'+
+'"Rancho California Water District",'+
+'"Antioch  City of",'+
+'"Rialto  City of",'+
+'"Camarillo  City of",'+
+'"Golden State Water Company S Arcadia",'+
+'"Monterey Park  City of",'+
+'"Rio Vista, city of",'+
+'"Roseville  City of",'+
+'"California Water Service Company Bakersfield",'+
+'"California Water Service Company Dixon, City of",'+
+'"Eureka  City of",'+
+'"Yreka, City of",'+
+'"Triunfo Sanitation District / Oak Park Water Service",'+
+'"Dinuba  City of",'+
+'"Santa Cruz  City of",'+
+'"Red Bluff  City of",'+
+'"Crescent City  City of",'+
+'"Hawthorne  City of",'+
+'"Valencia Water Company",'+
+'"South Pasadena  City of",'+
+'"California Water Service Company Dominguez",'+
+'"Fresno  City of",'+
+'"Sonoma  City of",'+
+'"Redwood City  City of",'+
+'"Whittier  City of",'+
+'"Adelanto City of",'+
+'"Las Virgenes Municipal Water District",'+
+'"Martinez  City of",'+
+'"Santa Margarita Water District",'+
+'"San Bernardino County Service Area 70J",'+
+'"Camrosa Water District",'+
+'"Glendora  City of",'+
+'"Davis  City of",'+
+'"South Gate  City of",'+
+'"North Coast County Water District",'+
+'"Del Oro Water Company",'+
+'"Golden State Water Company S San Gabriel",'+
+'"North Marin Water District",'+
+'"Golden State Water Company Barstow",'+
+'"Chino  City of",'+
+'"Crestline Village Water District",'+
+'"Paso Robles  City of",'+
+'"Olivenhain Municipal Water District",'+
+'"Valley Water Company",'+
+'"Mountain View  City of",'+
+'"San Jose Water Company",'+
+'"Dublin San Ramon Services District",'+
+'"Pico Water District",'+
+'"Ceres  City of",'+
+'"Fillmore  City of",'+
+'"South Tahoe Public Utilities District",'+
+'"Suisun-Solano Water Authority",'+
+'"Huntington Park  City of",'+
+'"Irvine Ranch Water District",'+
+'"California Water Service Company Livermore",'+
+'"California Water Service Company Los Altos/Suburban",'+
+'"Porterville  City of",'+
+'"Monte Vista Water District",'+
+'"Downey  City of",'+
+'"San Clemente  City of",'+
+'"Tehachapi, City of",'+
+'"Soquel Creek Water District",'+
+'"Hillsborough  Town of",'+
+'"Turlock  City of",'+
+'"Santa Clara  City of",'+
+'"Carpinteria Valley Water District",'+
+'"South Feather Water and Power Agency",'+
+'"Tahoe City Public Utilities District",'+
+'"Cucamonga Valley Water District",'+
+'"Folsom  City of",'+
+'"La Verne  City of",'+
+'"Tracy  City of",'+
+'"California Water Service Company Hermosa/Redondo",'+
+'"Sierra Madre  City of",'+
+'"California-American Water Company San Diego District",'+
+'"Blythe  City of",'+
+'"West Kern Water District",'+
+'"Oxnard  City of",'+
+'"Long Beach  City of",'+
+'"Sacramento Suburban Water District",'+
+'"Montebello Land and Water Company",'+
+'"Pismo Beach  City of",'+
+'"California Water Service Company Mid Peninsula",'+
+'"Arcata  City of",'+
+'"Mid-Peninsula Water District",'+
+'"Beverly Hills  City of",'+
+'"Corcoran, City of",'+
+'"Indio  City of",'+
+'"Riverbank  City of",'+
+'"Elsinore Valley Municipal Water District",'+
+'"San Luis Obispo  City of",'+
+'"Sacramento County Water Agency",'+
+'"Milpitas  City of",'+
+'"Fruitridge Vista Water Company",'+
+'"Arroyo Grande  City of",'+
+'"Livermore  City of Division of Water Resources",'+
+'"San Diego  City of",'+
+'"Georgetown Divide Public Utilities District",'+
+'"Burbank  City of",'+
+'"Exeter  City of",'+
+'"San Bernardino County Service Area 64",'+
+'"Casitas Municipal Water District",'+
+'"Coachella  City of",'+
+'"Brentwood  City of",'+
+'"Upland  City of",'+
+'"Huntington Beach  City of",'+
+'"California Water Service Company Visalia",'+
+'"Windsor, Town of",'+
+'"Clovis  City of",'+
+'"Palo Alto  City of",'+
+'"Manteca  City of",'+
+'"Santa Fe Springs  City of",'+
+'"Phelan Pinon Hills Community Services District",'+
+'"California-American Water Company Sacramento District",'+
+'"Truckee-Donner Public Utilities District",'+
+'"Bakman Water Company",'+
+'"Shafter  City of",'+
+'"Hi-Desert Water District",'+
+'"Golden State Water Company Cowan Heights",'+
+'"San Jose  City of",'+
+'"East Palo Alto, City of",'+
+'"Lincoln  City of",'+
+'"El Centro  City of",'+
+'"Sweetwater Springs Water District",'+
+'"El Dorado Irrigation District",'+
+'"Golden State Water Company Southwest",'+
+'"Sunny Slope Water Company",'+
+'"Mountain House Community Services District",'+
+'"Galt  City of",'+
+'"Pico Rivera  City of",'+
+'"Delano  City of",'+
+'"Groveland Community Services District",'+
+'"California Water Service Company Salinas District",'+
+'"San Juan Capistrano  City of",'+
+'"Petaluma  City of",'+
+'"Redlands  City of",'+
+'"El Toro Water District",'+
+'"Lincoln Avenue Water Company",'+
+'"Marin Municipal Water District",'+
+'"Morgan Hill  City of",'+
+'"Laguna Beach County Water District",'+
+'"California Water Service Company Kern River Valley",'+
+'"Yucaipa Valley Water District",'+
+'"Los Angeles County Public Works Waterworks District 29",'+
+'"Livingston  City of",'+
+'"Estero Municipal Improvement District",'+
+'"McKinleyville Community Service District",'+
+'"Jurupa Community Service District",'+
+'"Victorville Water District",'+
+'"Lee Lake Water District",'+
+'"Rubio Canyon Land and Water Association",'+
+'"Fortuna  City of",'+
+'"California Water Service Company Bear Gulch",'+
+'"Kingsburg, City of",'+
+'"Daly City  City of",'+
+'"City of Newman Water Department",'+
+'"Lathrop, City of",'+
+'"Napa  City of",'+
+'"Brea  City of",'+
+'"Mammoth Community Water District",'+
+'"Golden State Water Company Norwalk",'+
+'"Golden State Water Company Florence Graham",'+
+'"Santa Paula  City of",'+
+'"Manhattan Beach  City of",'+
+'"Morro Bay  City of",'+
+'"Patterson  City of",'+
+'"Tulare, City of",'+
+'"Bakersfield  City of",'+
+'"Golden State Water Company Simi Valley",'+
+'"Suburban Water Systems Whittier/La Mirada",'+
+'"California Water Service Company Chico District",'+
+'"Marina Coast Water District",'+
+'"La Palma  City of",'+
+'"Westborough Water District",'+
+'"South Coast Water District",'+
+'"Park Water Company",'+
+'"Padre Dam Municipal Water District",'+
+'"Glendale  City of",'+
+'"Helix Water District",'+
+'"Norwalk City of",'+
+'"Vista Irrigation District",'+
+'"Santa Fe Irrigation District",'+
+'"Los Angeles County Public Works Waterworks District 40",'+
+'"Golden State Water Company Bay Point",'+
+'"West Sacramento  City of",'+
+'"Hayward  City of",'+
+'"Sweetwater Authority",'+
+'"Lemoore  City of",'+
+'"Anderson, City of",'+
+'"Brawley  City of",'+
+'"La Habra  City of Public Works",'+
+'"East Niles Community Service District",'+
+'"Santa Monica  City of",'+
+'"Newport Beach  City of",'+
+'"Susanville  City of",'+
+'"Hesperia Water District City of",'+
+'"Trabuco Canyon Water District",'+
+'"Elk Grove Water Service",'+
+'"Goleta Water District",'+
+'"California Water Service Company King City",'+
+'"Cambria Community Services District",'+
+'"Woodland  City of",'+
+'"Kerman, City of",'+
+'"Westminster  City of",'+
+'"Quartz Hill Water District",'+
+'"Loma Linda  City of *",'+
+'"California Water Service Company Oroville",'+
+'"Apple Valley Ranchos Water Company",'+
+'"Soledad, City of",'+
+'"Golden State Water Company Cordova",'+
+'"Redding  City of",'+
+'"Bellflower-Somerset Mutual Water Company",'+
+'"East Bay Municipal Utilities District",'+
+'"San Francisco Public Utilities Commission",'+
+'"San Gabriel County Water District",'+
+'"Oceanside  City of",'+
+'"Orange Vale Water Company",'+
+'"San Gabriel Valley Water Company",'+
+'"Colton, City of",'+
+'"Mission Springs Water District",'+
+'"Lynwood  City of",'+
+'"Winton Water & Sanitary District",'+
+'"Wasco  City of",'+
+'"Ukiah  City of",'+
+'"Monrovia  City of",'+
+'"Tustin  City of",'+
+'"Myoma Dunes Mutual Water Company",'+
+'"California Water Service Company Redwood Valley",'+
+'"Port Hueneme  City of",'+
+'"Arcadia  City of",'+
+'"Humboldt Community Service District",'+
+'"Pleasanton  City of",'+
+'"Norco  City of",'+
+'"El Monte  City of",'+
+'"California Water Service Company Antelope Valley",'+
+'"Arvin Community Services District",'+
+'"Twentynine Palms Water District",'+
+'"Desert Water Agency",'+
+'"Amador Water Agency"],'+
 '"questions": ["Enter the Name of the Utility:", "Enter the Bill Frequency:",'+
 '"Enter the Effective Date of this Rate Structure:", "Select the Customer Classes Used by the Utility:",'+
 ' "Does this Customer Class contain a Service Charge?", "Does the Service Charge depend on the following:",'+
@@ -485,6 +485,9 @@ var survey = JSON.parse(surveyJSON)
                 var commodityCharges = [];
                 var tierStartsDependsOn = [];
                 var tierPricesDependsOn = [];
+                var isCapacityCharge = false;
+                var capacityMeterSizes;
+                var capacityCharges;
                 
                 var gpcd = [];
                 var landscape_factor = [];
@@ -504,16 +507,17 @@ var survey = JSON.parse(surveyJSON)
                 var area = [];
                 
                 
-                
+                //Fills All Html elements for first page
                 function MainPage()
                 {
-                    
+                    //Set The Title and Clear Form If Present
                     title.innerHTML = survey.title;
                     subtitle.innerHTML = "";
                     clear(form);
                     
                     QuestionTxt(survey.questions[0], 1, form);
                 
+                    //Create Utility Name DropDown List
                     Answer = document.createElement("select");
                 
                     for(var i = 0; i < survey.utilities.length; ++i)
@@ -526,7 +530,8 @@ var survey = JSON.parse(surveyJSON)
                     form.appendChild(Answer);
                 
                     QuestionTxt(survey.questions[1], 2, form);
-                
+                    
+                    //Create Bill Frequency Drop Down
                     Answer = document.createElement("select");
                 
                     for(var i = 0; i < survey.billFrequency.length; ++i)
@@ -539,6 +544,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     QuestionTxt(survey.questions[2], 3, form);
                     
+                    //Create Effective Date Date Input
                     Answer = document.createElement("input");
                     Answer.setAttribute("type", "date");
                     Answer.classList.add("form-control");
@@ -547,6 +553,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     QuestionTxt(survey.questions[3], 4, form);
                     
+                    //Creates Checkboxes for all the Rate Structures
                     for(var i = 0; i < survey.rateStructures.length; ++i)
                     {
                         DIV = document.createElement("div");
@@ -559,6 +566,7 @@ var survey = JSON.parse(surveyJSON)
                         DIV.appendChild(Answer); 
                     }
                     
+                    //Buttons To Call answers and go to next rate stucture
                     var ButtonDiv = document.createElement("div");
                     ButtonDiv.style.marginTop = "15px";
                     form.appendChild(ButtonDiv);
@@ -568,6 +576,7 @@ var survey = JSON.parse(surveyJSON)
                     Button.innerHTML = '<button type = "button" onclick = "GetMainPageAnswers()" class = "btn">Next</button>';
                     ButtonDiv.appendChild(Button);
                     
+                    //Checks if Data is Present and Populates inputs if so
                     if(UtilityName != "")
                     {
                         document.getElementById("utilityName").value = UtilityName;
@@ -596,19 +605,23 @@ var survey = JSON.parse(surveyJSON)
                         }
                     }
                     
+                    //Styles DropDown Lists
                     $(document).ready(function() {
                     $(".select").select2();
                     });
                     
                 }
                 
+                //Gets Data from first page and calls RateStructure Function
                 function GetMainPageAnswers()
                 {
+                    //Clears array and gets data from form elements
                     SelectedRateStructures = [];
                     UtilityName = document.getElementById("utilityName").value;
                     BillFrequency = document.getElementById("billFrequency").value;
                     EffectiveDate = document.getElementById("effectiveDate").value;
                     
+                    //Error checking for Date
                     var date = true;
                     if(EffectiveDate == "")
                     { 
@@ -616,6 +629,7 @@ var survey = JSON.parse(surveyJSON)
                         date = false;
                     }
                     
+                    //Error Checking for Rate Structures
                     var noneChecked = true;
                     for(var numOfCheckBoxes = 0; numOfCheckBoxes < survey.rateStructures.length ; ++numOfCheckBoxes)
                     {
@@ -631,19 +645,214 @@ var survey = JSON.parse(surveyJSON)
                     if(noneChecked)
                     { alert("Please Select A Customer Class"); }
                     
+                    //Call Next Page
                     if(!noneChecked && date)
-                    RateStructure(currentIndex);
+                    ChargePage();
                 }
                 
+                function ChargePage()
+                {
+                    title.innerHTML = UtilityName;
+                    subtitle.innerHTML = "Capacity Charges";
+                    clear(form);
+                    
+                    var capacityDiv = document.createElement("div");
+                    capacityDiv.id = "Capacity";
+                    form.appendChild(capacityDiv);
+                    
+                    var questionDiv = document.createElement("div");
+                    questionDiv.id = "questionDiv";
+                    capacityDiv.appendChild(questionDiv);
+                    
+                    var meterDiv = document.createElement("div");
+                    meterDiv.id = "meterDiv";
+                    capacityDiv.appendChild(meterDiv);
+                    
+                    var fieldDiv = document.createElement("div");
+                    fieldDiv.id = "fieldDiv";
+                    capacityDiv.appendChild(fieldDiv);
+                    
+                    QuestionTxt("Is there a Capacity Charge(s) for this Utility", 13, questionDiv);
+                    
+                    Answer = document.createElement("span");
+                    
+                    if(isCapacityCharge)
+                    {
+                        Answer.innerHTML = '<label for = "YesCapacityCharge" class ="radio-inline"><input type = "radio" id = "YesCapacityCharge" name = "isCapacityCharge" onclick = "capacityCharge()" value = "Yes"   checked = "true"/>Yes</label>'+
+                        '<label for = "NoCapacityCharge" class ="radio-inline"><input type = "radio" id = "NoCapacityCharge" name = "isCapacityCharge" onclick = "capacityCharge()" value = "No"/>No</label>';
+                        questionDiv.appendChild(Answer);
+                        capacityCharge();
+                    }
+                    else
+                    {
+                        Answer.innerHTML = '<label for = "YesCapacityCharge" class ="radio-inline"><input type = "radio" id = "YesCapacityCharge" name = "isCapacityCharge" onclick = "capacityCharge()" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCapacityCharge" class ="radio-inline"><input type = "radio" id = "NoCapacityCharge" name = "isCapacityCharge" onclick = "capacityCharge()" value = "No"  checked = "true"/>No</label>';
+                        questionDiv.appendChild(Answer);
+                    }
+                    
+                    var ButtonDiv = document.createElement("div");
+                    ButtonDiv.style.marginTop = "15px";
+                    form.appendChild(ButtonDiv);
+                    
+                    
+                    var Button = document.createElement("span");
+                    Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "MainPage()" class ="btn">Previous</button>' + 
+                    '<button type = "button" onclick = "ChargePageAnswers()" class = "btn">Next</button>';
+                    ButtonDiv.appendChild(Button);
+                }
                 
+                function capacityCharge()
+                {
+                    var Radio = document.getElementById("YesCapacityCharge");
+                    isCapacityCharge = Radio.checked;
+                    
+                    if(isCapacityCharge)
+                    {
+                        var meterDiv = document.getElementById("meterDiv");
+                        if(meterDiv.childNodes.length > 0)
+                        {
+                            clear(meterDiv)
+                        }
+                        
+                        QuestionTxt("Select the Meter Sizes that have a Capacity Charge", 100, meterDiv);
+                        
+                        for(var i = 0; i < survey.meterSizes.length; ++i)
+                        {
+                            var divider = document.createElement("div");
+                            divider.classList.add("checkbox");
+                            var checkboxID = "MeterSize" + i;
+                            divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "CapacityValues" onclick = "getCapacityValues()" value ="' + survey.meterSizes[i]+ '"/>'+
+                            '' + survey.meterSizes[i] + '"</label>';
+                            meterDiv.appendChild(divider);
+                        }
+                        
+                        if(capacityMeterSizes != null)
+                        {
+                            for(var i = 0; i < survey.meterSizes.length; ++i)
+                            {
+                                var checkCheckBox = document.getElementById("MeterSize" + i);
+                                for(var j = 0; j < capacityMeterSizes.length; ++j)
+                                {
+                                    if(commodityMeterSize[j] == checkCheckBox.value + "<QUOTE>")
+                                    {   
+                                        checkCheckBox.checked = true;
+                                    }
+                                }
+                            }
+                            
+                            getCapacityValues();
+                        }
+                    }
+                    else
+                    {
+                        capacityMeterSizes = null;
+                        ChargePage();
+                    }
+                }
                 
+                function getCapacityValues()
+                {
+                    capacityMeterSizes = [];
+                    
+                    for(var i = 0; i < survey.meterSizes.length; ++i)
+                    {
+                        var temp = document.getElementById("MeterSize" + i);
+                        if(temp.checked)
+                        {
+                            capacityMeterSizes.push(temp.value + "<QUOTE>");
+                        }
+                    }
+                    
+                    createCapacityFields();
+                }
                 
+                function createCapacityFields()
+                {
+                    var fieldDiv = document.getElementById("fieldDiv");
+                    if(fieldDiv.childNodes.length > 0)
+                        clear(fieldDiv);
+                    
+                    QuestionTxt("Enter The Capacity Charges Below:", 45, fieldDiv)
+                    
+                    for(var i = 0; i < capacityMeterSizes.length; ++i)
+                        {
+                            divider = document.createElement("div");
+                            divider.classList.add("form-group");
+                            fieldDiv.appendChild(divider);
+                                    
+                            Answer = document.createElement("label");
+                            Answer.setAttribute("for", "capacityCharge" + i);
+                            Answer.appendChild(document.createTextNode(capacityMeterSizes[i].split("<QUOTE>").join('"')));
+                            divider.appendChild(Answer);
+                                
+                            inputGroup = document.createElement("div");
+                            inputGroup.classList.add("input-group");
+                            divider.appendChild(inputGroup);
+                                    
+                            Answer = document.createElement("span");
+                            Answer.classList.add("input-group-addon");
+                            Answer.innerHTML = '<i class="glyphicon glyphicon-usd"></i>';
+                            inputGroup.appendChild(Answer);
+                                
+                            Answer = document.createElement("input");
+                            Answer.setAttribute("type", "text");
+                            Answer.id = "capacityCharge" + i;
+                            Answer.classList.add("form-control");
+                            inputGroup.appendChild(Answer);
+                        }
+                }
+                
+                function ChargePageAnswers()
+                {
+                    capacityCharges = [];
+                    var Continue = true;
+                    if(isCapacityCharge)
+                    {
+                        if(capacityMeterSizes == null || capacityMeterSizes == [])
+                        {
+                            alert("You must select a Meter Size");
+                        }
+                        else
+                        {
+                            for(var i = 0; i < capacityMeterSizes.length; ++i)
+                            {
+                                var temp = document.getElementById("capacityCharge" + i);
+                                if(temp.value == "")
+                                    alert("A value must be enter for Meter Size " + capacityMeterSizes[i].replace('<QUOTE>', '"'));
+                                else
+                                {
+                                    var regex = /^\d+(?:.\d{2})$/.test(temp.value);
+                                    if(regex)
+                                        capacityCharges.push(temp.value);
+                                    else
+                                    {
+                                        alert("Charge Must be entered in the format  15.99");
+                                        Continue = false;
+                                        i = capacityMeterSizes.length;
+                                    }
+                                }
+                            }
+                            if(Continue)
+                            {
+                                RateStructure(0);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        RateStructure(0);
+                    }
+                }
+                
+                //Creates All Rate Structure/Customer Class Pages
                 function RateStructure(index)
                 {
+                    //Sets title to Utility Name and Subtitle to Cusstomer class and Clears page
                     title.innerHTML = UtilityName;
                     subtitle.innerHTML = SelectedRateStructures[index];
                     clear(form);
                     
+                    //Populates The Service Charge Div
                     var serviceList = document.createElement("div");
                     serviceList.id = "serviceList";
                     form.appendChild(serviceList);
@@ -652,6 +861,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     Answer = document.createElement("span");
                     
+                    //
                     if(isServiceCharge[currentIndex])
                     {
                         Answer.innerHTML = '<label for = "YesServiceCharge" class = "radio-inline"><input type = "radio" id = "YesServiceCharge" name = "isServiceCharge" onclick = "serviceChargeDepends()" value = "Yes" checked = "true"/>Yes</label>'+
@@ -688,6 +898,7 @@ var survey = JSON.parse(surveyJSON)
                         commodityList.appendChild(Answer);
                     }
                     
+                    //Buttons To Move To Previous Page Or Next Page
                     var ButtonDiv = document.createElement("div");
                     ButtonDiv.style.marginTop = "15px";
                     form.appendChild(ButtonDiv);
@@ -707,13 +918,18 @@ var survey = JSON.parse(surveyJSON)
                     ButtonDiv.appendChild(Button);
                 }
                 
+                //Checks if The Service Charge is The Same as a Previously Service Charge If it is the same it calls the getServiceSame() Function
+                //If it isn't it goes to serviceChargeDepends()
                 function  serviceChargeTheSame()
                 {
+                    //
                     var RadioButton = document.getElementById("YesServiceCharge");
                     isServiceCharge[currentIndex] = RadioButton.checked;
                     
+                    //if rate structure has a service charge
                     if(RadioButton.checked == true)
                     {
+                        // if not the first entry
                         if(currentIndex > 0)
                         {
                             QuestionTxt("Is this service charge the same as a previously entered service charge?", 42, serviceList);
@@ -727,8 +943,10 @@ var survey = JSON.parse(surveyJSON)
                             serviceSame.id = "serviceSameDiv";
                             serviceList.appendChild(serviceSame);
                             
+                            // if data already exists
                             if(isServiceSame[currentIndex] != null)
                             {
+                                //is same as previous cust class
                                 if(isServiceSame[currentIndex])
                                 {
                                     var temp = document.getElementById("YesServiceSame");
@@ -736,6 +954,7 @@ var survey = JSON.parse(surveyJSON)
                                     
                                     getServiceSame();
                                 }
+                                //not same as a previous cust class
                                 else
                                 {
                                     var temp = document.getElementById("NoServiceSame");
@@ -745,6 +964,7 @@ var survey = JSON.parse(surveyJSON)
                                 }
                             }
                         }
+                        //is the first customer class
                         else
                         {
                             var service = document.createElement("div");
@@ -754,6 +974,7 @@ var survey = JSON.parse(surveyJSON)
                             serviceChargeDepends();
                         }
                     }
+                    //no service charge
                     else
                     {
                         clear(serviceList);
@@ -769,6 +990,10 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                
+                //populates dropdown list of previous customer classes
+                //
+                //after selection, calls serviceSameValues to get the service charge data for that class
                 function getServiceSame()
                 {
                     var serviceSame = document.getElementById("serviceSameDiv")
@@ -808,6 +1033,8 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //gets service charge data from previously entered class
+                //populates the variables related to service charge
                 function serviceSameValues()
                 {
                     serviceSameStructure[currentIndex] = document.getElementById("serviceSame").value;
@@ -870,6 +1097,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //sets the YesServiceDepends button based on program state
                 function serviceChargeDepends()
                 {
                     var serviceSame = document.getElementById("serviceSameDiv");
@@ -895,7 +1123,9 @@ var survey = JSON.parse(surveyJSON)
                     
                 }
                 
-                
+                //based on whether YesServiceDepends is yes or no,
+                //yes: calls getDepends to populate checklist of depend parameters
+                //no: creates numeric input for service charge
                 function getServiceChargeInfo()
                 {
                     var RadioButton = document.getElementById("YesServiceDepends");
@@ -964,6 +1194,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //creates numeric inputs for each category of each depend parameter
                 function getServiceRate()
                 {
                     
@@ -1034,6 +1265,8 @@ var survey = JSON.parse(surveyJSON)
                     
                 }
                 
+                // checks if YesCommodityCharge is yes or no 
+                //yes: create radio buttons to choose between uniform/tiered/budget
                 function getCommodityChargeInfo()
                 {
                     var RadioButton = document.getElementById("YesCommodityCharge");
@@ -1092,6 +1325,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //fill param arrays with empty subarrays
                 function primeParamArrays()
                 {
                     if(season[currentIndex] == null)
@@ -1114,6 +1348,7 @@ var survey = JSON.parse(surveyJSON)
                         area[currentIndex] = [];
                 }
                 
+                //clear and populate the commodityDependsOnDiv with options for uniform rates
                 function UniformDepends()
                 {
                     commodityStructure[currentIndex] = 'Uniform';
@@ -1163,6 +1398,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //
                 function getUniformRate()
                 {
                     var Radio = document.getElementById("NoUniformDepends");
@@ -1280,6 +1516,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                
                 function TieredDepends()
                 {
                     commodityStructure[currentIndex] = 'Tiered';
@@ -1329,6 +1566,7 @@ var survey = JSON.parse(surveyJSON)
                     getTierPricesInfo();
                 }
                 
+                //creates a yes/no radio  button for whether tiers depend on something
                 function Tier(DIV, question, qNumber, dependsOn, Identifier, Function)
                 {
                     var tierDiv = document.getElementById(DIV);
@@ -1364,6 +1602,9 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //checks value of YesTierStarts radio button
+                //yes: calls getDepends to create depends checklist
+                //no: calles createTierFields to create tier fields
                 function getTierStartsInfo()
                 {
                     var Radio = document.getElementById("YesTierStarts");
@@ -1421,6 +1662,9 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //checks value of YesTierPrices radio button
+                //yes: calls getDepends to create depends checklist
+                //no: calles createTierFields to create tier fields for prices
                 function getTierPricesInfo()
                 {
                     var Radio = document.getElementById("YesTierPrices");
@@ -1471,6 +1715,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //create budget equation fields
                 function budgetVariableFieldCreator(DIV, id, Text, glyphicon, valueArray, defaultValue)
                 {
                     divider = document.createElement("div");
@@ -1507,6 +1752,7 @@ var survey = JSON.parse(surveyJSON)
                     
                 }
                 
+                // create dropdown of number of tiers along with yes/no radio button for if tiers depend on something
                 function BudgetDepends()
                 {
                     commodityStructure[currentIndex] = 'Budget';
@@ -1561,7 +1807,7 @@ var survey = JSON.parse(surveyJSON)
                     createTierLevels();
                 }
                 
-                
+                //create depends checklist and populates based on program state
                 function getDepends(DIV, identifier, Structure)
                 {
                     if(DIV.childNodes.length > 0)
@@ -1599,6 +1845,7 @@ var survey = JSON.parse(surveyJSON)
                     
                 }
                 
+                // save the values of the various  depends checklists (tiered, service, budget, etc) into global params
                 function storeCommodityDepends(tierIdentifier)
                 {
                     if(tierIdentifier == 'uniform')
@@ -1938,6 +2185,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
+                //Clears parameters not used by cust class
                 function clearParametersNotUsed(Structure, tierIdentifier)
                 {
                     for(value in survey.commodityDependsOn)
@@ -2351,7 +2599,7 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(currentIndex == 0)
                     {
-                        MainPage();
+                        ChargePage();
                     }
                     else
                     {   
@@ -2771,7 +3019,6 @@ var survey = JSON.parse(surveyJSON)
                                                     else
                                                     {
                                                         var regex = /^\d+(?:%)$/.test(tempCharge.value);
-                                                        alert(i % tierLevels[currentIndex] + 1);
                                                         if(i % tierLevels[currentIndex] + 1 == 2)
                                                         {
                                                             if(tempCharge.value == "indoor" || regex)
@@ -2976,10 +3223,35 @@ var survey = JSON.parse(surveyJSON)
                             "utility_name" : "" + UtilityName + "",
                             "bill_frequency" : "" + BillFrequency + ""
                        }, 
+                       "capacity_charge" : {
+                           
+                       },
                        "rate_structure" : {
                        
                        }
                     };
+                    
+                    if(isCapacityCharge)
+                    {
+                        OWRSformat.capacity_charge = {
+                            "depends_on" : ["meter_size"]
+                        }
+                        
+                        var valueStorage = '{';
+                        for(var i = 0; i < capacityCharges.length; ++i)
+                        {
+                            console.log(capacityMeterSizes[i]);
+                            if(i == capacityCharges.length - 1)
+                            {
+                                valueStorage += '"' + capacityMeterSizes[i] + '" : ' + capacityCharges[i] + ' }'
+                            }
+                            else
+                            {
+                                valueStorage += '"' + capacityMeterSizes[i] + '" : ' + capacityCharges[i] + ', '
+                            }
+                        }
+                        OWRSformat.capacity_charge.values = JSON.parse(valueStorage);
+                    }
                     
                     for(var structure in SelectedRateStructures)
                     {
@@ -3179,7 +3451,7 @@ var survey = JSON.parse(surveyJSON)
                                         var tempComm = "{ ", number = 0; 
                                         for(value in tierStartsCategories[structure])
                                         {
-                                            var replacementStr = stringFormatter(commodityChargeCategories[structure][value]);
+                                            var replacementStr = stringFormatter(tierStartsCategories[structure][value]);
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
                                             for(var k = 0; k < tierLevels[structure]; ++k)
@@ -3353,7 +3625,7 @@ var survey = JSON.parse(surveyJSON)
                     var YAMLfile = document.createElement("pre");
                     YAMLfile.innerHTML = YAML;
                     cleared.appendChild(YAMLfile);
-                   
+                    
                     /*
                     var submitForm = document.createElement("form");
                     submitForm.id = "survey";
@@ -3367,13 +3639,26 @@ var survey = JSON.parse(surveyJSON)
                     TheEnd.value = YAML;
                     submitForm.appendChild(TheEnd);
                     
+                    var TheEnd = document.createElement("input");
+                    TheEnd.setAttribute("type", "hidden");
+                    TheEnd.name = "Utility";
+                    TheEnd.value = UtilityName;
+                    submitForm.appendChild(TheEnd);
+                    
+                    var TheEnd = document.createElement("input");
+                    TheEnd.setAttribute("type", "hidden");
+                    TheEnd.name = "Date";
+                    TheEnd.value = EffectiveDate;
+                    submitForm.appendChild(TheEnd);
+                    
                     submitForm.submit();
                     */
+                    
                 }
                 
                 function stringFormatter(theString)
                 {
-                    var replacementStr = theString.replace(" Rate:", "");
+                    var replacementStr = theString.replace(" Rate:", ""); replacementStr = theString.replace(" Level:", "");
                     replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                     replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
                     replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
