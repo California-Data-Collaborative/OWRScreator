@@ -11,17 +11,17 @@ var surveyJSON = '{"title": "CaDC Open Water Rate Specification Tool",' +
 '"Potable", "Recycled",'+
 '"Building Contractor", "Residential Construction",'+
 '"Other"],'+
-'"commodityDependsOn": ["Meter Size", "Meter Type", "Season", "Temperature Zone", "Elevation Zone", "Pressure Zone", "Lot Size Group", "Month", "Area"],'+
+'"commodityDependsOn": ["Meter Size", "Meter Type", "Season", "Temperature Zone", "Pressure Zone", '+
+'"Lot Size Group", "Month", "City Limits"],'+
 '"meterSizes": ["5/8","3/4", "1", "1 1/2", "2", "3", "4", "6", "8", "10", "12", "14", "16", "18"],'+
 '"meterTypes": ["Disc", "Compound", "Turbo", "Magnetic Meter", "Propeller", "Omni F2", "Displacement"],'+
 '"season": ["Summer", "Winter"],'+
 '"temperatureZone": ["Low", "Medium", "High"], '+
-'"elevationZone":["1", "2", "3", "4", "5", "6"],'+
 '"pressureZone":["1", "2", "3", "4", "5", "6"],'+
 '"lotSizeGroup":["1", "2", "3", "4", "5"],'+
 '"month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],'+
-'"area": ["Inside City", "Outside City"]}'
-var survey = JSON.parse(surveyJSON)
+'"cityLimits": ["Inside City", "Outside City"]}'
+var survey = JSON.parse(surveyJSON);
 survey.questions = questionList;
 survey.utilities = utilityList;
 
@@ -83,12 +83,11 @@ survey.utilities = utilityList;
                 var commodityMeterSize = [];
                 var month = [];
                 var season = [];
-                var elevationZone = [];
                 var pressureZone = [];
                 var temperatureZone = [];
                 var lotSizeGroup = [];
                 var meterType = [];
-                var area = [];
+                var cityLimits = [];
                 
                 function primeArrays()
                 {
@@ -167,8 +166,6 @@ survey.utilities = utilityList;
                         month[currentIndex] = [];
                     if(season[currentIndex] == null)
                         season[currentIndex] = [];
-                    if(elevationZone[currentIndex] == null)
-                        elevationZone[currentIndex] = [];
                     if(pressureZone[currentIndex] == null)
                         pressureZone[currentIndex] = [];
                     if(temperatureZone[currentIndex] == null)
@@ -177,8 +174,8 @@ survey.utilities = utilityList;
                         lotSizeGroup[currentIndex]= [];
                     if(meterType[currentIndex] == null)
                         meterType[currentIndex] = [];
-                    if(area[currentIndex] == null)
-                        area[currentIndex] = [];
+                    if(cityLimits[currentIndex] == null)
+                        cityLimits[currentIndex] = [];
                 }
                 
                 //Fills All Html elements for first page
@@ -864,11 +861,6 @@ survey.utilities = utilityList;
                                 temperatureZone[currentIndex][chargeIdentifier] = [];
                                 temperatureZone[currentIndex][chargeIdentifier][3] = temperatureZone[temp][chargeIdentifier][3];
                             }
-                            if(elevationZone[temp][chargeIdentifier][3] != null)
-                            {
-                                elevationZone[currentIndex][chargeIdentifier] = []; 
-                                elevationZone[currentIndex][chargeIdentifier][3] = elevationZone[temp][chargeIdentifier][3];
-                            }
                             if(pressureZone[temp][chargeIdentifier][3] != null)
                             {
                                 pressureZone[currentIndex][chargeIdentifier] = [];
@@ -894,10 +886,10 @@ survey.utilities = utilityList;
                                 meterType[currentIndex][chargeIdentifier] = [];
                                 meterType[currentIndex][chargeIdentifier][3] = meterType[temp][chargeIdentifier][3];
                             }
-                            if(area[temp][chargeIdentifier][3] != null)
+                            if(cityLimits[temp][chargeIdentifier][3] != null)
                             {
-                                area[currentIndex][chargeIdentifier] = [];
-                                area[currentIndex][chargeIdentifier][3] = area[temp][chargeIdentifier][3];
+                                cityLimits[currentIndex][chargeIdentifier] = [];
+                                cityLimits[currentIndex][chargeIdentifier][3] = cityLimits[temp][chargeIdentifier][3];
                             }
                         }
                     }
@@ -1140,8 +1132,6 @@ survey.utilities = utilityList;
                         season[currentIndex][chargeIdentifier] = [];
                     if(temperatureZone[currentIndex][chargeIdentifier] == null)
                         temperatureZone[currentIndex][chargeIdentifier] = [];
-                    if(elevationZone[currentIndex][chargeIdentifier] == null)
-                        elevationZone[currentIndex][chargeIdentifier] = []; 
                     if(pressureZone[currentIndex][chargeIdentifier] == null)
                         pressureZone[currentIndex][chargeIdentifier] = [];
                     if(lotSizeGroup[currentIndex][chargeIdentifier] == null)
@@ -1152,8 +1142,8 @@ survey.utilities = utilityList;
                         commodityMeterSize[currentIndex][chargeIdentifier] = [];
                     if(meterType[currentIndex][chargeIdentifier] == null)
                         meterType[currentIndex][chargeIdentifier] = [];
-                    if(area[currentIndex][chargeIdentifier] == null)
-                        area[currentIndex][chargeIdentifier] = [];
+                    if(cityLimits[currentIndex][chargeIdentifier] == null)
+                        cityLimits[currentIndex][chargeIdentifier] = [];
                 }
                 
                 //clear and populate the commodityDependsOnDiv with options for uniform rates
@@ -1852,24 +1842,26 @@ survey.utilities = utilityList;
                                     }
                             }
                             break;
-                        case 'Area': 
-                            for(var i = 0; i < survey.area.length; ++i)
+                        case 'City Limits': 
+                            for(var i = 0; i < survey.cityLimits.length; ++i)
                             {   
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
-                                var checkboxID = identifier + "Area" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'AreaValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value =\'' + survey.area[i] + '\'/>'+
-                                '' + survey.area[i] + '</label>';
-                                DIV.appendChild(divider);
+								
+                                var checkboxID = identifier + "cityLimits" + chargeIdentifier + i;
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'CityLimitsValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value =\'' + survey.cityLimits[i] + '\'/>'+
+                                '' + survey.cityLimits[i] + '</label>';
+                                
+								DIV.appendChild(divider);
                             }                            
-                            if(area[currentIndex][chargeIdentifier][tierIdentifier] != null)
+                            if(cityLimits[currentIndex][chargeIdentifier][tierIdentifier] != null)
                                 {
-                                    for(var i = 0; i < survey.area.length; ++i)
+                                    for(var i = 0; i < survey.cityLimits.length; ++i)
                                         {
-                                        var checkCheckBox = document.getElementById(identifier + "Area" + chargeIdentifier + i);
-                                        for(var j = 0; j < area[currentIndex][chargeIdentifier][tierIdentifier].length; ++j)
+                                        var checkCheckBox = document.getElementById(identifier + "CityLimits" + chargeIdentifier + i);
+                                        for(var j = 0; j < cityLimits[currentIndex][chargeIdentifier][tierIdentifier].length; ++j)
                                         {
-                                            if(area[currentIndex][chargeIdentifier][tierIdentifier][j] == checkCheckBox.value)
+                                            if(cityLimits[currentIndex][chargeIdentifier][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
@@ -1922,32 +1914,6 @@ survey.utilities = utilityList;
                                         for(var j = 0; j < temperatureZone[currentIndex][chargeIdentifier][tierIdentifier].length; ++j)
                                         {
                                             if(temperatureZone[currentIndex][chargeIdentifier][tierIdentifier][j] == checkCheckBox.value)
-                                            {
-                                                checkCheckBox.checked = true;
-                                            }
-                                        }
-                                    }
-                            }
-                            break;
-                        case 'Elevation Zone':
-                            for(var i = 0; i < survey.elevationZone.length; ++i)
-                            {   
-                                var divider = document.createElement("div");
-                                divider.classList.add("checkbox");
-                                var checkboxID = identifier + "ElevationZone" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'ElevationZoneValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="Elevation ' + survey.elevationZone[i]+ '"/>'+
-                                '' + survey.elevationZone[i] + '</label>';
-                                DIV.appendChild(divider);
-                            }
-                            
-                            if(elevationZone[currentIndex][chargeIdentifier][tierIdentifier] != null)
-                            {
-                                    for(var i = 0; i < survey.elevationZone.length; ++i)
-                                    {
-                                        var checkCheckBox = document.getElementById(identifier + "ElevationZone" + chargeIdentifier + i);
-                                        for(var j = 0; j < elevationZone[currentIndex][chargeIdentifier][tierIdentifier].length; ++j)
-                                        {
-                                            if(elevationZone[currentIndex][chargeIdentifier][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
@@ -2025,9 +1991,8 @@ survey.utilities = utilityList;
                                 case 'Temperature Zone': temperatureZone[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
                                 case 'Lot Size Group': lotSizeGroup[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
                                 case 'Pressure Zone': pressureZone[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
-                                case 'Elevation Zone': elevationZone[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
                                 case 'Meter Type': meterType[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
-                                case 'Area': area[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
+                                case 'City Limits': cityLimits[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
                             }
                         }
                     }
@@ -2147,14 +2112,14 @@ survey.utilities = utilityList;
                                             meterType[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); 
                                         }
                                     } break;
-                                case 'Area': 
-                                    area[currentIndex][chargeIdentifier][tierIdentifier] = [];
-                                    for(var i = 0; i < survey.area.length; ++i)
+                                case 'City Limits': 
+                                    cityLimits[currentIndex][chargeIdentifier][tierIdentifier] = [];
+                                    for(var i = 0; i < survey.cityLimits.length; ++i)
                                     {
-                                        var checkCheckBox = document.getElementById(Identifier + "Area" + chargeIdentifier + i);
+                                        var checkCheckBox = document.getElementById(Identifier + "CityLimits" + chargeIdentifier + i);
                                         if(checkCheckBox.checked)
                                         { 
-                                            area[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); 
+                                            cityLimits[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); 
                                         }
                                     } break;
                                 case 'Month': 
@@ -2182,14 +2147,6 @@ survey.utilities = utilityList;
                                         var checkCheckBox = document.getElementById(Identifier + "PressureZone" + chargeIdentifier + i);
                                         if(checkCheckBox.checked)
                                         { pressureZone[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); }
-                                    } break;
-                                case 'Elevation Zone':
-                                    elevationZone[currentIndex][chargeIdentifier][tierIdentifier] = [];
-                                    for(var i = 0; i < survey.elevationZone.length; ++i)
-                                    {
-                                        var checkCheckBox = document.getElementById(Identifier + "ElevationZone" + chargeIdentifier + i);
-                                        if(checkCheckBox.checked)
-                                        { elevationZone[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); }
                                     } break;
                                 case 'Lot Size Group':
                                     lotSizeGroup[currentIndex][chargeIdentifier][tierIdentifier] = [];
@@ -2226,7 +2183,7 @@ survey.utilities = utilityList;
                         
                     for(var i = 0; i < parameterList.length; ++i)
                     {
-                        if(season[currentIndex][chargeIdentifier] != null || commodityMeterSize[currentIndex][chargeIdentifier] != null || month[currentIndex][chargeIdentifier] != null || temperatureZone[currentIndex][chargeIdentifier] != null || elevationZone[currentIndex][chargeIdentifier] != null || pressureZone[currentIndex][chargeIdentifier] != null || lotSizeGroup[currentIndex][chargeIdentifier] != null )
+                        if(season[currentIndex][chargeIdentifier] != null || commodityMeterSize[currentIndex][chargeIdentifier] != null || month[currentIndex][chargeIdentifier] != null || temperatureZone[currentIndex][chargeIdentifier] != null || pressureZone[currentIndex][chargeIdentifier] != null || lotSizeGroup[currentIndex][chargeIdentifier] != null )
                         {
                             switch(parameterList[i])
                             {
@@ -2234,11 +2191,10 @@ survey.utilities = utilityList;
                                 case 'Meter Size': ParametersToUse[i] = commodityMeterSize[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Month': ParametersToUse[i] = month[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Temperature Zone': ParametersToUse[i] = temperatureZone[currentIndex][chargeIdentifier][identifier]; break;
-                                case 'Elevation Zone': ParametersToUse[i] = elevationZone[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Pressure Zone': ParametersToUse[i] = pressureZone[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Lot Size Group': ParametersToUse[i] = lotSizeGroup[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Meter Type': ParametersToUse[i] = meterType[currentIndex][chargeIdentifier][identifier]; break;
-                                case 'Area': ParametersToUse[i] = area[currentIndex][chargeIdentifier][identifier]; break;
+                                case 'City Limits': ParametersToUse[i] = cityLimits[currentIndex][chargeIdentifier][identifier]; break;
                             }
                         }
                     }
@@ -2363,7 +2319,7 @@ survey.utilities = utilityList;
                                     Continue = false;
                                     alert("No parameters selected for Season");
                                 } break;
-                            case "SMeter Size":
+                            case "Meter Size":
                                 if(commodityMeterSize[currentIndex][chargeIdentifier][tierIdentifier] == null || commodityMeterSize[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
                                 {
                                     Continue = false;
@@ -2381,12 +2337,6 @@ survey.utilities = utilityList;
                                     Continue = false;
                                     alert("No parameters selected for Temperature Zone");
                                 } break;
-                            case "Elevation Zone":
-                                if(elevationZone[currentIndex][chargeIdentifier][tierIdentifier] == null || elevationZone[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
-                                {
-                                    Continue = false;
-                                    alert("No parameters selected for Elevation Zone");
-                                } break;
                             case "Pressure Zone":
                                 if(pressureZone[currentIndex][chargeIdentifier][tierIdentifier] == null || pressureZone[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
                                 {
@@ -2399,17 +2349,17 @@ survey.utilities = utilityList;
                                     Continue = false;
                                     alert("No parameters selected for Lot Size Group");
                                 } break;
-                            case "Lot Size Group":
+                            case "Meter Type":
                                 if(meterType[currentIndex][chargeIdentifier][tierIdentifier] == null || meterType[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
                                 {
                                     Continue = false;
                                     alert("No parameters selected for Meter Type");
                                 } break;
-                            case "Area":
-                                if(area[currentIndex][chargeIdentifier][tierIdentifier] == null || area[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
+                            case "City Limits":
+                                if(cityLimits[currentIndex][chargeIdentifier][tierIdentifier] == null || cityLimits[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
                                 {
                                     Continue = false;
-                                    alert("No parameters selected for Area");
+                                    alert("No parameters selected for City Limits");
                                 } break;
                         }
                     }
@@ -3034,13 +2984,12 @@ survey.utilities = utilityList;
                     {
                         case 'Season': return 'season'; break;
                         case 'Temperature Zone': return 'temperature_zone'; break;
-                        case 'Elevation Zone': return 'elevation_zone'; break;
                         case 'Pressure Zone': return 'pressure_zone'; break;
                         case 'Lot Size Group': return 'lot_size_group'; break;
                         case 'Meter Size': return 'meter_size'; break;
                         case 'Month': return 'month'; break;
                         case 'Meter Type': return 'meter_type'; break;
-                        case 'Area': return 'area'; break;
+                        case 'City Limits': return 'city_limits'; break;
                     }
                 }
                 
@@ -3177,9 +3126,11 @@ survey.utilities = utilityList;
                                         {
                                             
                                             var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", ""); 
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -3225,9 +3176,11 @@ survey.utilities = utilityList;
                                         for(value in tierStartsCategories[structure][j])
                                         {
                                             var replacementStr = tierStartsCategories[structure][j][value].replace(" Level:", "");
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -3278,9 +3231,12 @@ survey.utilities = utilityList;
                                         for(value in commodityChargeCategories[structure][j])
                                         {
                                             var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", ""); 
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+											replacementStr = replacementStr.replace("Elevation ", "");
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -3351,9 +3307,11 @@ survey.utilities = utilityList;
                                         for(value in tierStartsCategories[structure][j])
                                         {
                                             var  replacementStr = tierStartsCategories[structure][j][value].replace(" Level:", "");
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -3404,9 +3362,11 @@ survey.utilities = utilityList;
                                         for(value in commodityChargeCategories[structure][j])
                                         {
                                             var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", "");
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
