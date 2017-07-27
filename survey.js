@@ -192,16 +192,33 @@ survey.utilities = utilityList;
                     QuestionTxt(survey.questions[0], 1, form);
                 
                     //Create Utility Name DropDown List
-                    Answer = document.createElement("select");
-                
-                    for(var i = 0; i < survey.utilities.length; ++i)
-                    {
-                        Answer.appendChild(new Option(survey.utilities[i], survey.utilities[i]));
-                    }
-                    Answer.id = "utilityName";
-                    Answer.classList.add("form-control");
-                    Answer.classList.add("select");
-                    form.appendChild(Answer);
+                    Answer = document.createElement("input");
+					Answer.setAttribute("id", "utilityName");
+					Answer.setAttribute("name", "utilityName");
+					Answer.setAttribute("type", "text");
+					Answer.setAttribute("placeholder", "Anytown Water District...");
+					Answer.classList.add("form-control");
+					Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
+					form.appendChild(Answer);
+					
+					new autoComplete({
+						selector: 'input[name="utilityName"]',
+						minChars: 2,
+						source: function(term, suggest){
+							term = term.toLowerCase();
+							var choices = survey.utilities;
+							var matches = [];
+							for (i=0; i<choices.length; i++)
+								if (typeof choices[i] != 'undefined'){
+									if (~choices[i].toLowerCase().indexOf(term)) 
+										matches.push(choices[i]);
+								}
+							suggest(matches);
+						},
+						onSelect: function(e, term, item){
+							return false;
+						}
+					});
                 
                     QuestionTxt(survey.questions[1], 2, form);
                     
@@ -220,10 +237,12 @@ survey.utilities = utilityList;
                     
                     //Create Effective Date Date Input
                     Answer = document.createElement("input");
-                    Answer.setAttribute("type", "date");
+                    Answer.setAttribute("type", "text");
                     Answer.classList.add("form-control");
                     Answer.id = "effectiveDate";
+					Answer.setAttribute("placeholder", "mm/dd/yyyy");
                     form.appendChild(Answer);
+					$( "#effectiveDate" ).datepicker();
                     
                     QuestionTxt(survey.questions[3], 4, form);
                     
@@ -297,9 +316,9 @@ survey.utilities = utilityList;
                     
                     //Error checking for Date
                     var date = true;
-                    if(EffectiveDate == "")
+                    if(EffectiveDate == "" | !EffectiveDate.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/g))
                     { 
-                        alert("Must select an Effective Date for the Rate Structure");
+                        alert("Must select a valid Effective Date for the Rate Structure");
                         date = false;
                     }
                     
@@ -1857,7 +1876,7 @@ survey.utilities = utilityList;
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
 								
-                                var checkboxID = identifier + "cityLimits" + chargeIdentifier + i;
+                                var checkboxID = identifier + "CityLimits" + chargeIdentifier + i;
                                 divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'CityLimitsValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value =\'' + survey.cityLimits[i] + '\'/>'+
                                 '' + survey.cityLimits[i] + '</label>';
                                 
