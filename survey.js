@@ -2908,7 +2908,7 @@ var survey = JSON.parse(surveyJSON)
                             }
                             else
                             {
-                                var temp = document.getElementById("serviceCharge" + i + j);
+                                var temp = document.getElementById("serviceCharge" + i );
                                 if(temp.value == "")
                                 {
                                     alert("The Service Charge Field is Empty");
@@ -2955,7 +2955,7 @@ var survey = JSON.parse(surveyJSON)
                                 commodityCharges[currentIndex][i] = []
                                 if(isUniformDependsOn[currentIndex][i] == "No")
                                 {
-                                    var Charge = document.getElementById("commodityCharge" + i + j);
+                                    var Charge = document.getElementById("commodityCharge" + i);
                                     if(Charge.value == "")
                                     { alert("You must enter a rate"); Continue = false; } 
                                     else
@@ -3507,7 +3507,7 @@ var survey = JSON.parse(surveyJSON)
                             {
                                 if(!isServiceDepends[structure][j])
                                 {
-                                    serviceJSON = Number(serviceCharges[currentIndex][j][0]);
+                                    serviceJSON[j] = Number(serviceCharges[currentIndex][j][0]);
                                 }
                                 else
                                 {
@@ -3576,7 +3576,7 @@ var survey = JSON.parse(surveyJSON)
                                     
                                     if(isUniformDependsOn[structure][j] == 'No')
                                     {
-                                        commodityJSON.flat_rate = Number(commodityCharges[structure][j][0]);
+                                        commodityJSON[j].flat_rate = Number(commodityCharges[structure][j][0]);
                                     }
                                     else
                                     {
@@ -3612,7 +3612,7 @@ var survey = JSON.parse(surveyJSON)
                                                 tempComm += '"' + replacementStr.split(" ").join("|") + '": ' + commodityCharges[structure][j][value]+ ', ';
                                             }
                                         }
-                                        commodityJSON.flat_rate.values = JSON.parse(tempComm);
+                                        commodityJSON[j].flat_rate.values = JSON.parse(tempComm);
                                     } break;
                                 case 'Tiered':
                                     switch(j)
@@ -3634,7 +3634,7 @@ var survey = JSON.parse(surveyJSON)
                                         for(var i = 0; i < tierStartsParameters[structure][j].length; ++i)
                                         {
                                             var temp = parameterParser(tierStartsParameters[structure][j][i])
-                                            commodityJSON.tier_starts.depends_on.push(temp);
+                                            commodityJSON[j].tier_starts.depends_on.push(temp);
                                         }
                                         
                                         var tempComm = "{ ", number = 0; 
@@ -3755,12 +3755,12 @@ var survey = JSON.parse(surveyJSON)
                                     
                                     if(isTierStartsDepends[structure][j])
                                     {
-                                        commodityJSON.tier_starts = { "depends_on": [],
+                                        commodityJSON[j].tier_starts = { "depends_on": [],
                                                                       "values": {}     };
                                         for(var i = 0; i < tierStartsParameters[structure][j].length; ++i)
                                         {
                                             var temp = parameterParser(tierStartsParameters[structure][j][i])
-                                            commodityJSON.tier_starts.depends_on.push(temp);
+                                            commodityJSON[j].tier_starts.depends_on.push(temp);
                                         }
                                         
                                         var tempComm = "{ ", number = 0; 
@@ -3803,7 +3803,7 @@ var survey = JSON.parse(surveyJSON)
                                         commodityJSON[j].tier_starts = [];
                                         for(var i = 0; i < tierLevels[structure][j]; ++i)
                                         {
-                                            commodityJSON.tier_starts.push(tierStartsValues[structure][j][i]);
+                                            commodityJSON[j].tier_starts.push(tierStartsValues[structure][j][i]);
                                         }
                                     }
                                     if(isTierPricesDepends[structure][j])
