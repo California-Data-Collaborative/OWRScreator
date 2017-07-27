@@ -1,4 +1,14 @@
-
+sectionTextDict = {
+	"water":"Water Rates",
+	"fixedServiceCharge":"Fixed Service Charge",
+	"variableCommCharge":"Variable Commodity Charge",
+	"drought":"Drought Rates",
+	"fixedDroughtCharge":"Fixed Drought Charge",
+	"variableDroughtCharge":"Variable Drought Charge",
+	"wastewater":"Wastewater Rates",
+	"fixedWastewaterCharge":"Fixed Wastewater Charge",
+	"variableWastewaterCharge":"Variable Wastewater Charge",
+};
 
 questionList = [
 "<b>Enter the Name of the Utility:</b>", 
@@ -40,4 +50,5 @@ questionList = [
 
 "<b>What customer account attributes affect the price charged?</b>",
 
-"<b>Do the Tier Prices Depend On Anything?</b>"]
+"<b>Do the Tier Prices Depend On Anything?</b>"];
+

@@ -560,12 +560,17 @@ survey.utilities = utilityList;
                     title.innerHTML = UtilityName;
                     subtitle.innerHTML = SelectedRateStructures[index];
                     clear(form);
+					
+					
                     
                     //Populates The Service Charge Div
                     var serviceList = document.createElement("div");
                     serviceList.id = "serviceList0";
                     form.appendChild(serviceList);
                     
+					createSection(sectionTextDict["water"], "water", "h2", serviceList)
+					createSection(sectionTextDict["fixedServiceCharge"], "fixedServiceCharge", "h3", serviceList)
+					
                     QuestionTxt(survey.questions[4], 5, serviceList);
                     
                     Answer = document.createElement("span");
@@ -590,6 +595,7 @@ survey.utilities = utilityList;
                     commodityList.id = "commodityList0";
                     form.appendChild(commodityList);
                     
+					createSection(sectionTextDict["variableCommCharge"], "variableCommCharge", "h3", commodityList)
                     QuestionTxt(survey.questions[6], 9, commodityList);
                     
                     Answer = document.createElement("span");
@@ -623,6 +629,8 @@ survey.utilities = utilityList;
                     serviceList.id = "serviceList1";
                     form.appendChild(serviceList);
                     
+					createSection(sectionTextDict["drought"], "drought", "h2", serviceList)
+					createSection(sectionTextDict["fixedDroughtCharge"], "fixedDroughtCharge", "h3", serviceList)
                     QuestionTxt("Is there a fixed Drought Surcharge?", 5, serviceList);
                     
                     Answer = document.createElement("span");
@@ -647,6 +655,7 @@ survey.utilities = utilityList;
                     commodityList.id = "commodityList1";
                     form.appendChild(commodityList);
                     
+					createSection(sectionTextDict["variableDroughtCharge"], "variableDroughtCharge", "h3", serviceList)
                     QuestionTxt("Is There A Volumetric Drought Surcharge?", 9, commodityList);
                     
                     Answer = document.createElement("span");
@@ -676,6 +685,8 @@ survey.utilities = utilityList;
                     serviceList.id = "serviceList2";
                     form.appendChild(serviceList);
                     
+					createSection(sectionTextDict["wastewater"], "wastewater", "h2", serviceList)
+					createSection(sectionTextDict["fixedWastewaterCharge"], "fixedWastewaterCharge", "h3", serviceList)
                     QuestionTxt("Is there a fixed wasterwater charge?", 5, serviceList);
                     
                     Answer = document.createElement("span");
@@ -3836,6 +3847,14 @@ survey.utilities = utilityList;
                     Question.setAttribute("id", "question" + number);
                     Parent.appendChild(Question);
                 }
+				
+				function createSection(sectionText, name, headerSize, Parent)
+				{
+					section = document.createElement(headerSize);
+                    section.innerHTML = sectionText;
+                    section.setAttribute("id", name);
+                    Parent.appendChild(section);
+				}
                 
                 function clear(parent)
                 {
