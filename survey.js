@@ -1,422 +1,4 @@
 var surveyJSON = '{"title": "CaDC Open Water Rate Specification Tool",' +
-'"utilities": [' +
-'"Pomona  City of",'+
-'"Merced  City of",'+
-'"Menlo Park  City of",'+
-'"Coachella Valley Water District",'+
-'"Vallecitos Water District",'+
-'"Alhambra  City of",'+
-'"Poway  City of",'+
-'"American Canyon, City of",'+
-'"San Bernardino  City of",'+
-'"Ontario  City of",'+
-'"Rainbow Municipal Water District",'+
-'"Humboldt Bay Municipal Water District",'+
-'"Fountain Valley  City of",'+
-'"Hollister  City of",'+
-'"Alameda County Water District",'+
-'"Suburban Water Systems San Jose Hills",'+
-'"Valley County Water District",'+
-'"San Gabriel Valley Fontana Water Company",'+
-'"Los Angeles Department of Water and Power",'+
-'"San Bruno  City of",'+
-'"Los Banos, City of",'+
-'"Stockton  City of",'+
-'"Golden State Water Company Placentia",'+
-'"Lomita  City of",'+
-'"Big Bear City Community Services District",'+
-'"Santa Ana  City of",'+
-'"Pasadena  City of",'+
-'"San Buenaventura  City of",'+
-'"Sacramento  City of",'+
-'"Inglewood  City of",'+
-'"Greenfield, City of",'+
-'"Hanford  City of",'+
-'"North Tahoe Public Utility District",'+
-'"Linda County Water District",'+
-'"Indian Wells Valley Water District",'+
-'"Great Oaks Water Company Incorporated",'+
-'"Yuba City  City of",'+
-'"Golden State Water Company Artesia",'+
-'"Burlingame  City of",'+
-'"Carmichael Water District",'+
-'"San Lorenzo Valley Water District",'+
-'"Vaughn Water Company",'+
-'"West Valley Water District",'+
-'"Nevada Irrigation District",'+
-'"Ramona Municipal Water District",'+
-'"Carlsbad Municipal Water District",'+
-'"Imperial, City of",'+
-'"Crescenta Valley Water District",'+
-'"Santa Maria  City of",'+
-'"Tuolumne Utilities District",'+
-'"Orange  City of",'+
-'"Atascadero Mutual Water Company",'+
-'"Eastern Municipal Water District",'+
-'"Buena Park  City of",'+
-'"Calaveras County Water District",'+
-'"Montecito Water District",'+
-'"Discovery Bay Community Services District",'+
-'"Fullerton  City of",'+
-'"San Fernando  City of",'+
-'"Rowland Water District",'+
-'"Corona  City of",'+
-'"Modesto, City of",'+
-'"Lodi  City of Public Works Department",'+
-'"Covina  City of",'+
-'"Contra Costa Water District",'+
-'"Lakeside Water District",'+
-'"Oakdale  City of",'+
-'"California-American Water Company Monterey District",'+
-'"California-American Water Company Los Angeles District",'+
-'"Paradise Irrigation District",'+
-'"East Valley Water District",'+
-'"Golden State Water Company Bell-Bell Gardens",'+
-'"Fair Oaks Water District",'+
-'"Reedley  City of",'+
-'"Fallbrook Public Utility District",'+
-'"Gilroy  City of",'+
-'"Torrance  City of",'+
-'"Nipomo Community Services District",'+
-'"California Water Service Company East Los Angeles",'+
-'"Rubidoux Community Service District",'+
-'"Newhall County Water District",'+
-'"Lake Hemet Municipal Water District",'+
-'"Lake Arrowhead Community Services District",'+
-'"El Segundo  City of",'+
-'"Ripon  City of",'+
-'"Golden State Water Company Orcutt",'+
-'"Sunnyvale  City of",'+
-'"Paramount  City of",'+
-'"California Water Service Company Willows",'+
-'"Rincon Del Diablo Municipal Water District",'+
-'"California Water Service Company Selma",'+
-'"Coastside County Water District",'+
-'"Garden Grove  City of",'+
-'"Rosamond Community Service District",'+
-'"Grover Beach  City of",'+
-'"Diablo Water District",'+
-'"Chino Hills  City of",'+
-'"California-American Water Ventura District",'+
-'"Coalinga City of",'+
-'"Bella Vista Water District",'+
-'"Benicia  City of",'+
-'"California Water Service Company Stockton",'+
-'"Walnut Valley Water District",'+
-'"Escondido  City of",'+
-'"San Dieguito Water District",'+
-'"Cerritos  City of",'+
-'"Golden State Water Company West Orange",'+
-'"Vallejo  City of",'+
-'"Valley Center Municipal Water District",'+
-'"Atwater  City of",'+
-'"Banning  City of",'+
-'"Sunnyslope County Water District",'+
-'"California Water Service Company Marysville",'+
-'"Healdsburg  City of",'+
-'"California Water Service Company Westlake",'+
-'"Ventura County Waterworks District No. 8",'+
-'"Castaic Lake Water Agency Santa Clarita Water Division",'+
-'"Yorba Linda Water District",'+
-'"City of Big Bear Lake, Dept of Water & Power",'+
-'"Valley of the Moon Water District",'+
-'"Perris, City of",'+
-'"Beaumont-Cherry Valley Water District",'+
-'"Palmdale Water District",'+
-'"Thousand Oaks  City of",'+
-'"Seal Beach  City of",'+
-'"Fairfield  City of",'+
-'"Azusa  City of",'+
-'"Hemet  City of",'+
-'"San Jacinto  City of",'+
-'"Riverside Highland Water Company",'+
-'"Oildale Mutual Water Company",'+
-'"Olivehurst Public Utility District",'+
-'"Pittsburg  City of",'+
-'"Citrus Heights Water District",'+
-'"Orchard Dale Water District",'+
-'"Golden State Water Company Culver City",'+
-'"Watsonville  City of",'+
-'"Millbrae  City of",'+
-'"California City  City of",'+
-'"California Water Service Company South San Francisco",'+
-'"Compton  City of",'+
-'"Western Municipal Water District of Riverside",'+
-'"Lamont Public Utility District",'+
-'"Shasta Lake  City of",'+
-'"Madera  City of",'+
-'"Golden State Water Company San Dimas",'+
-'"Moulton Niguel Water District",'+
-'"Vernon  City of",'+
-'"Alco Water Service",'+
-'"California Water Service Company Palos Verdes",'+
-'"Rio Linda - Elverta Community Water District",'+
-'"Pinedale County Water District",'+
-'"Sanger  City of",'+
-'"Mesa Water District",'+
-'"Rohnert Park  City of",'+
-'"Otay Water District",'+
-'"Santa Barbara  City of",'+
-'"Scotts Valley Water District",'+
-'"Lompoc  City of",'+
-'"Santa Rosa  City of",'+
-'"East Orange County Water District",'+
-'"Lakewood  City of",'+
-'"Golden State Water Company Claremont",'+
-'"Anaheim  City of",'+
-'"Vacaville  City of",'+
-'"San Juan Water District",'+
-'"Riverside  City of",'+
-'"Ventura County Waterworks District No 1",'+
-'"Joshua Basin Water District",'+
-'"Calexico  City of",'+
-'"Placer County Water Agency",'+
-'"Rancho California Water District",'+
-'"Antioch  City of",'+
-'"Rialto  City of",'+
-'"Camarillo  City of",'+
-'"Golden State Water Company S Arcadia",'+
-'"Monterey Park  City of",'+
-'"Rio Vista, city of",'+
-'"Roseville  City of",'+
-'"California Water Service Company Bakersfield",'+
-'"California Water Service Company Dixon, City of",'+
-'"Eureka  City of",'+
-'"Yreka, City of",'+
-'"Triunfo Sanitation District / Oak Park Water Service",'+
-'"Dinuba  City of",'+
-'"Santa Cruz  City of",'+
-'"Red Bluff  City of",'+
-'"Crescent City  City of",'+
-'"Hawthorne  City of",'+
-'"Valencia Water Company",'+
-'"South Pasadena  City of",'+
-'"California Water Service Company Dominguez",'+
-'"Fresno  City of",'+
-'"Sonoma  City of",'+
-'"Redwood City  City of",'+
-'"Whittier  City of",'+
-'"Adelanto City of",'+
-'"Las Virgenes Municipal Water District",'+
-'"Martinez  City of",'+
-'"Santa Margarita Water District",'+
-'"San Bernardino County Service Area 70J",'+
-'"Camrosa Water District",'+
-'"Glendora  City of",'+
-'"Davis  City of",'+
-'"South Gate  City of",'+
-'"North Coast County Water District",'+
-'"Del Oro Water Company",'+
-'"Golden State Water Company S San Gabriel",'+
-'"North Marin Water District",'+
-'"Golden State Water Company Barstow",'+
-'"Chino  City of",'+
-'"Crestline Village Water District",'+
-'"Paso Robles  City of",'+
-'"Olivenhain Municipal Water District",'+
-'"Valley Water Company",'+
-'"Mountain View  City of",'+
-'"San Jose Water Company",'+
-'"Dublin San Ramon Services District",'+
-'"Pico Water District",'+
-'"Ceres  City of",'+
-'"Fillmore  City of",'+
-'"South Tahoe Public Utilities District",'+
-'"Suisun-Solano Water Authority",'+
-'"Huntington Park  City of",'+
-'"Irvine Ranch Water District",'+
-'"California Water Service Company Livermore",'+
-'"California Water Service Company Los Altos/Suburban",'+
-'"Porterville  City of",'+
-'"Monte Vista Water District",'+
-'"Downey  City of",'+
-'"San Clemente  City of",'+
-'"Tehachapi, City of",'+
-'"Soquel Creek Water District",'+
-'"Hillsborough  Town of",'+
-'"Turlock  City of",'+
-'"Santa Clara  City of",'+
-'"Carpinteria Valley Water District",'+
-'"South Feather Water and Power Agency",'+
-'"Tahoe City Public Utilities District",'+
-'"Cucamonga Valley Water District",'+
-'"Folsom  City of",'+
-'"La Verne  City of",'+
-'"Tracy  City of",'+
-'"California Water Service Company Hermosa/Redondo",'+
-'"Sierra Madre  City of",'+
-'"California-American Water Company San Diego District",'+
-'"Blythe  City of",'+
-'"West Kern Water District",'+
-'"Oxnard  City of",'+
-'"Long Beach  City of",'+
-'"Sacramento Suburban Water District",'+
-'"Montebello Land and Water Company",'+
-'"Pismo Beach  City of",'+
-'"California Water Service Company Mid Peninsula",'+
-'"Arcata  City of",'+
-'"Mid-Peninsula Water District",'+
-'"Beverly Hills  City of",'+
-'"Corcoran, City of",'+
-'"Indio  City of",'+
-'"Riverbank  City of",'+
-'"Elsinore Valley Municipal Water District",'+
-'"San Luis Obispo  City of",'+
-'"Sacramento County Water Agency",'+
-'"Milpitas  City of",'+
-'"Fruitridge Vista Water Company",'+
-'"Arroyo Grande  City of",'+
-'"Livermore  City of Division of Water Resources",'+
-'"San Diego  City of",'+
-'"Georgetown Divide Public Utilities District",'+
-'"Burbank  City of",'+
-'"Exeter  City of",'+
-'"San Bernardino County Service Area 64",'+
-'"Casitas Municipal Water District",'+
-'"Coachella  City of",'+
-'"Brentwood  City of",'+
-'"Upland  City of",'+
-'"Huntington Beach  City of",'+
-'"California Water Service Company Visalia",'+
-'"Windsor, Town of",'+
-'"Clovis  City of",'+
-'"Palo Alto  City of",'+
-'"Manteca  City of",'+
-'"Santa Fe Springs  City of",'+
-'"Phelan Pinon Hills Community Services District",'+
-'"California-American Water Company Sacramento District",'+
-'"Truckee-Donner Public Utilities District",'+
-'"Bakman Water Company",'+
-'"Shafter  City of",'+
-'"Hi-Desert Water District",'+
-'"Golden State Water Company Cowan Heights",'+
-'"San Jose  City of",'+
-'"East Palo Alto, City of",'+
-'"Lincoln  City of",'+
-'"El Centro  City of",'+
-'"Sweetwater Springs Water District",'+
-'"El Dorado Irrigation District",'+
-'"Golden State Water Company Southwest",'+
-'"Sunny Slope Water Company",'+
-'"Mountain House Community Services District",'+
-'"Galt  City of",'+
-'"Pico Rivera  City of",'+
-'"Delano  City of",'+
-'"Groveland Community Services District",'+
-'"California Water Service Company Salinas District",'+
-'"San Juan Capistrano  City of",'+
-'"Petaluma  City of",'+
-'"Redlands  City of",'+
-'"El Toro Water District",'+
-'"Lincoln Avenue Water Company",'+
-'"Marin Municipal Water District",'+
-'"Morgan Hill  City of",'+
-'"Laguna Beach County Water District",'+
-'"California Water Service Company Kern River Valley",'+
-'"Yucaipa Valley Water District",'+
-'"Los Angeles County Public Works Waterworks District 29",'+
-'"Livingston  City of",'+
-'"Estero Municipal Improvement District",'+
-'"McKinleyville Community Service District",'+
-'"Jurupa Community Service District",'+
-'"Victorville Water District",'+
-'"Lee Lake Water District",'+
-'"Rubio Canyon Land and Water Association",'+
-'"Fortuna  City of",'+
-'"California Water Service Company Bear Gulch",'+
-'"Kingsburg, City of",'+
-'"Daly City  City of",'+
-'"City of Newman Water Department",'+
-'"Lathrop, City of",'+
-'"Napa  City of",'+
-'"Brea  City of",'+
-'"Mammoth Community Water District",'+
-'"Golden State Water Company Norwalk",'+
-'"Golden State Water Company Florence Graham",'+
-'"Santa Paula  City of",'+
-'"Manhattan Beach  City of",'+
-'"Morro Bay  City of",'+
-'"Patterson  City of",'+
-'"Tulare, City of",'+
-'"Bakersfield  City of",'+
-'"Golden State Water Company Simi Valley",'+
-'"Suburban Water Systems Whittier/La Mirada",'+
-'"California Water Service Company Chico District",'+
-'"Marina Coast Water District",'+
-'"La Palma  City of",'+
-'"Westborough Water District",'+
-'"South Coast Water District",'+
-'"Park Water Company",'+
-'"Padre Dam Municipal Water District",'+
-'"Glendale  City of",'+
-'"Helix Water District",'+
-'"Norwalk City of",'+
-'"Vista Irrigation District",'+
-'"Santa Fe Irrigation District",'+
-'"Los Angeles County Public Works Waterworks District 40",'+
-'"Golden State Water Company Bay Point",'+
-'"West Sacramento  City of",'+
-'"Hayward  City of",'+
-'"Sweetwater Authority",'+
-'"Lemoore  City of",'+
-'"Anderson, City of",'+
-'"Brawley  City of",'+
-'"La Habra  City of Public Works",'+
-'"East Niles Community Service District",'+
-'"Santa Monica  City of",'+
-'"Newport Beach  City of",'+
-'"Susanville  City of",'+
-'"Hesperia Water District City of",'+
-'"Trabuco Canyon Water District",'+
-'"Elk Grove Water Service",'+
-'"Goleta Water District",'+
-'"California Water Service Company King City",'+
-'"Cambria Community Services District",'+
-'"Woodland  City of",'+
-'"Kerman, City of",'+
-'"Westminster  City of",'+
-'"Quartz Hill Water District",'+
-'"Loma Linda  City of *",'+
-'"California Water Service Company Oroville",'+
-'"Apple Valley Ranchos Water Company",'+
-'"Soledad, City of",'+
-'"Golden State Water Company Cordova",'+
-'"Redding  City of",'+
-'"Bellflower-Somerset Mutual Water Company",'+
-'"East Bay Municipal Utilities District",'+
-'"San Francisco Public Utilities Commission",'+
-'"San Gabriel County Water District",'+
-'"Oceanside  City of",'+
-'"Orange Vale Water Company",'+
-'"San Gabriel Valley Water Company",'+
-'"Colton, City of",'+
-'"Mission Springs Water District",'+
-'"Lynwood  City of",'+
-'"Winton Water & Sanitary District",'+
-'"Wasco  City of",'+
-'"Ukiah  City of",'+
-'"Monrovia  City of",'+
-'"Tustin  City of",'+
-'"Myoma Dunes Mutual Water Company",'+
-'"California Water Service Company Redwood Valley",'+
-'"Port Hueneme  City of",'+
-'"Arcadia  City of",'+
-'"Humboldt Community Service District",'+
-'"Pleasanton  City of",'+
-'"Norco  City of",'+
-'"El Monte  City of",'+
-'"California Water Service Company Antelope Valley",'+
-'"Arvin Community Services District",'+
-'"Twentynine Palms Water District",'+
-'"Desert Water Agency",'+
-'"Amador Water Agency"],'+
-'"questions": ["Enter the Name of the Utility:", "Enter the Bill Frequency:",'+
-'"Enter the Effective Date of this Rate Structure:", "Select the Customer Classes Used by the Utility:",'+
-' "Does this Customer Class contain a Fixed Service Charge?", "Does the Service Charge depend on the following:",'+
-'"Does this Customer Class contain a Volumetric Commodity Charge?", "What type of Commodity Charge does this Customer Class Contain?",'+
-'"Does this Uniform Commodity Charge Depend On Anything?", "How Many Tiers are There?",' +
-' "Do the Tier Levels Depend On Anything?", "Select the parameters to include:",'+
-' "Do the Tier Prices Depend On Anything?"],'+
 '"billFrequency": ["Monthly", "BiMonthly", "Quarterly", "Annually", "Other"],'+
 '"rateStructures":['+
 '"Residential Single", "Residential Multi",'+
@@ -429,17 +11,19 @@ var surveyJSON = '{"title": "CaDC Open Water Rate Specification Tool",' +
 '"Potable", "Recycled",'+
 '"Building Contractor", "Residential Construction",'+
 '"Other"],'+
-'"commodityDependsOn": ["Meter Size", "Meter Type", "Season", "Temperature Zone", "Elevation Zone", "Pressure Zone", "Lot Size Group", "Month", "Area"],'+
+'"commodityDependsOn": ["Meter Size", "Meter Type", "Season", "Temperature Zone", "Pressure Zone", '+
+'"Lot Size Group", "Month", "City Limits"],'+
 '"meterSizes": ["5/8","3/4", "1", "1 1/2", "2", "3", "4", "6", "8", "10", "12", "14", "16", "18"],'+
 '"meterTypes": ["Disc", "Compound", "Turbo", "Magnetic Meter", "Propeller", "Omni F2", "Displacement"],'+
 '"season": ["Summer", "Winter"],'+
 '"temperatureZone": ["Low", "Medium", "High"], '+
-'"elevationZone":["1", "2", "3", "4", "5", "6"],'+
 '"pressureZone":["1", "2", "3", "4", "5", "6"],'+
 '"lotSizeGroup":["1", "2", "3", "4", "5"],'+
 '"month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],'+
-'"area": ["Inside City", "Outside City"]}'
-var survey = JSON.parse(surveyJSON)
+'"cityLimits": ["Inside City", "Outside City"]}'
+var survey = JSON.parse(surveyJSON);
+survey.questions = questionList;
+survey.utilities = utilityList;
 
                 var form = document.getElementById("survey");
                 var title = document.getElementById("Header");
@@ -499,12 +83,11 @@ var survey = JSON.parse(surveyJSON)
                 var commodityMeterSize = [];
                 var month = [];
                 var season = [];
-                var elevationZone = [];
                 var pressureZone = [];
                 var temperatureZone = [];
                 var lotSizeGroup = [];
                 var meterType = [];
-                var area = [];
+                var cityLimits = [];
                 
                 function primeArrays()
                 {
@@ -583,8 +166,6 @@ var survey = JSON.parse(surveyJSON)
                         month[currentIndex] = [];
                     if(season[currentIndex] == null)
                         season[currentIndex] = [];
-                    if(elevationZone[currentIndex] == null)
-                        elevationZone[currentIndex] = [];
                     if(pressureZone[currentIndex] == null)
                         pressureZone[currentIndex] = [];
                     if(temperatureZone[currentIndex] == null)
@@ -593,8 +174,8 @@ var survey = JSON.parse(surveyJSON)
                         lotSizeGroup[currentIndex]= [];
                     if(meterType[currentIndex] == null)
                         meterType[currentIndex] = [];
-                    if(area[currentIndex] == null)
-                        area[currentIndex] = [];
+                    if(cityLimits[currentIndex] == null)
+                        cityLimits[currentIndex] = [];
                 }
                 
                 //Fills All Html elements for first page
@@ -608,16 +189,33 @@ var survey = JSON.parse(surveyJSON)
                     QuestionTxt(survey.questions[0], 1, form);
                 
                     //Create Utility Name DropDown List
-                    Answer = document.createElement("select");
-                
-                    for(var i = 0; i < survey.utilities.length; ++i)
-                    {
-                        Answer.appendChild(new Option(survey.utilities[i], survey.utilities[i]));
-                    }
-                    Answer.id = "utilityName";
-                    Answer.classList.add("form-control");
-                    Answer.classList.add("select");
-                    form.appendChild(Answer);
+                    Answer = document.createElement("input");
+					Answer.setAttribute("id", "utilityName");
+					Answer.setAttribute("name", "utilityName");
+					Answer.setAttribute("type", "text");
+					Answer.setAttribute("placeholder", "Anytown Water District...");
+					Answer.classList.add("form-control");
+					Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
+					form.appendChild(Answer);
+					
+					new autoComplete({
+						selector: 'input[name="utilityName"]',
+						minChars: 2,
+						source: function(term, suggest){
+							term = term.toLowerCase();
+							var choices = survey.utilities;
+							var matches = [];
+							for (i=0; i<choices.length; i++)
+								if (typeof choices[i] != 'undefined'){
+									if (~choices[i].toLowerCase().indexOf(term)) 
+										matches.push(choices[i]);
+								}
+							suggest(matches);
+						},
+						onSelect: function(e, term, item){
+							return false;
+						}
+					});
                 
                     QuestionTxt(survey.questions[1], 2, form);
                     
@@ -636,10 +234,12 @@ var survey = JSON.parse(surveyJSON)
                     
                     //Create Effective Date Date Input
                     Answer = document.createElement("input");
-                    Answer.setAttribute("type", "date");
+                    Answer.setAttribute("type", "text");
                     Answer.classList.add("form-control");
                     Answer.id = "effectiveDate";
+					Answer.setAttribute("placeholder", "mm/dd/yyyy");
                     form.appendChild(Answer);
+					$( "#effectiveDate" ).datepicker();
                     
                     QuestionTxt(survey.questions[3], 4, form);
                     
@@ -713,9 +313,9 @@ var survey = JSON.parse(surveyJSON)
                     
                     //Error checking for Date
                     var date = true;
-                    if(EffectiveDate == "")
+                    if(EffectiveDate == "" | !EffectiveDate.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/g))
                     { 
-                        alert("Must select an Effective Date for the Rate Structure");
+                        alert("Must select a valid Effective Date for the Rate Structure");
                         date = false;
                     }
                     
@@ -1280,11 +880,6 @@ var survey = JSON.parse(surveyJSON)
                                 temperatureZone[currentIndex][chargeIdentifier] = [];
                                 temperatureZone[currentIndex][chargeIdentifier][3] = temperatureZone[temp][chargeIdentifier][3];
                             }
-                            if(elevationZone[temp][chargeIdentifier][3] != null)
-                            {
-                                elevationZone[currentIndex][chargeIdentifier] = []; 
-                                elevationZone[currentIndex][chargeIdentifier][3] = elevationZone[temp][chargeIdentifier][3];
-                            }
                             if(pressureZone[temp][chargeIdentifier][3] != null)
                             {
                                 pressureZone[currentIndex][chargeIdentifier] = [];
@@ -1310,10 +905,10 @@ var survey = JSON.parse(surveyJSON)
                                 meterType[currentIndex][chargeIdentifier] = [];
                                 meterType[currentIndex][chargeIdentifier][3] = meterType[temp][chargeIdentifier][3];
                             }
-                            if(area[temp][chargeIdentifier][3] != null)
+                            if(cityLimits[temp][chargeIdentifier][3] != null)
                             {
-                                area[currentIndex][chargeIdentifier] = [];
-                                area[currentIndex][chargeIdentifier][3] = area[temp][chargeIdentifier][3];
+                                cityLimits[currentIndex][chargeIdentifier] = [];
+                                cityLimits[currentIndex][chargeIdentifier][3] = cityLimits[temp][chargeIdentifier][3];
                             }
                         }
                     }
@@ -1556,8 +1151,6 @@ var survey = JSON.parse(surveyJSON)
                         season[currentIndex][chargeIdentifier] = [];
                     if(temperatureZone[currentIndex][chargeIdentifier] == null)
                         temperatureZone[currentIndex][chargeIdentifier] = [];
-                    if(elevationZone[currentIndex][chargeIdentifier] == null)
-                        elevationZone[currentIndex][chargeIdentifier] = []; 
                     if(pressureZone[currentIndex][chargeIdentifier] == null)
                         pressureZone[currentIndex][chargeIdentifier] = [];
                     if(lotSizeGroup[currentIndex][chargeIdentifier] == null)
@@ -1568,8 +1161,8 @@ var survey = JSON.parse(surveyJSON)
                         commodityMeterSize[currentIndex][chargeIdentifier] = [];
                     if(meterType[currentIndex][chargeIdentifier] == null)
                         meterType[currentIndex][chargeIdentifier] = [];
-                    if(area[currentIndex][chargeIdentifier] == null)
-                        area[currentIndex][chargeIdentifier] = [];
+                    if(cityLimits[currentIndex][chargeIdentifier] == null)
+                        cityLimits[currentIndex][chargeIdentifier] = [];
                 }
                 
                 //clear and populate the commodityDependsOnDiv with options for uniform rates
@@ -2268,24 +1861,26 @@ var survey = JSON.parse(surveyJSON)
                                     }
                             }
                             break;
-                        case 'Area': 
-                            for(var i = 0; i < survey.area.length; ++i)
+                        case 'City Limits': 
+                            for(var i = 0; i < survey.cityLimits.length; ++i)
                             {   
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
-                                var checkboxID = identifier + "Area" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'AreaValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value =\'' + survey.area[i] + '\'/>'+
-                                '' + survey.area[i] + '</label>';
-                                DIV.appendChild(divider);
+								
+                                var checkboxID = identifier + "CityLimits" + chargeIdentifier + i;
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'CityLimitsValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value =\'' + survey.cityLimits[i] + '\'/>'+
+                                '' + survey.cityLimits[i] + '</label>';
+                                
+								DIV.appendChild(divider);
                             }                            
-                            if(area[currentIndex][chargeIdentifier][tierIdentifier] != null)
+                            if(cityLimits[currentIndex][chargeIdentifier][tierIdentifier] != null)
                                 {
-                                    for(var i = 0; i < survey.area.length; ++i)
+                                    for(var i = 0; i < survey.cityLimits.length; ++i)
                                         {
-                                        var checkCheckBox = document.getElementById(identifier + "Area" + chargeIdentifier + i);
-                                        for(var j = 0; j < area[currentIndex][chargeIdentifier][tierIdentifier].length; ++j)
+                                        var checkCheckBox = document.getElementById(identifier + "CityLimits" + chargeIdentifier + i);
+                                        for(var j = 0; j < cityLimits[currentIndex][chargeIdentifier][tierIdentifier].length; ++j)
                                         {
-                                            if(area[currentIndex][chargeIdentifier][tierIdentifier][j] == checkCheckBox.value)
+                                            if(cityLimits[currentIndex][chargeIdentifier][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
@@ -2338,32 +1933,6 @@ var survey = JSON.parse(surveyJSON)
                                         for(var j = 0; j < temperatureZone[currentIndex][chargeIdentifier][tierIdentifier].length; ++j)
                                         {
                                             if(temperatureZone[currentIndex][chargeIdentifier][tierIdentifier][j] == checkCheckBox.value)
-                                            {
-                                                checkCheckBox.checked = true;
-                                            }
-                                        }
-                                    }
-                            }
-                            break;
-                        case 'Elevation Zone':
-                            for(var i = 0; i < survey.elevationZone.length; ++i)
-                            {   
-                                var divider = document.createElement("div");
-                                divider.classList.add("checkbox");
-                                var checkboxID = identifier + "ElevationZone" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'ElevationZoneValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="Elevation ' + survey.elevationZone[i]+ '"/>'+
-                                '' + survey.elevationZone[i] + '</label>';
-                                DIV.appendChild(divider);
-                            }
-                            
-                            if(elevationZone[currentIndex][chargeIdentifier][tierIdentifier] != null)
-                            {
-                                    for(var i = 0; i < survey.elevationZone.length; ++i)
-                                    {
-                                        var checkCheckBox = document.getElementById(identifier + "ElevationZone" + chargeIdentifier + i);
-                                        for(var j = 0; j < elevationZone[currentIndex][chargeIdentifier][tierIdentifier].length; ++j)
-                                        {
-                                            if(elevationZone[currentIndex][chargeIdentifier][tierIdentifier][j] == checkCheckBox.value)
                                             {
                                                 checkCheckBox.checked = true;
                                             }
@@ -2441,9 +2010,8 @@ var survey = JSON.parse(surveyJSON)
                                 case 'Temperature Zone': temperatureZone[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
                                 case 'Lot Size Group': lotSizeGroup[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
                                 case 'Pressure Zone': pressureZone[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
-                                case 'Elevation Zone': elevationZone[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
                                 case 'Meter Type': meterType[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
-                                case 'Area': area[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
+                                case 'City Limits': cityLimits[currentIndex][chargeIdentifier][tierIdentifier] = []; break;
                             }
                         }
                     }
@@ -2563,14 +2131,14 @@ var survey = JSON.parse(surveyJSON)
                                             meterType[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); 
                                         }
                                     } break;
-                                case 'Area': 
-                                    area[currentIndex][chargeIdentifier][tierIdentifier] = [];
-                                    for(var i = 0; i < survey.area.length; ++i)
+                                case 'City Limits': 
+                                    cityLimits[currentIndex][chargeIdentifier][tierIdentifier] = [];
+                                    for(var i = 0; i < survey.cityLimits.length; ++i)
                                     {
-                                        var checkCheckBox = document.getElementById(Identifier + "Area" + chargeIdentifier + i);
+                                        var checkCheckBox = document.getElementById(Identifier + "CityLimits" + chargeIdentifier + i);
                                         if(checkCheckBox.checked)
                                         { 
-                                            area[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); 
+                                            cityLimits[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); 
                                         }
                                     } break;
                                 case 'Month': 
@@ -2598,14 +2166,6 @@ var survey = JSON.parse(surveyJSON)
                                         var checkCheckBox = document.getElementById(Identifier + "PressureZone" + chargeIdentifier + i);
                                         if(checkCheckBox.checked)
                                         { pressureZone[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); }
-                                    } break;
-                                case 'Elevation Zone':
-                                    elevationZone[currentIndex][chargeIdentifier][tierIdentifier] = [];
-                                    for(var i = 0; i < survey.elevationZone.length; ++i)
-                                    {
-                                        var checkCheckBox = document.getElementById(Identifier + "ElevationZone" + chargeIdentifier + i);
-                                        if(checkCheckBox.checked)
-                                        { elevationZone[currentIndex][chargeIdentifier][tierIdentifier].push(checkCheckBox.value); }
                                     } break;
                                 case 'Lot Size Group':
                                     lotSizeGroup[currentIndex][chargeIdentifier][tierIdentifier] = [];
@@ -2642,7 +2202,7 @@ var survey = JSON.parse(surveyJSON)
                         
                     for(var i = 0; i < parameterList.length; ++i)
                     {
-                        if(season[currentIndex][chargeIdentifier] != null || commodityMeterSize[currentIndex][chargeIdentifier] != null || month[currentIndex][chargeIdentifier] != null || temperatureZone[currentIndex][chargeIdentifier] != null || elevationZone[currentIndex][chargeIdentifier] != null || pressureZone[currentIndex][chargeIdentifier] != null || lotSizeGroup[currentIndex][chargeIdentifier] != null )
+                        if(season[currentIndex][chargeIdentifier] != null || commodityMeterSize[currentIndex][chargeIdentifier] != null || month[currentIndex][chargeIdentifier] != null || temperatureZone[currentIndex][chargeIdentifier] != null || pressureZone[currentIndex][chargeIdentifier] != null || lotSizeGroup[currentIndex][chargeIdentifier] != null )
                         {
                             switch(parameterList[i])
                             {
@@ -2650,11 +2210,10 @@ var survey = JSON.parse(surveyJSON)
                                 case 'Meter Size': ParametersToUse[i] = commodityMeterSize[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Month': ParametersToUse[i] = month[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Temperature Zone': ParametersToUse[i] = temperatureZone[currentIndex][chargeIdentifier][identifier]; break;
-                                case 'Elevation Zone': ParametersToUse[i] = elevationZone[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Pressure Zone': ParametersToUse[i] = pressureZone[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Lot Size Group': ParametersToUse[i] = lotSizeGroup[currentIndex][chargeIdentifier][identifier]; break;
                                 case 'Meter Type': ParametersToUse[i] = meterType[currentIndex][chargeIdentifier][identifier]; break;
-                                case 'Area': ParametersToUse[i] = area[currentIndex][chargeIdentifier][identifier]; break;
+                                case 'City Limits': ParametersToUse[i] = cityLimits[currentIndex][chargeIdentifier][identifier]; break;
                             }
                         }
                     }
@@ -2779,7 +2338,7 @@ var survey = JSON.parse(surveyJSON)
                                     Continue = false;
                                     alert("No parameters selected for Season");
                                 } break;
-                            case "SMeter Size":
+                            case "Meter Size":
                                 if(commodityMeterSize[currentIndex][chargeIdentifier][tierIdentifier] == null || commodityMeterSize[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
                                 {
                                     Continue = false;
@@ -2797,12 +2356,6 @@ var survey = JSON.parse(surveyJSON)
                                     Continue = false;
                                     alert("No parameters selected for Temperature Zone");
                                 } break;
-                            case "Elevation Zone":
-                                if(elevationZone[currentIndex][chargeIdentifier][tierIdentifier] == null || elevationZone[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
-                                {
-                                    Continue = false;
-                                    alert("No parameters selected for Elevation Zone");
-                                } break;
                             case "Pressure Zone":
                                 if(pressureZone[currentIndex][chargeIdentifier][tierIdentifier] == null || pressureZone[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
                                 {
@@ -2815,17 +2368,17 @@ var survey = JSON.parse(surveyJSON)
                                     Continue = false;
                                     alert("No parameters selected for Lot Size Group");
                                 } break;
-                            case "Lot Size Group":
+                            case "Meter Type":
                                 if(meterType[currentIndex][chargeIdentifier][tierIdentifier] == null || meterType[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
                                 {
                                     Continue = false;
                                     alert("No parameters selected for Meter Type");
                                 } break;
-                            case "Area":
-                                if(area[currentIndex][chargeIdentifier][tierIdentifier] == null || area[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
+                            case "City Limits":
+                                if(cityLimits[currentIndex][chargeIdentifier][tierIdentifier] == null || cityLimits[currentIndex][chargeIdentifier][tierIdentifier].length == 0)
                                 {
                                     Continue = false;
-                                    alert("No parameters selected for Area");
+                                    alert("No parameters selected for City Limits");
                                 } break;
                         }
                     }
@@ -3450,13 +3003,12 @@ var survey = JSON.parse(surveyJSON)
                     {
                         case 'Season': return 'season'; break;
                         case 'Temperature Zone': return 'temperature_zone'; break;
-                        case 'Elevation Zone': return 'elevation_zone'; break;
                         case 'Pressure Zone': return 'pressure_zone'; break;
                         case 'Lot Size Group': return 'lot_size_group'; break;
                         case 'Meter Size': return 'meter_size'; break;
                         case 'Month': return 'month'; break;
                         case 'Meter Type': return 'meter_type'; break;
-                        case 'Area': return 'area'; break;
+                        case 'City Limits': return 'city_limits'; break;
                     }
                 }
                 
@@ -3593,9 +3145,11 @@ var survey = JSON.parse(surveyJSON)
                                         {
                                             
                                             var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", ""); 
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -3641,9 +3195,11 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in tierStartsCategories[structure][j])
                                         {
                                             var replacementStr = tierStartsCategories[structure][j][value].replace(" Level:", "");
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -3694,9 +3250,12 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in commodityChargeCategories[structure][j])
                                         {
                                             var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", ""); 
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+											replacementStr = replacementStr.replace("Elevation ", "");
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -3767,9 +3326,11 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in tierStartsCategories[structure][j])
                                         {
                                             var  replacementStr = tierStartsCategories[structure][j][value].replace(" Level:", "");
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -3820,9 +3381,11 @@ var survey = JSON.parse(surveyJSON)
                                         for(value in commodityChargeCategories[structure][j])
                                         {
                                             var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", "");
-                                            replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                            replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                            replacementStr = replacementStr.replace("Pressure ", ""); 
+                                            replacementStr = replacementStr.replace("Lot Size ", ""); 
+											replacementStr = replacementStr.replace('"', '');
+                                            replacementStr = replacementStr.replace("Inside City", "inside_city"); 
+											replacementStr = replacementStr.replace("Outside City", "outside_city");
                                             replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
                     
                                             for(var i = 0; i < survey.month.length; ++i)
@@ -4081,7 +3644,7 @@ var survey = JSON.parse(surveyJSON)
                 function QuestionTxt(question, number, Parent)
                 {
                     Question = document.createElement("h5");
-                    Question.appendChild(document.createTextNode(question));
+                    Question.innerHTML = question;
                     Question.setAttribute("id", "question" + number);
                     Parent.appendChild(Question);
                 }
