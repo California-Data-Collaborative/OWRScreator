@@ -412,8 +412,8 @@ var surveyJSON = '{"title": "CaDC Open Water Rate Specification Tool",' +
 '"Amador Water Agency"],'+
 '"questions": ["Enter the Name of the Utility:", "Enter the Bill Frequency:",'+
 '"Enter the Effective Date of this Rate Structure:", "Select the Customer Classes Used by the Utility:",'+
-' "Does this Customer Class contain a Service Charge?", "Does the Service Charge depend on the following:",'+
-'"Does this Customer Class contain a Commodity Charge?", "What type of Commodity Charge does this Customer Class Contain?",'+
+' "Does this Customer Class contain a Fixed Service Charge?", "Does the Service Charge depend on the following:",'+
+'"Does this Customer Class contain a Volumetric Commodity Charge?", "What type of Commodity Charge does this Customer Class Contain?",'+
 '"Does this Uniform Commodity Charge Depend On Anything?", "How Many Tiers are There?",' +
 ' "Do the Tier Levels Depend On Anything?", "Select the parameters to include:",'+
 ' "Do the Tier Prices Depend On Anything?"],'+
@@ -506,95 +506,95 @@ var survey = JSON.parse(surveyJSON)
                 var meterType = [];
                 var area = [];
                 
-                function primeArrays(chargeIdentifier)
+                function primeArrays()
                 {
-                    if(serviceParameters[chargeIdentifier] == null)
-                        serviceParameters[chargeIdentifier] = [];
-                    if(serviceChargeCategories[chargeIdentifier] == null)
-                        serviceChargeCategories[chargeIdentifier] = [];
-                    if(serviceCharges[chargeIdentifier] == null)
-                        serviceCharges[chargeIdentifier] = [];
-                    if(isServiceCharge[chargeIdentifier] == null)
-                        isServiceCharge[chargeIdentifier] = [];
-                    if(isServiceDepends[chargeIdentifier] == null)
-                        isServiceDepends[chargeIdentifier] = [];
-                    if(isServiceSame[chargeIdentifier] == null)
-                        isServiceSame[chargeIdentifier] = [];
-                    if(serviceSameStructure[chargeIdentifier] == null)
-                        serviceSameStructure[chargeIdentifier] = [];
-                    if(ParametersToUse[chargeIdentifier] == null)
-                        ParametersToUse[chargeIdentifier] = [];
+                    if(serviceParameters[currentIndex] == null)
+                        serviceParameters[currentIndex] = [];
+                    if(serviceChargeCategories[currentIndex] == null)
+                        serviceChargeCategories[currentIndex] = [];
+                    if(serviceCharges[currentIndex] == null)
+                        serviceCharges[currentIndex] = [];
+                    if(isServiceCharge[currentIndex] == null)
+                        isServiceCharge[currentIndex] = [];
+                    if(isServiceDepends[currentIndex] == null)
+                        isServiceDepends[currentIndex] = [];
+                    if(isServiceSame[currentIndex] == null)
+                        isServiceSame[currentIndex] = [];
+                    if(serviceSameStructure[currentIndex] == null)
+                        serviceSameStructure[currentIndex] = [];
+                    if(ParametersToUse[currentIndex] == null)
+                        ParametersToUse[currentIndex] = [];
                     
-                    if(uniformParameters[chargeIdentifier] == null)
-                        uniformParameters[chargeIdentifier] = [];
-                    if(commodityStructure[chargeIdentifier] == null)
-                        commodityStructure[chargeIdentifier] = [];
-                    if(numOfTiers[chargeIdentifier] == null)
-                        numOfTiers[chargeIdentifier] = [];
-                    if(tierStartsParameters[chargeIdentifier] == null)
-                        tierStartsParameters[chargeIdentifier] = [];
-                    if(tierStarts[chargeIdentifier] == null)
-                        tierStarts[chargeIdentifier] = [];
-                    if(isTierStartsDepends[chargeIdentifier] == null)
-                        isTierStartsDepends[chargeIdentifier] = [];
-                    if(tierStartsValues[chargeIdentifier] == null)
-                        tierStartsValues[chargeIdentifier] = [];
-                    if(tierStartsCategories[chargeIdentifier] == null)
-                        tierStartsCategories[chargeIdentifier] = [];
-                    if(tierPricesParameters[chargeIdentifier] == null)
-                        tierPricesParameters[chargeIdentifier] = [];
-                    if(tierPrices[chargeIdentifier] == null)
-                        tierPrices[chargeIdentifier] = [];
-                    if(isTierPricesDepends[chargeIdentifier] == null)
-                        isTierPricesDepends[chargeIdentifier] = [];
-                    if(tierLevels[chargeIdentifier] == null)
-                        tierLevels[chargeIdentifier] = [];
-                    if(uniformPrices[chargeIdentifier] == null)
-                        uniformPrices[chargeIdentifier] = [];
-                    if(isCommodityCharge[chargeIdentifier] == null)
-                        isCommodityCharge[chargeIdentifier] = [];
-                    if(isUniformDependsOn[chargeIdentifier] == null)
-                        isUniformDependsOn[chargeIdentifier] = [];
-                    if(commodityChargeCategories[chargeIdentifier] == null)
-                        commodityChargeCategories[chargeIdentifier] = [];
-                    if(commodityCharges[chargeIdentifier] == null)
-                        commodityCharges[chargeIdentifier] = [];
-                    if(tierStartsDependsOn[chargeIdentifier] == null)
-                        tierStartsDependsOn[chargeIdentifier] = [];
-                    if(tierPricesDependsOn[chargeIdentifier] == null)
-                        tierPricesDependsOn[chargeIdentifier] = [];
+                    if(uniformParameters[currentIndex] == null)
+                        uniformParameters[currentIndex] = [];
+                    if(commodityStructure[currentIndex] == null)
+                        commodityStructure[currentIndex] = [];
+                    if(numOfTiers[currentIndex] == null)
+                        numOfTiers[currentIndex] = [];
+                    if(tierStartsParameters[currentIndex] == null)
+                        tierStartsParameters[currentIndex] = [];
+                    if(tierStarts[currentIndex] == null)
+                        tierStarts[currentIndex] = [];
+                    if(isTierStartsDepends[currentIndex] == null)
+                        isTierStartsDepends[currentIndex] = [];
+                    if(tierStartsValues[currentIndex] == null)
+                        tierStartsValues[currentIndex] = [];
+                    if(tierStartsCategories[currentIndex] == null)
+                        tierStartsCategories[currentIndex] = [];
+                    if(tierPricesParameters[currentIndex] == null)
+                        tierPricesParameters[currentIndex] = [];
+                    if(tierPrices[currentIndex] == null)
+                        tierPrices[currentIndex] = [];
+                    if(isTierPricesDepends[currentIndex] == null)
+                        isTierPricesDepends[currentIndex] = [];
+                    if(tierLevels[currentIndex] == null)
+                        tierLevels[currentIndex] = [];
+                    if(uniformPrices[currentIndex] == null)
+                        uniformPrices[currentIndex] = [];
+                    if(isCommodityCharge[currentIndex] == null)
+                        isCommodityCharge[currentIndex] = [];
+                    if(isUniformDependsOn[currentIndex] == null)
+                        isUniformDependsOn[currentIndex] = [];
+                    if(commodityChargeCategories[currentIndex] == null)
+                        commodityChargeCategories[currentIndex] = [];
+                    if(commodityCharges[currentIndex] == null)
+                        commodityCharges[currentIndex] = [];
+                    if(tierStartsDependsOn[currentIndex] == null)
+                        tierStartsDependsOn[currentIndex] = [];
+                    if(tierPricesDependsOn[currentIndex] == null)
+                        tierPricesDependsOn[currentIndex] = [];
                     
-                    if(gpcd[chargeIdentifier] == null)
-                        gpcd[chargeIdentifier] = [];
-                    if(landscape_factor[chargeIdentifier] == null)
-                        landscape_factor[chargeIdentifier] = [];
-                    if(indoor[chargeIdentifier] == null)
-                        indoor[chargeIdentifier] = [];
-                    if(outdoor[chargeIdentifier] == null)
-                        outdoor[chargeIdentifier] = [];
-                    if(budget[chargeIdentifier] == null)
-                        budget[chargeIdentifier] = [];
+                    if(gpcd[currentIndex] == null)
+                        gpcd[currentIndex] = [];
+                    if(landscape_factor[currentIndex] == null)
+                        landscape_factor[currentIndex] = [];
+                    if(indoor[currentIndex] == null)
+                        indoor[currentIndex] = [];
+                    if(outdoor[currentIndex] == null)
+                        outdoor[currentIndex] = [];
+                    if(budget[currentIndex] == null)
+                        budget[currentIndex] = [];
                     
-                    if(uniformDependsOn[chargeIdentifier] == null)
-                        uniformDependsOn[chargeIdentifier] = [];
-                    if(commodityMeterSize[chargeIdentifier] == null)
-                        commodityMeterSize[chargeIdentifier] = [];
-                    if(month[chargeIdentifier] == null)
-                        month[chargeIdentifier] = [];
-                    if(season[chargeIdentifier] == null)
-                        season[chargeIdentifier] = [];
-                    if(elevationZone[chargeIdentifier] == null)
-                        elevationZone[chargeIdentifier] = [];
-                    if(pressureZone[chargeIdentifier] == null)
-                        pressureZone[chargeIdentifier] = [];
-                    if(temperatureZone[chargeIdentifier] == null)
-                        temperatureZone[chargeIdentifier] = [];
-                    if(lotSizeGroup[chargeIdentifier] == null)
-                        lotSizeGroup[chargeIdentifier] = [];
-                    if(meterType[chargeIdentifier] == null)
-                        meterType[chargeIdentifier] = [];
-                    if(area[chargeIdentifier] == null)
-                        area[chargeIdentifier] = [];
+                    if(uniformDependsOn[currentIndex] == null)
+                        uniformDependsOn[currentIndex] = [];
+                    if(commodityMeterSize[currentIndex] == null)
+                        commodityMeterSize[currentIndex] = [];
+                    if(month[currentIndex] == null)
+                        month[currentIndex] = [];
+                    if(season[currentIndex] == null)
+                        season[currentIndex] = [];
+                    if(elevationZone[currentIndex] == null)
+                        elevationZone[currentIndex] = [];
+                    if(pressureZone[currentIndex] == null)
+                        pressureZone[currentIndex] = [];
+                    if(temperatureZone[currentIndex] == null)
+                        temperatureZone[currentIndex] = [];
+                    if(lotSizeGroup[currentIndex] == null)
+                        lotSizeGroup[currentIndex]= [];
+                    if(meterType[currentIndex] == null)
+                        meterType[currentIndex] = [];
+                    if(area[currentIndex] == null)
+                        area[currentIndex] = [];
                 }
                 
                 //Fills All Html elements for first page
@@ -966,14 +966,15 @@ var survey = JSON.parse(surveyJSON)
                     //
                     if(isServiceCharge[currentIndex][0])
                     {
-                        Answer.innerHTML = '<label for = "YesServiceCharge0" class = "radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0)" value = "Yes" checked = "true"/>Yes</label>'+
+                        Answer.innerHTML = '<label for = "YesServiceCharge0" class = "radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + survey.questions[4] + '\', \'Fixed Service Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
                         '<label for = "NoServiceCharge0" class ="radio-inline"><input type = "radio" id = "NoServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0)" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
-                        serviceChargeTheSame(0, serviceList);
+                        serviceChargeTheSame(0, survey.questions[4], "Fixed Service Charge");
                     }
                     else
                     {  
-                        Answer.innerHTML = '<label for = "YesServiceCharge0" class ="radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0)" value = "Yes" />Yes</label>'+
+                        isServiceCharge[currentIndex][0] = false;
+                        Answer.innerHTML = '<label for = "YesServiceCharge0" class ="radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + survey.questions[4] + '\', \'Fixed Service Charge\')" value = "Yes" />Yes</label>'+
                         '<label for = "NoServiceCharge0" class ="radio-inline"><input type = "radio" id = "NoServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0)" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
@@ -988,15 +989,16 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(isCommodityCharge[currentIndex][0])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0)" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0)" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + survey.questions[6] + '\', \'Volumetric Commodity Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + survey.questions[6] + '\', \'Volumetric Commodity Charge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(0);
+                        getCommodityChargeInfo(0, survey.questions[6], "Volumetric Commodity Charge");
                     }
                     else
                     {  
-                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0)" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0)" value = "No"  checked = "true"/>No</label>';
+                        isCommodityCharge[currentIndex][0] = false;
+                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + survey.questions[6] + '\', \'Volumetric Commodity Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + survey.questions[6] + '\', \'Volumetric Commodity Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -1021,15 +1023,16 @@ var survey = JSON.parse(surveyJSON)
                     //
                     if(isServiceCharge[currentIndex][1])
                     {
-                        Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge0" onclick = "serviceChargeTheSame(1)" value = "Yes" checked = "true"/>Yes</label>'+
+                        Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge0" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
                         '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1)" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
-                        serviceChargeTheSame(0, serviceList);
+                        serviceChargeTheSame(0, "Is there a fixed Drought Surcharge?", "Fixed Drought Charge");
                     }
                     else
                     {  
-                        Answer.innerHTML = '<label for = "YesServiceCharge1" class ="radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1)" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1)" value = "No"  checked = "true"/>No</label>';
+                        isServiceCharge[currentIndex][1] = false;
+                        Answer.innerHTML = '<label for = "YesServiceCharge1" class ="radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
                     
@@ -1043,15 +1046,16 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(isCommodityCharge[currentIndex][1])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0)" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0)" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(1);
+                        getCommodityChargeInfo(1, "Is There A Volumetric Drought Surcharge?", "Volumetric Drought Surcharge");
                     }
                     else
                     {  
-                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1)" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1)" value = "No"  checked = "true"/>No</label>';
+                        isCommodityCharge[currentIndex][1] = false;
+                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -1072,15 +1076,16 @@ var survey = JSON.parse(surveyJSON)
                     //
                     if(isServiceCharge[currentIndex][2])
                     {
-                        Answer.innerHTML = '<label for = "YesServiceCharge2" class = "radio-inline"><input type = "radio" id = "YesServiceCharge2" name = "isServiceCharge0" onclick = "serviceChargeTheSame(2)" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoServiceCharge2" class ="radio-inline"><input type = "radio" id = "NoServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2)" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge2" class = "radio-inline"><input type = "radio" id = "YesServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2, \'Is there a fixed wasterwater charge?\', \'Fixed Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoServiceCharge2" class ="radio-inline"><input type = "radio" id = "NoServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2, \'Is there a fixed wasterwater charge?\', \'Fixed Wastewater Charge\')" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
-                        serviceChargeTheSame(2, serviceList);
+                        serviceChargeTheSame(2, "Is there a fixed wasterwater charge?", "Fixed Wastewater Charge");
                     }
                     else
                     {  
-                        Answer.innerHTML = '<label for = "YesServiceCharge2" class ="radio-inline"><input type = "radio" id = "YesServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2)" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge2" class ="radio-inline"><input type = "radio" id = "NoServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2)" value = "No"  checked = "true"/>No</label>';
+                        isServiceCharge[currentIndex][2] = false;
+                        Answer.innerHTML = '<label for = "YesServiceCharge2" class ="radio-inline"><input type = "radio" id = "YesServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2, \'Is there a fixed wasterwater charge?\', \'Fixed Wastewater Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge2" class ="radio-inline"><input type = "radio" id = "NoServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2, \'Is there a fixed wasterwater charge?\', \'Fixed Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
                     
@@ -1094,15 +1099,16 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(isCommodityCharge[currentIndex][2])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2)" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2)" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge\', \'Volumetric Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge\', \'Volumetric Wastewater Charge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(2);
+                        getCommodityChargeInfo(2, "Is There a Volumetric Wastewater Charge", "Volumetric Wastewater Charge");
                     }
                     else
                     {  
-                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2)" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2)" value = "No"  checked = "true"/>No</label>';
+                        isServiceCharge[currentIndex][2] = false;
+                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge\', \'Volumetric Wastewater Charge\')"value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge\', \'Volumetric Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -1135,7 +1141,7 @@ var survey = JSON.parse(surveyJSON)
                 
                 //Checks if The Service Charge is The Same as a Previously Service Charge If it is the same it calls the getServiceSame() Function
                 //If it isn't it goes to serviceChargeDepends()
-                function  serviceChargeTheSame(chargeIdentifier)
+                function  serviceChargeTheSame(chargeIdentifier, Question, chargeName)
                 {
                     var DIV = document.getElementById("serviceList" + chargeIdentifier);
                     //
@@ -1148,15 +1154,15 @@ var survey = JSON.parse(surveyJSON)
                         // if not the first entry
                         if(currentIndex > 0)
                         {
-                            QuestionTxt("Is this service charge the same as a previously entered service charge?", 42, DIV);
+                            QuestionTxt("Is this" + ChargeName + "the same as a previously entered " + ChargeName + "?", 42, DIV);
                             Answer = document.createElement("span");
                         
-                            Answer.innerHTML = '<label for = "YesServiceSame' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesServiceSame' + chargeIdentifier + '" name = "isServiceSame' + chargeIdentifier + '" onclick = "getServiceSame(' + chargeIdentifier + ')" value = "Yes" />Yes</label>'+
-                            '<label for = "NoServiceSame' + chargeIdentifier + '" class ="radio-inline"><input type = "radio" id = "NoServiceSame' + chargeIdentifier + '" name = "isServiceSame' + chargeIdentifier + '" onclick = "getServiceSame(' + chargeIdentifier + ')" value = "No" />No</label>';
+                            Answer.innerHTML = '<label for = "YesServiceSame' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesServiceSame' + chargeIdentifier + '" name = "isServiceSame' + chargeIdentifier + '" onclick = "getServiceSame(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" />Yes</label>'+
+                            '<label for = "NoServiceSame' + chargeIdentifier + '" class ="radio-inline"><input type = "radio" id = "NoServiceSame' + chargeIdentifier + '" name = "isServiceSame' + chargeIdentifier + '" onclick = "getServiceSame(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "No" />No</label>';
                             DIV.appendChild(Answer);
                             
                             var serviceSame = document.createElement("div");
-                            serviceSame.id = "serviceSame" + chargeIdentifier+ "Div";
+                            serviceSame.id = "serviceSame" + chargeIdentifier + "Div";
                             DIV.appendChild(serviceSame);
                             
                             // if data already exists
@@ -1168,7 +1174,7 @@ var survey = JSON.parse(surveyJSON)
                                     var temp = document.getElementById("YesServiceSame" + chargeIdentifier);
                                     temp.checked = true;
                                     
-                                    getServiceSame(chargeIdentifier);
+                                    getServiceSame(chargeIdentifier, chargeName);
                                 }
                                 //not same as a previous cust class
                                 else
@@ -1176,7 +1182,7 @@ var survey = JSON.parse(surveyJSON)
                                     var temp = document.getElementById("NoServiceSame" + chargeIdentifier);
                                     temp.checked = true;
                                     
-                                    serviceChargeDepends(chargeIdentifier);
+                                    serviceChargeDepends(chargeIdentifier, chargeName);
                                 }
                             }
                         }
@@ -1187,7 +1193,7 @@ var survey = JSON.parse(surveyJSON)
                             service.id = "serviceSame" + chargeIdentifier + "Div";
                             DIV.appendChild(service);
                         
-                            serviceChargeDepends(chargeIdentifier);
+                            serviceChargeDepends(chargeIdentifier, chargeName);
                         }
                     }
                     //no service charge
@@ -1196,12 +1202,12 @@ var survey = JSON.parse(surveyJSON)
                         clear(DIV);
                         serviceParameters[currentIndex][chargeIdentifier] = [];
                         
-                        QuestionTxt(survey.questions[4], 5, DIV);
+                        QuestionTxt(Question, 5, DIV);
                         
                         Answer = document.createElement("span");
                     
-                        Answer.innerHTML = '<label for = "YesServiceCharge' + chargeIdentifier + '" class ="radio-inline"><input type = "radio" id = "YesServiceCharge' + chargeIdentifier + '" name = "isServiceCharge' + chargeIdentifier + '" onclick = "serviceChargeTheSame(' + chargeIdentifier + ')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge' + chargeIdentifier + '" class ="radio-inline"><input type = "radio" id = "NoServiceCharge' + chargeIdentifier + '" name = "isServiceCharge' + chargeIdentifier + '" onclick = "serviceChargeTheSame(' + chargeIdentifier + ')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge' + chargeIdentifier + '" class ="radio-inline"><input type = "radio" id = "YesServiceCharge' + chargeIdentifier + '" name = "isServiceCharge' + chargeIdentifier + '" onclick = "serviceChargeTheSame(' + chargeIdentifier + ', \'' + Question + '\', \'' + chargeName + '\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge' + chargeIdentifier + '" class ="radio-inline"><input type = "radio" id = "NoServiceCharge' + chargeIdentifier + '" name = "isServiceCharge' + chargeIdentifier + '" onclick = "serviceChargeTheSame(' + chargeIdentifier + ', \'' + Question + '\', \'' + chargeName + '\')" value = "No"  checked = "true"/>No</label>';
                         DIV.appendChild(Answer);
                     }
                 }
@@ -1210,7 +1216,7 @@ var survey = JSON.parse(surveyJSON)
                 //populates dropdown list of previous customer classes
                 //
                 //after selection, calls serviceSameValues to get the service charge data for that class
-                function getServiceSame(chargeIdentifier)
+                function getServiceSame(chargeIdentifier, chargeName)
                 {
                     var serviceSame = document.getElementById("serviceSame" + chargeIdentifier + "Div")
                     
@@ -1222,7 +1228,7 @@ var survey = JSON.parse(surveyJSON)
                         
                         isServiceSame[currentIndex] = true;
                         
-                        QuestionTxt("Select which Service Charge is the Same?", 78, serviceSame);
+                        QuestionTxt("Select which " + chargeName + "is the Same?", 78, serviceSame);
                         
                         Answer = document.createElement("select");
                 
@@ -1245,7 +1251,7 @@ var survey = JSON.parse(surveyJSON)
                         if(serviceSame.childNodes.length> 0)
                             clear(serviceSame);
                         
-                        serviceChargeDepends(chargeIdentifier);
+                        serviceChargeDepends(chargeIdentifier, chargeName);
                     }
                 }
                 
@@ -1314,15 +1320,15 @@ var survey = JSON.parse(surveyJSON)
                 }
                 
                 //sets the YesServiceDepends button based on program state
-                function serviceChargeDepends(chargeIdentifier)
+                function serviceChargeDepends(chargeIdentifier, chargeName)
                 {
                     var serviceSame = document.getElementById("serviceSame" + chargeIdentifier + "Div");
                     
-                    QuestionTxt("Does the service charge depend on anything?", 25, serviceSame);
+                    QuestionTxt("Does the " + chargeName + " depend on anything?", 25, serviceSame);
                     Answer = document.createElement("span");
                         
-                    Answer.innerHTML = '<label for = "YesServiceDepends' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesServiceDepends' + chargeIdentifier + '" name = "isServiceDepends' + chargeIdentifier + '" onclick = "getServiceChargeInfo(' + chargeIdentifier + ')" value = "Yes" />Yes</label>'+
-                    '<label for = "NoServiceDepends' + chargeIdentifier + '" class ="radio-inline"><input type = "radio" id = "NoServiceDepends' + chargeIdentifier + '" name = "isServiceDepends' + chargeIdentifier + '" onclick = "getServiceChargeInfo(' + chargeIdentifier + ')" value = "No" checked = "true"/>No</label>';
+                    Answer.innerHTML = '<label for = "YesServiceDepends' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesServiceDepends' + chargeIdentifier + '" name = "isServiceDepends' + chargeIdentifier + '" onclick = "getServiceChargeInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" />Yes</label>'+
+                    '<label for = "NoServiceDepends' + chargeIdentifier + '" class ="radio-inline"><input type = "radio" id = "NoServiceDepends' + chargeIdentifier + '" name = "isServiceDepends' + chargeIdentifier + '" onclick = "getServiceChargeInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "No" checked = "true"/>No</label>';
                     serviceSame.appendChild(Answer);
                         
                     var service = document.createElement("div");
@@ -1335,14 +1341,14 @@ var survey = JSON.parse(surveyJSON)
                         temp.checked = true;
                     }
                         
-                    getServiceChargeInfo(chargeIdentifier);
+                    getServiceChargeInfo(chargeIdentifier, chargeName);
                     
                 }
                 
                 //based on whether YesServiceDepends is yes or no,
                 //yes: calls getDepends to populate checklist of depend parameters
                 //no: creates numeric input for service charge
-                function getServiceChargeInfo(chargeIdentifier)
+                function getServiceChargeInfo(chargeIdentifier, chargeName)
                 {
                     var RadioButton = document.getElementById("YesServiceDepends" + chargeIdentifier);
                     isServiceDepends[currentIndex][chargeIdentifier] = RadioButton.checked;
@@ -1368,7 +1374,7 @@ var survey = JSON.parse(surveyJSON)
                         servicePriceDiv.id = "servicePrice" + chargeIdentifier + "Div";
                         service.appendChild(servicePriceDiv);
                         
-                        getDepends("serviceParameters" + chargeIdentifier + "Div", serviceParameters[currentIndex][chargeIdentifier], "service", chargeIdentifier);
+                        getDepends("serviceParameters" + chargeIdentifier + "Div", serviceParameters[currentIndex][chargeIdentifier], "service", chargeIdentifier, chargeName);
                     }
                     else
                     {
@@ -1377,7 +1383,7 @@ var survey = JSON.parse(surveyJSON)
                         if(service.childNodes.length > 0)
                             clear(service);
                         
-                        QuestionTxt("Enter the Service Charge (In the form of 15.99):", 512, service);
+                        QuestionTxt("Enter the " + chargeName + "(In the form of 15.99):", 512, service);
                         
                         divider = document.createElement("div");
                         divider.classList.add("form-group");
@@ -1411,7 +1417,7 @@ var survey = JSON.parse(surveyJSON)
                 }
                 
                 //creates numeric inputs for each category of each depend parameter
-                function getServiceRate(chargeIdentifier)
+                function getServiceRate(chargeIdentifier, chargeName)
                 {
                     var servicePriceDiv = document.getElementById("servicePrice" + chargeIdentifier + "Div")
                     if(servicePriceDiv.childNodes.length > 0)
@@ -1434,7 +1440,7 @@ var survey = JSON.parse(surveyJSON)
                             
                     if(Continue && ParametersToUse.length > 0)
                     {
-                        QuestionTxt("Enter The Service Charge(In the form of 15.99):", 43, servicePriceDiv)
+                        QuestionTxt("Enter The " + chargeName + " (In the form of 15.99):", 43, servicePriceDiv)
                         serviceChargeCategories[currentIndex][chargeIdentifier] = [];
                         getCategories(serviceChargeCategories[currentIndex][chargeIdentifier], 0, ParametersToUse.length, "", "Rate:");
                             
@@ -1483,7 +1489,7 @@ var survey = JSON.parse(surveyJSON)
                 
                 // checks if YesCommodityCharge is yes or no 
                 //yes: create radio buttons to choose between uniform/tiered/budget
-                function getCommodityChargeInfo(chargeIdentifier)
+                function getCommodityChargeInfo(chargeIdentifier, Question, chargeName)
                 {
                     var DIV = document.getElementById("commodityList" + chargeIdentifier)
                     
@@ -1493,12 +1499,12 @@ var survey = JSON.parse(surveyJSON)
                     
                     if(RadioButton.checked == true)
                     {
-                        QuestionTxt(survey.questions[7], 10, DIV);
+                        QuestionTxt("What Type of " + chargeName + "Does This Customer class contain" , 10, DIV);
                         
                         Answer = document.createElement("span");
-                        Answer.innerHTML = '<label for = "Uniform" class = "radio-inline"><input type = "radio" id = "Uniform" name = "CommodityStructure' + chargeIdentifier + '" onclick = "UniformDepends(' + chargeIdentifier + ')" value = "Uniform"/>Uniform</label>'+
-                        '<label for = "Tiered" class = "radio-inline"><input type = "radio" id = "Tiered" name = "CommodityStructure' + chargeIdentifier + '" onclick = "TieredDepends(' + chargeIdentifier + ')" value = "Tiered"/>Tiered</label>'+
-                        '<label for = "Budget" class = "radio-inline"><input type = "radio" id = "Budget" name = "CommodityStructure' + chargeIdentifier + '" onclick = "BudgetDepends(' + chargeIdentifier + ')" value = "Budget"/>Budget</label>';
+                        Answer.innerHTML = '<label for = "Uniform" class = "radio-inline"><input type = "radio" id = "Uniform" name = "CommodityStructure' + chargeIdentifier + '" onclick = "UniformDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Uniform"/>Uniform</label>'+
+                        '<label for = "Tiered" class = "radio-inline"><input type = "radio" id = "Tiered" name = "CommodityStructure' + chargeIdentifier + '" onclick = "TieredDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Tiered"/>Tiered</label>'+
+                        '<label for = "Budget" class = "radio-inline"><input type = "radio" id = "Budget" name = "CommodityStructure' + chargeIdentifier + '" onclick = "BudgetDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Budget"/>Budget</label>';
                         
                         DIV.appendChild(Answer);
                         
@@ -1511,12 +1517,12 @@ var survey = JSON.parse(surveyJSON)
                         clear(DIV);
                         commodityStructure[currentIndex][chargeIdentifier] = [];
                         
-                        QuestionTxt(survey.questions[6], 9, DIV);
+                        QuestionTxt(Question, 9, DIV);
                         
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<label for = "YesCommodityCharge' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge' + chargeIdentifier + '" name = "isCommodityCharge' + chargeIdentifier + '" onclick = "getCommodityChargeInfo(0)" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge' + chargeIdentifier + '" name = "isCommodityCharge' + chargeIdentifier + '" onclick = "getCommodityChargeInfo(0)" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge' + chargeIdentifier + '" name = "isCommodityCharge' + chargeIdentifier + '" onclick = "getCommodityChargeInfo(' + chargeIdentifier + ', \'' + Question + '\', \'' + chargeName + '\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge' + chargeIdentifier + '" name = "isCommodityCharge' + chargeIdentifier + '" onclick = "getCommodityChargeInfo(' + chargeIdentifier + ', \'' + Question + '\', \'' + chargeName + '\')" value = "No"  checked = "true"/>No</label>';
                         DIV.appendChild(Answer);
                     }
                     
@@ -1525,21 +1531,21 @@ var survey = JSON.parse(surveyJSON)
                         var Radio = document.getElementById("Uniform");
                         Radio.checked = true;
                         
-                        UniformDepends(changeIdentifier);
+                        UniformDepends(changeIdentifier, chargeName);
                     }
                     else if(commodityStructure[currentIndex][chargeIdentifier] == 'Tiered')
                     {
                         var Radio = document.getElementById("Tiered");
                         Radio.checked = true;
                         
-                        TieredDepends(chargeIdentifier);
+                        TieredDepends(chargeIdentifier, chargeName);
                     }
                     else if(commodityStructure[currentIndex][chargeIdentifier] == 'Budget')
                     {
                         var Radio = document.getElementById("Budget");
                         Radio.checked = true;
                         
-                        BudgetDepends(chargeIdentifier);
+                        BudgetDepends(chargeIdentifier, chargeName);
                     }
                 }
                 
@@ -1567,7 +1573,7 @@ var survey = JSON.parse(surveyJSON)
                 }
                 
                 //clear and populate the commodityDependsOnDiv with options for uniform rates
-                function UniformDepends(chargeIdentifier)
+                function UniformDepends(chargeIdentifier, chargeName)
                 {
                     commodityStructure[currentIndex][chargeIdentifier] = 'Uniform';
                     
@@ -1579,13 +1585,13 @@ var survey = JSON.parse(surveyJSON)
                         clear(commodityDependsOnDiv);
                     }
                     
-                    QuestionTxt(survey.questions[8], 11, commodityDependsOnDiv);
+                    QuestionTxt("Does this Uniform " + chargeName + " depend on anything?", 11, commodityDependsOnDiv);
                     
                     Answer = document.createElement("span");
                         
-                    Answer.innerHTML = '<label for = "YesUniformDepends' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesUniformDepends' + chargeIdentifier + '" name = "isUniformDependsOn' + chargeIdentifier + '" onclick = "callGetDepends(' + chargeIdentifier + ')" value = "Yes" />'+
+                    Answer.innerHTML = '<label for = "YesUniformDepends' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesUniformDepends' + chargeIdentifier + '" name = "isUniformDependsOn' + chargeIdentifier + '" onclick = "callGetDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" />'+
                     'Yes</label>'+
-                    '<label for = "NoUniformDepends' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoUniformDepends' + chargeIdentifier + '" name = "isUniformDependsOn' + chargeIdentifier + '" onclick = "getUniformRate(' + chargeIdentifier + ')" value = "No"/>'+
+                    '<label for = "NoUniformDepends' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoUniformDepends' + chargeIdentifier + '" name = "isUniformDependsOn' + chargeIdentifier + '" onclick = "getUniformRate(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "No"/>'+
                     'No</label>';
                         
                     commodityDependsOnDiv.appendChild(Answer);
@@ -1606,23 +1612,23 @@ var survey = JSON.parse(surveyJSON)
                     {
                         var Radio = document.getElementById("YesUniformDepends" + chargeIdentifier);
                         Radio.checked = true;
-                        getDepends('uniformParameters' + chargeIdentifier + 'Div', uniformParameters[currentIndex][chargeIdentifier], "uniform", chargeIdentifier);
+                        getDepends('uniformParameters' + chargeIdentifier + 'Div', uniformParameters[currentIndex][chargeIdentifier], "uniform", chargeIdentifier, chargeName);
                     }
                     else if(isUniformDependsOn[currentIndex] == 'No')
                     {
                         var Radio = document.getElementById("NoUniformDepends"  + chargeIdentifier);
                         Radio.checked = true;
-                        getUniformRate(chargeIdentifier);
+                        getUniformRate(chargeIdentifier), chargeName;
                     }
                 }
                 
-                function callGetDepends(chargeIdentifier)
+                function callGetDepends(chargeIdentifier, chargeName)
                 {
-                    getDepends('uniformParameters' + chargeIdentifier + 'Div', uniformParameters[currentIndex][chargeIdentifier], 'uniform', chargeIdentifier)
+                    getDepends('uniformParameters' + chargeIdentifier + 'Div', uniformParameters[currentIndex][chargeIdentifier], 'uniform', chargeIdentifier, chargeName)
                 }
                 
                 //
-                function getUniformRate(chargeIdentifier)
+                function getUniformRate(chargeIdentifier, chargeName)
                 {
                     var uniformPriceDiv = document.getElementById("uniformPrice" + chargeIdentifier + "Div");
                     var Radio = document.getElementById("NoUniformDepends" + chargeIdentifier);
@@ -1742,7 +1748,7 @@ var survey = JSON.parse(surveyJSON)
                 }
                 
                 
-                function TieredDepends(chargeIdentifier)
+                function TieredDepends(chargeIdentifier, chargeName)
                 {
                     commodityStructure[currentIndex][chargeIdentifier] = 'Tiered';
                     
@@ -1766,7 +1772,7 @@ var survey = JSON.parse(surveyJSON)
                     {
                     Answer.value = tierLevels[currentIndex][chargeIdentifier];
                     }
-                    Answer.setAttribute("onchange", "createTierLevels(" + chargeIdentifier + ")");
+                    Answer.setAttribute("onchange", "createTierLevels(" + chargeIdentifier + ", \"" + chargeName + "\")");
                     commodityDependsOnDiv.appendChild(Answer);
                     
                     var tierStartsDiv = document.createElement("div");
@@ -1777,22 +1783,22 @@ var survey = JSON.parse(surveyJSON)
                     tierPricesDiv.id = "tierPrices" + chargeIdentifier + "Div";
                     commodityDependsOnDiv.appendChild(tierPricesDiv);
                     
-                    createTierLevels(chargeIdentifier);
+                    createTierLevels(chargeIdentifier, chargeName);
                 }
                 
-                function createTierLevels(chargeIdentifier)
+                function createTierLevels(chargeIdentifier, chargeName)
                 {
                     var tiers = document.getElementById("numOfTiers" + chargeIdentifier);
                     tierLevels[currentIndex][chargeIdentifier] = tiers.value;
                     
-                    Tier("tierStarts" + chargeIdentifier + "Div", survey.questions[10], 14, isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier);
-                    Tier("tierPrices" + chargeIdentifier + "Div", survey.questions[12], 15, isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier);
-                    getTierStartsInfo(chargeIdentifier);
-                    getTierPricesInfo(chargeIdentifier);
+                    Tier("tierStarts" + chargeIdentifier + "Div", survey.questions[10], 14, isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
+                    Tier("tierPrices" + chargeIdentifier + "Div", survey.questions[12], 15, isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
+                    getTierStartsInfo(chargeIdentifier, chargeName);
+                    getTierPricesInfo(chargeIdentifier, chargeName);
                 }
                 
                 //creates a yes/no radio  button for whether tiers depend on something
-                function Tier(DIV, question, qNumber, dependsOn, Identifier, Function, chargeIdentifier)
+                function Tier(DIV, question, qNumber, dependsOn, Identifier, Function, chargeIdentifier, chargeName)
                 {
                     var tierDiv = document.getElementById(DIV);
                     if(tierDiv.childNodes.length > 0)
@@ -1805,9 +1811,9 @@ var survey = JSON.parse(surveyJSON)
                     {
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<label for = "Yes' + Identifier + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "Yes' + Identifier + chargeIdentifier + '" name = "is' + Identifier + 'Depends' + chargeIdentifier + '" onclick = "get' + Identifier + 'Info(' + chargeIdentifier + ')" value = "Yes" checked = "true"/>'+
+                        Answer.innerHTML = '<label for = "Yes' + Identifier + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "Yes' + Identifier + chargeIdentifier + '" name = "is' + Identifier + 'Depends' + chargeIdentifier + '" onclick = "get' + Identifier + 'Info(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" checked = "true"/>'+
                         'Yes</label>'+
-                        '<label for = "No' + Identifier + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "No' + Identifier + chargeIdentifier + '" name = "is' + Identifier + 'Depends' + chargeIdentifier + '" onclick = "get' + Identifier + 'Info(' + chargeIdentifier + ')" value = "No" />'+
+                        '<label for = "No' + Identifier + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "No' + Identifier + chargeIdentifier + '" name = "is' + Identifier + 'Depends' + chargeIdentifier + '" onclick = "get' + Identifier + 'Info(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "No" />'+
                         'No</label>';
                         
                         tierDiv.appendChild(Answer);
@@ -1815,18 +1821,18 @@ var survey = JSON.parse(surveyJSON)
                         
                         if(Identifier == "TierStarts")
                         {
-                            getTierStartsInfo(chargeIdentifier);
+                            getTierStartsInfo(chargeIdentifier, chargeName);
                         }
                         else
-                            getTierPricesInfo(chargeIdentifier)
+                            getTierPricesInfo(chargeIdentifier, chargeName)
                     }
                     else
                     {
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<label for = "Yes' + Identifier + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "Yes' + Identifier + chargeIdentifier + '" name = "is' + Identifier + 'Depends' + chargeIdentifier + '" onclick = "get' + Identifier + 'Info(' + chargeIdentifier + ')" value = "Yes"/>'+
+                        Answer.innerHTML = '<label for = "Yes' + Identifier + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "Yes' + Identifier + chargeIdentifier + '" name = "is' + Identifier + 'Depends' + chargeIdentifier + '" onclick = "get' + Identifier + 'Info(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes"/>'+
                         'Yes</label>'+
-                        '<label for = "No' + Identifier + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "No' + Identifier + chargeIdentifier + '" name = "is' + Identifier + 'Depends' + chargeIdentifier + '" onclick = "get' + Identifier + 'Info(' + chargeIdentifier + ')" value = "No" checked = "true"/>'+
+                        '<label for = "No' + Identifier + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "No' + Identifier + chargeIdentifier + '" name = "is' + Identifier + 'Depends' + chargeIdentifier + '" onclick = "get' + Identifier + 'Info(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "No" checked = "true"/>'+
                         'No</label>';
                         
                         tierDiv.appendChild(Answer);
@@ -1836,7 +1842,7 @@ var survey = JSON.parse(surveyJSON)
                 //checks value of YesTierStarts radio button
                 //yes: calls getDepends to create depends checklist
                 //no: calles createTierFields to create tier fields
-                function getTierStartsInfo(chargeIdentifier)
+                function getTierStartsInfo(chargeIdentifier, chargeName)
                 {
                     var Radio = document.getElementById("YesTierStarts" + chargeIdentifier);
                     var tierStartsDiv = document.getElementById("tierStarts" + chargeIdentifier + "Div");
@@ -1851,9 +1857,9 @@ var survey = JSON.parse(surveyJSON)
                         QuestionTxt(survey.questions[10], 14,tierStartsDiv)
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<label for = "YesTierStarts' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesTierStarts' + chargeIdentifier + '" name = "isTierStartsDepends' + chargeIdentifier + '" onclick = "getTierStartsInfo(' + chargeIdentifier + ')" value = "Yes" checked = "true"/>'+
+                        Answer.innerHTML = '<label for = "YesTierStarts' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesTierStarts' + chargeIdentifier + '" name = "isTierStartsDepends' + chargeIdentifier + '" onclick = "getTierStartsInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" checked = "true"/>'+
                         'Yes</label>'+
-                        '<label for = "NoTierStarts' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoTierStarts' + chargeIdentifier + '" name = "isTierStartsDepends' + chargeIdentifier + '" onclick = "getTierStartsInfo(' + chargeIdentifier + ')" value = "No" />'+
+                        '<label for = "NoTierStarts' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoTierStarts' + chargeIdentifier + '" name = "isTierStartsDepends' + chargeIdentifier + '" onclick = "getTierStartsInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "No" />'+
                         'No</label>';
                         
                         tierStartsDiv.appendChild(Answer);
@@ -1870,12 +1876,12 @@ var survey = JSON.parse(surveyJSON)
                         tierStartsValuesDiv.id = "tierStartsValues" + chargeIdentifier + "Div";
                         tierStartsDiv.appendChild(tierStartsValuesDiv);
                         
-                        getDepends('tierStartsParameter' + chargeIdentifier + 'Div', tierStartsParameters[currentIndex][chargeIdentifier], 'tierStarts', chargeIdentifier);
+                        getDepends('tierStartsParameter' + chargeIdentifier + 'Div', tierStartsParameters[currentIndex][chargeIdentifier], 'tierStarts', chargeIdentifier, chargeName);
                     }
                     else
                     {
                         isTierStartsDepends[currentIndex] = false;
-                        Tier("tierStarts" + chargeIdentifier + "Div", survey.questions[10], 14, isTierStartsDepends[currentIndex], "TierStarts", getTierStartsInfo, chargeIdentifier);
+                        Tier("tierStarts" + chargeIdentifier + "Div", survey.questions[10], 14, isTierStartsDepends[currentIndex], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
                        
                         Answer = document.createElement('div');
                         Answer.id = "tierStartsValuesDIV";
@@ -1885,11 +1891,11 @@ var survey = JSON.parse(surveyJSON)
                         
                         if(commodityStructure == "Tiered")
                         {
-                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (As an Integer):", chargeIdentifier);
+                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (As an Integer):", chargeIdentifier, chargeName);
                         }
                         else
                         {
-                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (As a percent like 100%):", chargeIdentifier);
+                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (As a percent like 100%):", chargeIdentifier, chargeName);
                         }
                     }
                 }
@@ -1897,7 +1903,7 @@ var survey = JSON.parse(surveyJSON)
                 //checks value of YesTierPrices radio button
                 //yes: calls getDepends to create depends checklist
                 //no: calles createTierFields to create tier fields for prices
-                function getTierPricesInfo(chargeIdentifier)
+                function getTierPricesInfo(chargeIdentifier, chargeName)
                 {
                     var Radio = document.getElementById("YesTierPrices" + chargeIdentifier);
                     var tierPricesDiv = document.getElementById("tierPrices" + chargeIdentifier + "Div");
@@ -1912,9 +1918,9 @@ var survey = JSON.parse(surveyJSON)
                         QuestionTxt(survey.questions[12], 15,tierPricesDiv)
                         Answer = document.createElement("span");
                         
-                        Answer.innerHTML = '<label for = "YesTierPrices' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesTierPrices' + chargeIdentifier + '" name = "isTierPricesDepends' + chargeIdentifier + '" onclick = "getTierPricesInfo(' + chargeIdentifier + ')" value = "Yes" checked = "true"/>'+
+                        Answer.innerHTML = '<label for = "YesTierPrices' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesTierPrices' + chargeIdentifier + '" name = "isTierPricesDepends' + chargeIdentifier + '" onclick = "getTierPricesInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" checked = "true"/>'+
                         'Yes</label>'+
-                        '<label for = "NoTierPrices' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoTierPrices' + chargeIdentifier + '" name = "isTierPricesDepends' + chargeIdentifier + '" onclick = "getTierPricesInfo(' + chargeIdentifier + ')" value = "No" />'+
+                        '<label for = "NoTierPrices' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoTierPrices' + chargeIdentifier + '" name = "isTierPricesDepends' + chargeIdentifier + '" onclick = "getTierPricesInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "No" />'+
                         'No</label>';
                         
                         tierPricesDiv.appendChild(Answer);
@@ -1931,12 +1937,12 @@ var survey = JSON.parse(surveyJSON)
                         tierPricesValuesDiv.id = "tierPricesValues" + chargeIdentifier + "Div";
                         tierPricesDiv.appendChild(tierPricesValuesDiv);
                         
-                        getDepends('tierPricesParameter' + chargeIdentifier + 'Div', tierPricesParameters[currentIndex][chargeIdentifier], 'tierPrices', chargeIdentifier);
+                        getDepends('tierPricesParameter' + chargeIdentifier + 'Div', tierPricesParameters[currentIndex][chargeIdentifier], 'tierPrices', chargeIdentifier, chargeName);
                     }
                     else
                     {
                         isTierPricesDepends[currentIndex][chargeIdentifier] = false;
-                        Tier("tierPrices" + chargeIdentifier + "Div", survey.questions[12], 15, isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier);
+                        Tier("tierPrices" + chargeIdentifier + "Div", survey.questions[12], 15, isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
                         
                         Answer = document.createElement('div');
                         Answer.id = "tierPricesValues" + chargeIdentifier + "DIV";
@@ -1944,7 +1950,7 @@ var survey = JSON.parse(surveyJSON)
                         
                         commodityChargeCategories[currentIndex][chargeIdentifier] = [""];
                         
-                        createTierFields(Answer, "tierPrices", commodityChargeCategories[currentIndex][chargeIdentifier], "Tier Prices (In the Form of 15.99):", chargeIdentifier)
+                        createTierFields(Answer, "tierPrices", commodityChargeCategories[currentIndex][chargeIdentifier], "Tier Prices (In the Form of 15.99):", chargeIdentifier, chargeName)
                     }
                 }
                 
@@ -1986,7 +1992,7 @@ var survey = JSON.parse(surveyJSON)
                 }
                 
                 // create dropdown of number of tiers along with yes/no radio button for if tiers depend on something
-                function BudgetDepends(chargeIdentifier)
+                function BudgetDepends(chargeIdentifier, chargeName)
                 {
                     commodityStructure[currentIndex][chargeIdentifier] = 'Budget';
                     primeParamArrays(chargeIdentifier);
@@ -2026,7 +2032,7 @@ var survey = JSON.parse(surveyJSON)
                             Answer.value = tierLevels[currentIndex][chargeIdentifier];
                         }
                     }
-                    Answer.setAttribute("onchange", "createTierLevels(" + chargeIdentifier + ")");
+                    Answer.setAttribute("onchange", "createTierLevels(" + chargeIdentifier + ", \"" + chargeName + "\")");
                     commodityDependsOnDiv.appendChild(Answer);
                     
                     var tierStartsDiv = document.createElement("div");
@@ -2037,11 +2043,11 @@ var survey = JSON.parse(surveyJSON)
                     tierPricesDiv.id = "tierPrices" + chargeIdentifier + "Div";
                     commodityDependsOnDiv.appendChild(tierPricesDiv);
                     
-                    createTierLevels(chargeIdentifier);
+                    createTierLevels(chargeIdentifier, chargeName);
                 }
                 
                 //create depends checklist and populates based on program state
-                function getDepends(DIVname, identifier, Structure, chargeIdentifier)
+                function getDepends(DIVname, identifier, Structure, chargeIdentifier, chargeName)
                 {
                     var DIV = document.getElementById(DIVname)
                     if(DIV.childNodes.length > 0)
@@ -2055,7 +2061,7 @@ var survey = JSON.parse(surveyJSON)
                         var divider = document.createElement("div");
                         divider.classList.add("checkbox");
                         var checkboxID = Structure + "DependsOn" + chargeIdentifier + i;
-                        divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "CommodityDependsOn' + chargeIdentifier + '" onclick = "storeCommodityDepends(\'' + Structure + '\', ' + chargeIdentifier + ')" value ="' + survey.commodityDependsOn[i]+ '"/>'+
+                        divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "CommodityDependsOn' + chargeIdentifier + '" onclick = "storeCommodityDepends(\'' + Structure + '\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="' + survey.commodityDependsOn[i]+ '"/>'+
                         '' + survey.commodityDependsOn[i] + '</label>';
                         DIV.appendChild(divider);
                     }
@@ -2074,13 +2080,13 @@ var survey = JSON.parse(surveyJSON)
                                 }
                             }
                         }
-                        storeCommodityDepends(Structure, chargeIdentifier);
+                        storeCommodityDepends(Structure, chargeIdentifier, chargeName);
                     }
                     
                 }
                 
                 // save the values of the various  depends checklists (tiered, service, budget, etc) into global params
-                function storeCommodityDepends(tierIdentifier, chargeIdentifier)
+                function storeCommodityDepends(tierIdentifier, chargeIdentifier, chargeName)
                 {
                     if(tierIdentifier == 'uniform')
                     {
@@ -2095,11 +2101,11 @@ var survey = JSON.parse(surveyJSON)
                         
                         for(var i = 0; i < uniformParameters[currentIndex][chargeIdentifier].length; ++i)
                         {
-                            getParameterValues(uniformParameters[currentIndex][chargeIdentifier][i], uniformParametersValueDiv, 'Uniform', 0, chargeIdentifier);
+                            getParameterValues(uniformParameters[currentIndex][chargeIdentifier][i], uniformParametersValueDiv, 'Uniform', 0, chargeIdentifier, chargeName);
                         }
                         clearParametersNotUsed(uniformParameters[currentIndex][chargeIdentifier], 0, chargeIdentifier);
                         commodityChargeCategories[currentIndex][chargeIdentifier] = null;
-                        getUniformRate(chargeIdentifier);
+                        getUniformRate(chargeIdentifier, chargeName);
                     }
                     else if(tierIdentifier == 'tierStarts' || tierIdentifier == 'tierPrices')
                     {
@@ -2119,9 +2125,9 @@ var survey = JSON.parse(surveyJSON)
                             
                             for(value in tierStartsParameters[currentIndex][chargeIdentifier])
                             {
-                                getParameterValues(tierStartsParameters[currentIndex][chargeIdentifier][value], tierStartsParameterValueDiv, 'tierStarts', 1, chargeIdentifier);
+                                getParameterValues(tierStartsParameters[currentIndex][chargeIdentifier][value], tierStartsParameterValueDiv, 'tierStarts', 1, chargeIdentifier, chargeName);
                             }
-                            pushParameterValues('tierStarts', chargeIdentifier);
+                            pushParameterValues('tierStarts', chargeIdentifier, chargeName);
                         }
                         else
                         {
@@ -2139,9 +2145,9 @@ var survey = JSON.parse(surveyJSON)
                             
                             for(value in tierPricesParameters[currentIndex][chargeIdentifier])
                             {
-                                getParameterValues(tierPricesParameters[currentIndex][chargeIdentifier][value], tierPricesParameterValueDiv, 'tierPrices', 2, chargeIdentifier);
+                                getParameterValues(tierPricesParameters[currentIndex][chargeIdentifier][value], tierPricesParameterValueDiv, 'tierPrices', 2, chargeIdentifier, chargeName);
                             }
-                            pushParameterValues('tierPrices', chargeIdentifier);
+                            pushParameterValues('tierPrices', chargeIdentifier, chargeName);
                         }
                     }
                     else if(tierIdentifier == "service")
@@ -2156,11 +2162,11 @@ var survey = JSON.parse(surveyJSON)
                         
                         for(var i = 0; i < serviceParameters[currentIndex][chargeIdentifier].length; ++i)
                         {
-                            getParameterValues(serviceParameters[currentIndex][chargeIdentifier][i], serviceParametersValueDiv, 'service', 3, chargeIdentifier);
+                            getParameterValues(serviceParameters[currentIndex][chargeIdentifier][i], serviceParametersValueDiv, 'service', 3, chargeIdentifier, chargeName);
                         }
                         clearParametersNotUsed(serviceParameters[currentIndex][chargeIdentifier], 3, chargeIdentifier);
                         serviceChargeCategories[currentIndex][chargeIdentifier] = null;
-                        getServiceRate(chargeIdentifier);
+                        getServiceRate(chargeIdentifier, chargeName);
                     }
                 }
                 
@@ -2168,7 +2174,6 @@ var survey = JSON.parse(surveyJSON)
                 {
                     for(var i = 0; i < survey.commodityDependsOn.length; ++i)
                     {
-                        console.log(identifier + "DependsOn" + chargeIdentifier + i);
                         var checkCheckBox = document.getElementById(identifier + "DependsOn" + chargeIdentifier + i);
                         
                         if(checkCheckBox.checked)
@@ -2178,7 +2183,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
-                function getParameterValues(parameter, DIV, identifier, tierIdentifier, chargeIdentifier)
+                function getParameterValues(parameter, DIV, identifier, tierIdentifier, chargeIdentifier, chargeName)
                 {
                     QuestionTxt("Select the values for " + parameter ,13 , DIV)
                     
@@ -2190,7 +2195,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "Season" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value ="' + survey.season[i]+ '"/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'SeasonValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="' + survey.season[i]+ '"/>'+
                                 '' + survey.season[i] + '</label>';
                                 DIV.appendChild(divider);
                             }
@@ -2216,7 +2221,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "MeterSize" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterSizeValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value =\'' + survey.meterSizes[i] + '"\'/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterSizeValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value =\'' + survey.meterSizes[i] + '"\'/>'+
                                 '' + survey.meterSizes[i] + '"</label>';
                                 DIV.appendChild(divider);
                             }
@@ -2243,7 +2248,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "MeterType" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterTypeValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value =\'' + survey.meterTypes[i] + '\'/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MeterTypeValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value =\'' + survey.meterTypes[i] + '\'/>'+
                                 '' + survey.meterTypes[i] + '</label>';
                                 DIV.appendChild(divider);
                             }
@@ -2269,7 +2274,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "Area" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'AreaValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value =\'' + survey.area[i] + '\'/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'AreaValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value =\'' + survey.area[i] + '\'/>'+
                                 '' + survey.area[i] + '</label>';
                                 DIV.appendChild(divider);
                             }                            
@@ -2294,7 +2299,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "Month" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MonthValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value ="' + survey.month[i] + '"/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'MonthValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="' + survey.month[i] + '"/>'+
                                 '' + survey.month[i] + '</label>';
                                 DIV.appendChild(divider);
                             }
@@ -2320,7 +2325,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "TemperatureZone" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'TemperatureZoneValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value ="' + survey.temperatureZone[i]+ '"/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'TemperatureZoneValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="' + survey.temperatureZone[i]+ '"/>'+
                                 '' + survey.temperatureZone[i] + '</label>';
                                 DIV.appendChild(divider);
                             }
@@ -2346,7 +2351,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "ElevationZone" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'ElevationZoneValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value ="Elevation ' + survey.elevationZone[i]+ '"/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'ElevationZoneValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="Elevation ' + survey.elevationZone[i]+ '"/>'+
                                 '' + survey.elevationZone[i] + '</label>';
                                 DIV.appendChild(divider);
                             }
@@ -2372,7 +2377,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "PressureZone" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'PressureZoneValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value ="Pressure ' + survey.pressureZone[i]+ '"/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'PressureZoneValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="Pressure ' + survey.pressureZone[i]+ '"/>'+
                                 '' + survey.pressureZone[i] + '</label>';
                                 DIV.appendChild(divider);
                             }
@@ -2398,7 +2403,7 @@ var survey = JSON.parse(surveyJSON)
                                 var divider = document.createElement("div");
                                 divider.classList.add("checkbox");
                                 var checkboxID = identifier + "LotSizeGroup" + chargeIdentifier + i;
-                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'LotSizeGroupValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ')" value ="Lot Size ' + survey.lotSizeGroup[i]+ '"/>'+
+                                divider.innerHTML += '<label for = "' + checkboxID + '"><input type = "checkbox" id = "' + checkboxID + '" name = "' + identifier + 'LotSizeGroupValues' + chargeIdentifier + '" onclick = "pushParameterValues(\''+ identifier +'\', ' + chargeIdentifier + ', \'' + chargeName + '\')" value ="Lot Size ' + survey.lotSizeGroup[i]+ '"/>'+
                                 '' + survey.lotSizeGroup[i] + '</label>';
                                 DIV.appendChild(divider);
                             }
@@ -2444,7 +2449,7 @@ var survey = JSON.parse(surveyJSON)
                     }
                 }
                 
-                function pushParameterValues(Identifier, chargeIdentifier)
+                function pushParameterValues(Identifier, chargeIdentifier, chargeName)
                 {
                     if(Identifier == 'Uniform')
                     {
@@ -2518,7 +2523,7 @@ var survey = JSON.parse(surveyJSON)
                     else if (Identifier == "service")
                     {
                         theSwitchStatement(serviceParameters[currentIndex][chargeIdentifier], Identifier, 3, chargeIdentifier);
-                        getServiceRate(chargeIdentifier);
+                        getServiceRate(chargeIdentifier, chargeName);
                     }
                 }
                 
@@ -2847,7 +2852,7 @@ var survey = JSON.parse(surveyJSON)
                 function NextGetAnswers()
                 {
                     var Continue = true;
-                    for(var i = 0; i < 1; ++i)
+                    for(var i = 0; i < 3; ++i)
                     {
                     if(isServiceCharge[currentIndex][i])
                     {
@@ -2903,7 +2908,7 @@ var survey = JSON.parse(surveyJSON)
                             }
                             else
                             {
-                                var temp = document.getElementById("serviceCharge" + i + "0");
+                                var temp = document.getElementById("serviceCharge" + i + j);
                                 if(temp.value == "")
                                 {
                                     alert("The Service Charge Field is Empty");
@@ -2950,7 +2955,7 @@ var survey = JSON.parse(surveyJSON)
                                 commodityCharges[currentIndex][i] = []
                                 if(isUniformDependsOn[currentIndex][i] == "No")
                                 {
-                                    var Charge = document.getElementById("commodityCharge" + i + "0");
+                                    var Charge = document.getElementById("commodityCharge" + i + j);
                                     if(Charge.value == "")
                                     { alert("You must enter a rate"); Continue = false; } 
                                     else
@@ -3462,9 +3467,6 @@ var survey = JSON.parse(surveyJSON)
                             "effective_date" : "" + EffectiveDate + "",
                             "utility_name" : "" + UtilityName + "",
                             "bill_frequency" : "" + BillFrequency + ""
-                       }, 
-                       "capacity_charge" : {
-                           
                        },
                        "rate_structure" : {
                        
@@ -3492,92 +3494,105 @@ var survey = JSON.parse(surveyJSON)
                         OWRSformat.capacity_charge.values = JSON.parse(valueStorage);
                     }
                     
+                    var serviceJSON = [];
+                    var commodityJSON = [];
+                    
                     for(var structure in SelectedRateStructures)
                     {
-                        var tempStructure; 
-                        
-                        var serviceJSON;
-                        var commodityJSON;
-                        
-                        if(isServiceCharge[structure][0])
+                        for(var j = 0; j < 3; ++j)
                         {
-                            if(!isServiceDepends[structure][0])
+                            var tempStructure; 
+                        
+                            if(isServiceCharge[structure][j])
                             {
-                                serviceJSON = Number(serviceCharges[currentIndex][0][0]);
+                                if(!isServiceDepends[structure][j])
+                                {
+                                    serviceJSON = Number(serviceCharges[currentIndex][j][0]);
+                                }
+                                else
+                                {
+                                    serviceJSON[j] = {
+                                        "depends_on" : [],
+                                        "values" : {}
+                                    };
+                            
+                                    for(var i = 0; i < serviceParameters[structure][i].length; ++i)
+                                    {
+                                        var temp = parameterParser(serviceParameters[structure][j][i]);
+                                        serviceJSON[j].depends_on.push(temp);
+                                    }
+                            
+                                    var valueStorage = '{';
+                                    for(var value in serviceCharges[structure][j])
+                                    {
+                                        var replacementStr = serviceChargeCategories[structure][j][value].replace(" Rate:", ""); 
+                                        replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
+                                        replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
+                                        replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
+                                        replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
+                                    
+                                        for(var i = 0; i < survey.month.length; ++i)
+                                        {
+                                            replacementStr = replacementStr.replace(survey.month[i], i + 1);
+                                        }
+                                    
+                                        if(value == serviceCharges[structure][j].length - 1)
+                                        {
+                                                valueStorage += '"' + replacementStr.split(" ").join("|") + '" : ' + serviceCharges[structure][j][value] + ' }'
+                                        }
+                                        else
+                                        {
+                                            valueStorage += '"' + replacementStr.split(" ").join("|") + '" : ' + serviceCharges[structure][j][value] + ', '
+                                        }
+                                    }
+                                    serviceJSON[j].values = JSON.parse(valueStorage);
+                                }
                             }
                             else
-                            {
-                                serviceJSON = {
-                                    "depends_on" : [],
-                                    "values" : {}
-                                };
-                            
-                                for(var i = 0; i < serviceParameters[structure][0].length; ++i)
-                                {
-                                    var temp = parameterParser(serviceParameters[structure][0][i]);
-                                    serviceJSON.depends_on.push(temp);
-                                }
-                            
-                                var valueStorage = '{';
-                                for(var value in serviceCharges[structure][0])
-                                {
-                                    var replacementStr = serviceChargeCategories[structure][0][value].replace(" Rate:", ""); 
-                                    replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
-                                    replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
-                                    replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
-                                    replacementStr = replacementStr.replace("Omni F2", "Omni_F2");
-                                    
-                                    for(var i = 0; i < survey.month.length; ++i)
-                                    {
-                                        replacementStr = replacementStr.replace(survey.month[i], i + 1);
-                                    }
-                                    
-                                    if(value == serviceCharges[structure][0].length - 1)
-                                    {
-                                        valueStorage += '"' + replacementStr.split(" ").join("|") + '" : ' + serviceCharges[structure][0][value] + ' }'
-                                    }
-                                    else
-                                    {
-                                        valueStorage += '"' + replacementStr.split(" ").join("|") + '" : ' + serviceCharges[structure][0][value] + ', '
-                                    }
-                                }
-                                console.log(valueStorage);
-                                serviceJSON.values = JSON.parse(valueStorage);
-                            }
-                        }
-                        else
-                        { serviceJSON = 0; }
+                            { serviceJSON[j] = 0; }
                     
-                        if(isCommodityCharge[structure][0])
-                        {
-                            commodityJSON = "";
-                            switch(commodityStructure[structure][0])
+                            if(isCommodityCharge[structure][j])
                             {
-                                case 'Uniform':
-                                    commodityJSON  = {
-                                        "commodity_charge": "flat_rate*usage_ccf",
-                                        "flat_rate" : {}
-                                    };
-                                    
-                                    if(isUniformDependsOn[structure][0] == 'No')
+                                commodityJSON[j] = "";
+                                switch(commodityStructure[structure][0])
+                                {
+                                    case 'Uniform':
+                                
+                                    switch(j)
                                     {
-                                        commodityJSON.flat_rate = Number(commodityCharges[structure][0][0]);
+                                        case 0: commodityJSON[j]  = {
+                                                    "commodity_charge" : "flat_rate*usage_ccf",
+                                                    "flat_rate" : {}
+                                                }; break;
+                                        case 1: commodityJSON[j]  = {
+                                                    "volumetric_drought_surcharge" : "flat_rate*usage_ccf",
+                                                    "flat_rate" : {}
+                                                }; break;
+                                        case 2: commodityJSON[j]  = {
+                                                    "volumetric_wastewater_charge" : "flat_rate*usage_ccf",
+                                                    "flat_rate" : {}
+                                                }; break;
+                                    }
+                                    
+                                    if(isUniformDependsOn[structure][j] == 'No')
+                                    {
+                                        commodityJSON.flat_rate = Number(commodityCharges[structure][j][0]);
                                     }
                                     else
                                     {
-                                        commodityJSON.flat_rate.depends_on = [];
+                                        commodityJSON[j].flat_rate.depends_on = [];
                                         
-                                        for(var i = 0; i < uniformParameters[structure][0].length; ++i)
+                                        for(var i = 0; i < uniformParameters[structure][j].length; ++i)
                                         {
-                                            var temp = parameterParser(uniformParameters[structure][0][i]);
-                                            commodityJSON.flat_rate.depends_on.push(temp);
+                                            var temp = parameterParser(uniformParameters[structure][j][i]);
+                                            commodityJSON[j].flat_rate.depends_on.push(temp);
                                         }
                                         
                                         var tempComm = "{ "
-                                        for(value in commodityChargeCategories[structure][0])
+                                        for(value in commodityChargeCategories[structure][j])
                                         {
                                             
-                                            var replacementStr = commodityChargeCategories[structure][0][value].replace(" Rate:", ""); 
+                                            var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", ""); 
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
                                             replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
@@ -3588,33 +3603,44 @@ var survey = JSON.parse(surveyJSON)
                                                 replacementStr = replacementStr.replace(survey.month[i], i + 1);
                                             }
                                             
-                                            if(value == commodityChargeCategories[structure][0].length - 1)
+                                            if(value == commodityChargeCategories[structure][j].length - 1)
                                             {
-                                                tempComm += '"' + replacementStr.split(" ").join("|") + '": ' + commodityCharges[structure][0][value]+ ' }';
+                                                tempComm += '"' + replacementStr.split(" ").join("|") + '": ' + commodityCharges[structure][j][value]+ ' }';
                                             }
                                             else
                                             {
-                                                tempComm += '"' + replacementStr.split(" ").join("|") + '": ' + commodityCharges[structure][0][value]+ ', ';
+                                                tempComm += '"' + replacementStr.split(" ").join("|") + '": ' + commodityCharges[structure][j][value]+ ', ';
                                             }
                                         }
                                         commodityJSON.flat_rate.values = JSON.parse(tempComm);
                                     } break;
                                 case 'Tiered':
-                                    commodityJSON = { "commodity_charge": "Tiered" };
-                                    if(isTierStartsDepends[structure])
+                                    switch(j)
                                     {
-                                        commodityJSON.tier_starts = { "depends_on": [],
+                                        case 0: commodityJSON[j]  = {
+                                                    "commodity_charge" : "Tiered"
+                                                }; break;
+                                        case 1: commodityJSON[j]  = {
+                                                    "volumetric_drought_surcharge" : "Tiered"
+                                                }; break;
+                                        case 2: commodityJSON[j]  = {
+                                                    "volumetric_wastewater_charge" : "Tiered"
+                                                }; break;
+                                    }
+                                    if(isTierStartsDepends[structure][j])
+                                    {
+                                        commodityJSON[j].tier_starts = { "depends_on": [],
                                                                       "values": {}     };
-                                        for(var i = 0; i < tierStartsParameters[structure][0].length; ++i)
+                                        for(var i = 0; i < tierStartsParameters[structure][j].length; ++i)
                                         {
-                                            var temp = parameterParser(tierStartsParameters[structure][0][i])
+                                            var temp = parameterParser(tierStartsParameters[structure][j][i])
                                             commodityJSON.tier_starts.depends_on.push(temp);
                                         }
                                         
                                         var tempComm = "{ ", number = 0; 
-                                        for(value in tierStartsCategories[structure][0])
+                                        for(value in tierStartsCategories[structure][j])
                                         {
-                                            var replacementStr = tierStartsCategories[structure][0][value].replace(" Level:", "");
+                                            var replacementStr = tierStartsCategories[structure][j][value].replace(" Level:", "");
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
                                             replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
@@ -3626,48 +3652,48 @@ var survey = JSON.parse(surveyJSON)
                                             }
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
-                                            for(var k = 0; k < tierLevels[structure][0]; ++k)
+                                            for(var k = 0; k < tierLevels[structure][j]; ++k)
                                             {
-                                                if(k == tierLevels[structure][0] - 1)
+                                                if(k == tierLevels[structure][j] - 1)
                                                 {
-                                                    tempComm += tierStartsValues[structure][0][number] + ' ]';
+                                                    tempComm += tierStartsValues[structure][j][number] + ' ]';
                                                 }
                                                 else
                                                 {
-                                                    tempComm += tierStartsValues[structure][0][number] + ', ';
+                                                    tempComm += tierStartsValues[structure][j][number] + ', ';
                                                 }
                                                 number++;
                                             }
                                             
-                                            if(value == tierStartsCategories[structure][0].length - 1)
+                                            if(value == tierStartsCategories[structure][j].length - 1)
                                                 tempComm += ' }';
                                             else
                                                 tempComm += ', '
                                         }
-                                        commodityJSON.tier_starts.values = JSON.parse(tempComm)
+                                        commodityJSON[j].tier_starts.values = JSON.parse(tempComm)
                                     }
                                     else
                                     {
-                                        commodityJSON.tier_starts = [];
-                                        for(var i = 0; i < tierLevels[structure][0]; ++i)
+                                        commodityJSON[j].tier_starts = [];
+                                        for(var i = 0; i < tierLevels[structure][j]; ++i)
                                         {
-                                            commodityJSON.tier_starts.push(Number(tierStartsValues[structure][0][i]));
+                                            commodityJSON[j].tier_starts.push(Number(tierStartsValues[structure][j][i]));
                                         }
                                     }
-                                    if(isTierPricesDepends[structure])
+                                    if(isTierPricesDepends[structure][j])
                                     {
-                                        commodityJSON.tier_prices = { "depends_on": [],
+                                        commodityJSON[j].tier_prices = { "depends_on": [],
                                                                       "values": {}     };
-                                        for(var i = 0; i < tierPricesParameters[structure][0].length; ++i)
+                                        for(var i = 0; i < tierPricesParameters[structure][j].length; ++i)
                                         {
-                                            var temp = parameterParser(tierPricesParameters[structure][0][i])
-                                            commodityJSON.tier_prices.depends_on.push(temp);
+                                            var temp = parameterParser(tierPricesParameters[structure][j][i])
+                                            commodityJSON[j].tier_prices.depends_on.push(temp);
                                         }
                                         
                                         var tempComm = "{ ", number = 0; 
-                                        for(value in commodityChargeCategories[structure][0])
+                                        for(value in commodityChargeCategories[structure][j])
                                         {
-                                            var replacementStr = commodityChargeCategories[structure][0][value].replace(" Rate:", ""); 
+                                            var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", ""); 
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
                                             replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
@@ -3679,57 +3705,68 @@ var survey = JSON.parse(surveyJSON)
                                             }
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
-                                            for(var k = 0; k < tierLevels[structure][0]; ++k)
+                                            for(var k = 0; k < tierLevels[structure][j]; ++k)
                                             {
-                                                if(k == tierLevels[structure][0] - 1)
+                                                if(k == tierLevels[structure][j] - 1)
                                                 {
-                                                    tempComm += commodityCharges[structure][0][number] + ' ]';
+                                                    tempComm += commodityCharges[structure][j][number] + ' ]';
                                                 }
                                                 else
                                                 {
-                                                    tempComm += commodityCharges[structure][0][number] + ', ';
+                                                    tempComm += commodityCharges[structure][j][number] + ', ';
                                                 }
                                                 number++;
                                             }
                                             
-                                            if(value == commodityChargeCategories[structure][0].length - 1)
+                                            if(value == commodityChargeCategories[structure][j].length - 1)
                                                 tempComm += ' }';
                                             else
                                                 tempComm += ', '
                                         }
-                                        commodityJSON.tier_prices.values = JSON.parse(tempComm)
+                                        commodityJSON[j].tier_prices.values = JSON.parse(tempComm)
                                     }
                                     else
                                     {
-                                        commodityJSON.tier_prices = [];
-                                        for(var i = 0; i < tierLevels[structure][0]; ++i)
+                                        commodityJSON[j].tier_prices = [];
+                                        for(var i = 0; i < tierLevels[structure][j]; ++i)
                                         {
-                                            commodityJSON.tier_prices.push(Number(commodityCharges[structure][0][i]));
+                                            commodityJSON[j].tier_prices.push(Number(commodityCharges[structure][j][i]));
                                         }
                                     } break;
                                 case 'Budget':
-                                commodityJSON = { "commodity_charge": "Budget" };
+                                    switch(j)
+                                    {
+                                        case 0: commodityJSON[j]  = {
+                                                    "commodity_charge" : "Budget"
+                                                }; break;
+                                        case 1: commodityJSON[j]  = {
+                                                    "volumetric_drought_surcharge" : "Budget"
+                                                }; break;
+                                        case 2: commodityJSON[j]  = {
+                                                    "volumetric_wastewater_charge" : "Budget"
+                                                }; break;
+                                    }
                                     
-                                    commodityJSON.gpcd = gpcd[structure][0];
-                                    commodityJSON.indoor = indoor[structure][0];
-                                    commodityJSON.outdoor = outdoor[structure][0];
-                                    commodityJSON.budget = budget[structure][0];
-                                    commodityJSON.landscape_factor = landscape_factor[structure][0];
+                                    commodityJSON[j].gpcd = gpcd[structure][j];
+                                    commodityJSON[j].indoor = indoor[structure][j];
+                                    commodityJSON[j].outdoor = outdoor[structure][j];
+                                    commodityJSON[j].budget = budget[structure][j];
+                                    commodityJSON[j].landscape_factor = landscape_factor[structure][j];
                                     
-                                    if(isTierStartsDepends[structure][0])
+                                    if(isTierStartsDepends[structure][j])
                                     {
                                         commodityJSON.tier_starts = { "depends_on": [],
                                                                       "values": {}     };
-                                        for(var i = 0; i < tierStartsParameters[structure][0].length; ++i)
+                                        for(var i = 0; i < tierStartsParameters[structure][j].length; ++i)
                                         {
-                                            var temp = parameterParser(tierStartsParameters[structure][0][i])
+                                            var temp = parameterParser(tierStartsParameters[structure][j][i])
                                             commodityJSON.tier_starts.depends_on.push(temp);
                                         }
                                         
                                         var tempComm = "{ ", number = 0; 
-                                        for(value in tierStartsCategories[structure][0])
+                                        for(value in tierStartsCategories[structure][j])
                                         {
-                                            var  replacementStr = tierStartsCategories[structure][0][value].replace(" Level:", "");
+                                            var  replacementStr = tierStartsCategories[structure][j][value].replace(" Level:", "");
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
                                             replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
@@ -3741,48 +3778,48 @@ var survey = JSON.parse(surveyJSON)
                                             }
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
-                                            for(var k = 0; k < tierLevels[structure][0]; ++k)
+                                            for(var k = 0; k < tierLevels[structure][j]; ++k)
                                             {
                                                 if(k == tierLevels[structure] - 1)
                                                 {
-                                                    tempComm += '"' + tierStartsValues[structure][0][number] + '" ]';
+                                                    tempComm += '"' + tierStartsValues[structure][j][number] + '" ]';
                                                 }
                                                 else
                                                 {
-                                                    tempComm += '"' + tierStartsValues[structure][0][number] + '", ';
+                                                    tempComm += '"' + tierStartsValues[structure][j][number] + '", ';
                                                 }
                                                 number++;
                                             }
                                             
-                                            if(value == tierStartsCategories[structure][0].length - 1)
+                                            if(value == tierStartsCategories[structure][j].length - 1)
                                                 tempComm += ' }';
                                             else
                                                 tempComm += ', '
                                         }
-                                        commodityJSON.tier_starts.values = JSON.parse(tempComm)
+                                        commodityJSON[j].tier_starts.values = JSON.parse(tempComm)
                                     }
                                     else
                                     {
-                                        commodityJSON.tier_starts = [];
-                                        for(var i = 0; i < tierLevels[structure][0]; ++i)
+                                        commodityJSON[j].tier_starts = [];
+                                        for(var i = 0; i < tierLevels[structure][j]; ++i)
                                         {
-                                            commodityJSON.tier_starts.push(tierStartsValues[structure][0][i]);
+                                            commodityJSON.tier_starts.push(tierStartsValues[structure][j][i]);
                                         }
                                     }
-                                    if(isTierPricesDepends[structure][0])
+                                    if(isTierPricesDepends[structure][j])
                                     {
-                                        commodityJSON.tier_prices = { "depends_on": [],
+                                        commodityJSON[j].tier_prices = { "depends_on": [],
                                                                       "values": {}     };
-                                        for(var i = 0; i < tierPricesParameters[structure][0].length; ++i)
+                                        for(var i = 0; i < tierPricesParameters[structure][j].length; ++i)
                                         {
-                                            var temp = parameterParser(tierPricesParameters[structure][0][i])
-                                            commodityJSON.tier_prices.depends_on.push(temp);
+                                            var temp = parameterParser(tierPricesParameters[structure][j][i])
+                                            commodityJSON[j].tier_prices.depends_on.push(temp);
                                         }
                                         
                                         var tempComm = "{ ", number = 0; 
-                                        for(value in commodityChargeCategories[structure][0])
+                                        for(value in commodityChargeCategories[structure][j])
                                         {
-                                            var replacementStr = commodityChargeCategories[structure][0][value].replace(" Rate:", "");
+                                            var replacementStr = commodityChargeCategories[structure][j][value].replace(" Rate:", "");
                                             replacementStr = replacementStr.replace("Pressure ", ""); replacementStr = replacementStr.replace("Elevation ", "");
                                             replacementStr = replacementStr.replace("Lot Size ", ""); replacementStr = replacementStr.replace('"', '');
                                             replacementStr = replacementStr.replace("Inside City", "inside_city"); replacementStr = replacementStr.replace("Outside City", "outside_city");
@@ -3794,116 +3831,205 @@ var survey = JSON.parse(surveyJSON)
                                             }
                                             tempComm += ' "' + replacementStr.split(" ").join("|") + '": [ ';
                                             
-                                            for(var k = 0; k < tierLevels[structure][0]; ++k)
+                                            for(var k = 0; k < tierLevels[structure][j]; ++k)
                                             {
-                                                if(k == tierLevels[structure][0] - 1)
+                                                if(k == tierLevels[structure][j] - 1)
                                                 {
-                                                    tempComm += commodityCharges[structure][0][number] + ' ]';
+                                                    tempComm += commodityCharges[structure][j][number] + ' ]';
                                                 }
                                                 else
                                                 {
-                                                    tempComm += commodityCharges[structure][0][number] + ', ';
+                                                    tempComm += commodityCharges[structure][j][number] + ', ';
                                                 }
                                                 number++;
                                             }
                                             
-                                            if(value == commodityChargeCategories[structure][0].length - 1)
+                                            if(value == commodityChargeCategories[structure][j].length - 1)
                                                 tempComm += ' }';
                                             else
                                                 tempComm += ', '
                                         }
-                                        commodityJSON.tier_prices.values = JSON.parse(tempComm)
+                                        commodityJSON[j].tier_prices.values = JSON.parse(tempComm)
                                     }
                                     else
                                     {
-                                        commodityJSON.tier_prices = [];
-                                        for(var i = 0; i < tierLevels[structure][0]; ++i)
+                                        commodityJSON[j].tier_prices = [];
+                                        for(var i = 0; i < tierLevels[structure][j]; ++i)
                                         {
-                                            commodityJSON.tier_prices.push(Number(commodityCharges[structure][0][i]));
+                                            commodityJSON[j].tier_prices.push(Number(commodityCharges[structure][j][i]));
                                         }
                                     } break;
                             }
                         }
                         else
-                        { commodityJSON = { "commodity_charge" : 0 } };
-                        
+                        { 
+                                    switch(j)
+                                    {
+                                        case 0: commodityJSON[j]  = {
+                                                    "commodity_charge" : 0
+                                                }; break;
+                                        case 1: commodityJSON[j]  = {
+                                                    "volumetric_drought_surcharge" : 0
+                                                }; break;
+                                        case 2: commodityJSON[j]  = {
+                                                    "volumetric_wastewater_charge" : 0
+                                                }; break;
+                                    } 
+                        };
+                        }
                         switch(SelectedRateStructures[structure])
                         {
                             case "Residential Single": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
-                                                        tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON ;
-                                                        tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON); 
+                                                        tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON[0] ;
+                                                        tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON[0]); 
+                                                        tempStructure.RESIDENTIAL_SINGLE.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON[1]);
+                                                        tempStructure.RESIDENTIAL_SINGLE.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON[2]); 
                                                         tempStructure.RESIDENTIAL_SINGLE.bill = "service_charge+commodity_charge"; break;
                             case "Residential Multi": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
-                                                        tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON; 
-                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON); 
+                                                        tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON[0]; 
+                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON[0]); 
+                                                        tempStructure.RESIDENTIAL_MULTI.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON[1]);
+                                                        tempStructure.RESIDENTIAL_MULTI.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON[2]); 
                                                         tempStructure.RESIDENTIAL_MULTI.bill = "service_charge+commodity_charge"; break;
                             case "Irrigation": tempStructure = { "IRRIGATION" : { "service_charge" : {} } };
-                                                        tempStructure.IRRIGATION.service_charge = serviceJSON; 
-                                                        tempStructure.IRRIGATION = jQuery.extend({}, tempStructure.IRRIGATION, commodityJSON); 
-                                                        tempStructure.IRRIGATION.bill = "service_charge+commodity_charge"; break;
+                                                        tempStructure.IRRIGATION.service_charge = serviceJSON[0]; 
+                                                        tempStructure.IRRIGATION = jQuery.extend({}, tempStructure.IRRIGATION, commodityJSON[0]); 
+                                                        tempStructure.RESIDENTIAL_MULTI.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON[1]);
+                                                        tempStructure.RESIDENTIAL_MULTI.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON[2]); 
+                                                        tempStructure.RESIDENTIAL_MULTI.bill = "service_charge+commodity_charge"; break;
                             case "Commercial": tempStructure = { "COMMERCIAL" : { "service_charge" : {} } }; 
-                                                        tempStructure.COMMERCIAL.service_charge = serviceJSON; 
-                                                        tempStructure.COMMERCIAL = jQuery.extend({}, tempStructure.COMMERCIAL, commodityJSON); 
+                                                        tempStructure.COMMERCIAL.service_charge = serviceJSON[0]; 
+                                                        tempStructure.COMMERCIAL = jQuery.extend({}, tempStructure.COMMERCIAL, commodityJSON[0]); 
+                                                        tempStructure.COMMERCIAL.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.COMMERCIAL = jQuery.extend({}, tempStructure.COMMERCIAL, commodityJSON[1]);
+                                                        tempStructure.COMMERCIAL.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.COMMERCIAL = jQuery.extend({}, tempStructure.COMMERCIAL, commodityJSON[2]); 
                                                         tempStructure.COMMERCIAL.bill = "service_charge+commodity_charge"; break;
                             case "Industrial": tempStructure = { "INDUSTRIAL" : { "service_charge" : {} } };
-                                                        tempStructure.INDUSTRIAL.service_charge = serviceJSON; 
-                                                        tempStructure.INDUSTRIAL = jQuery.extend({}, tempStructure.INDUSTRIAL, commodityJSON); 
+                                                        tempStructure.INDUSTRIAL.service_charge = serviceJSON[0]; 
+                                                        tempStructure.INDUSTRIAL = jQuery.extend({}, tempStructure.INDUSTRIAL, commodityJSON[0]); 
+                                                        tempStructure.INDUSTRIAL.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.INDUSTRIAL = jQuery.extend({}, tempStructure.INDUSTRIAL, commodityJSON[1]);
+                                                        tempStructure.INDUSTRIAL.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.INDUSTRIAL = jQuery.extend({}, tempStructure.INDUSTRIAL, commodityJSON[2]); 
                                                         tempStructure.INDUSTRIAL.bill = "service_charge+commodity_charge"; break;
                             case "Institutional": tempStructure = { "INSTITUTIONAL" : { "service_charge" : {} } };
-                                                        tempStructure.INSTITUTIONAL.service_charge = serviceJSON; 
-                                                        tempStructure.INSTITUTIONAL = jQuery.extend({}, tempStructure.INSTITUTIONAL, commodityJSON); 
+                                                        tempStructure.INSTITUTIONAL.service_charge = serviceJSON[0]; 
+                                                        tempStructure.INSTITUTIONAL = jQuery.extend({}, tempStructure.INSTITUTIONAL, commodityJSON[0]); 
+                                                        tempStructure.INSTITUTIONAL.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.INSTITUTIONAL = jQuery.extend({}, tempStructure.INSTITUTIONAL, commodityJSON[1]);
+                                                        tempStructure.INSTITUTIONAL.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.INSTITUTIONAL = jQuery.extend({}, tempStructure.INSTITUTIONAL, commodityJSON[2]); 
                                                         tempStructure.INSTITUTIONAL.bill = "service_charge+commodity_charge"; break;
                             case "Fire Service": tempStructure = { "FIRE_SERVICE" : { "service_charge" : {} } }; 
-                                                        tempStructure.FIRE_SERVICE.service_charge = serviceJSON; 
-                                                        tempStructure.FIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON); 
+                                                        tempStructure.FIRE_SERVICE.service_charge = serviceJSON[0]; 
+                                                        tempStructure.FIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON[0]); 
+                                                        tempStructure.FIRE_SERVICE.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.FIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON[1]);
+                                                        tempStructure.FIRE_SERVICE.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.FIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON[2]); 
                                                         tempStructure.FIRE_SERVICE.bill = "service_charge+commodity_charge"; break;
                             case "Non-Potable": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } };
-                                                        tempStructure.NONPOTABLE.service_charge = serviceJSON; 
-                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON); 
+                                                        tempStructure.NONPOTABLE.service_charge = serviceJSON[0]; 
+                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[0]); 
+                                                        tempStructure.NONPOTABLE.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[1]);
+                                                        tempStructure.NONPOTABLE.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[2]); 
                                                         tempStructure.NONPOTABLE.bill = "service_charge+commodity_charge"; break;
                             case "Potable": tempStructure = { "POTABLE" : { "service_charge" : {} } };
-                                                        tempStructure.POTABLE.service_charge = serviceJSON; 
-                                                        tempStructure.POTABLE = jQuery.extend({}, tempStructure.POTABLE, commodityJSON); 
+                                                        tempStructure.POTABLE.service_charge = serviceJSON[0]; 
+                                                        tempStructure.POTABLE = jQuery.extend({}, tempStructure.POTABLE, commodityJSON[0]); 
+                                                        tempStructure.POTABLE.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.POTABLE = jQuery.extend({}, tempStructure.POTABLE, commodityJSON[1]);
+                                                        tempStructure.POTABLE.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.POTABLE = jQuery.extend({}, tempStructure.POTABLE, commodityJSON[2]); 
                                                         tempStructure.POTABLE.bill = "service_charge+commodity_charge"; break;
                             case "Recycled": tempStructure = { "RECYCLED" : { "service_charge" : {} } };
-                                                        tempStructure.RECYCLED.service_charge = serviceJSON; 
-                                                        tempStructure.RECYCLED = jQuery.extend({}, tempStructure.RECYCLED, commodityJSON); 
+                                                        tempStructure.RECYCLED.service_charge = serviceJSON[0]; 
+                                                        tempStructure.RECYCLED = jQuery.extend({}, tempStructure.RECYCLED, commodityJSON[0]); 
+                                                        tempStructure.RECYCLED.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.RECYCLED = jQuery.extend({}, tempStructure.RECYCLED, commodityJSON[1]);
+                                                        tempStructure.RECYCLED.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.RECYCLED = jQuery.extend({}, tempStructure.RECYCLED, commodityJSON[2]); 
                                                         tempStructure.RECYCLED.bill = "service_charge+commodity_charge"; break;                            
                             case "Non-Residential": tempStructure = { "NON_RESIDENTIAL" : { "service_charge" : {} } }; 
-                                                        tempStructure.NON_RESIDENTIAL.service_charge = serviceJSON; 
-                                                        tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON); 
+                                                        tempStructure.NON_RESIDENTIAL.service_charge = serviceJSON[0]; 
+                                                        tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON[0]); 
+                                                        tempStructure.NON_RESIDENTIAL.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON[1]);
+                                                        tempStructure.NON_RESIDENTIAL.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON[2]); 
                                                         tempStructure.NON_RESIDENTIAL.bill = "service_charge+commodity_charge"; break;
                             case "Unmetered": tempStructure = { "UNMETERED" : { "service_charge" : {} } };
-                                                        tempStructure.UNMETERED.service_charge = serviceJSON; 
-                                                        tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON); 
+                                                        tempStructure.UNMETERED.service_charge = serviceJSON[0]; 
+                                                        tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON[0]); 
+                                                        tempStructure.UNMETERED.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON[1]);
+                                                        tempStructure.UNMETERED.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON[2]); 
                                                         tempStructure.UNMETERED.bill = "service_charge+commodity_charge"; break;
                             case "Reclaimed": tempStructure = { "RECLAIMED" : { "service_charge" : {} } }; 
-                                                        tempStructure.RECLAIMED.service_charge = serviceJSON; 
-                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON); 
+                                                        tempStructure.RECLAIMED.service_charge = serviceJSON[0]; 
+                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[0]); 
+                                                        tempStructure.RECLAIMED.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[1]);
+                                                        tempStructure.RECLAIMED.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[2]); 
                                                         tempStructure.RECLAIMED.bill = "service_charge+commodity_charge"; break;
                             case "Governmental": tempStructure = { "GOVERNMENTAL" : { "service_charge" : {} } }; 
-                                                        tempStructure.GOVERNMENTAL.service_charge = serviceJSON; 
-                                                        tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON); 
+                                                        tempStructure.GOVERNMENTAL.service_charge = serviceJSON[0]; 
+                                                        tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON[0]); 
+                                                        tempStructure.GOVERNMENTAL.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON[1]);
+                                                        tempStructure.GOVERNMENTAL.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON[2]); 
                                                         tempStructure.GOVERNMENTAL.bill = "service_charge+commodity_charge"; break;
                             case "Interruptible": tempStructure = { "INTERRUPTIBLE" : { "service_charge" : {} } }; 
-                                                        tempStructure.INTERRUPTIBLE.service_charge = serviceJSON; 
-                                                        tempStructure.INTERRUPTIBLE = jQuery.extend({}, tempStructure.INTERRUPTIBLE, commodityJSON); 
+                                                        tempStructure.INTERRUPTIBLE.service_charge = serviceJSON[0]; 
+                                                        tempStructure.INTERRUPTIBLE = jQuery.extend({}, tempStructure.INTERRUPTIBLE, commodityJSON[0]); 
+                                                        tempStructure.INTERRUPTIBLE.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.INTERRUPTIBLE = jQuery.extend({}, tempStructure.INTERRUPTIBLE, commodityJSON[1]);
+                                                        tempStructure.INTERRUPTIBLE.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.INTERRUPTIBLE = jQuery.extend({}, tempStructure.INTERRUPTIBLE, commodityJSON[2]); 
                                                         tempStructure.INTERRUPTIBLE.bill = "service_charge+commodity_charge"; break;
                             case "Docks Shipping": tempStructure = { "DOCKS_SHIPPING" : { "service_charge" : {} } }; 
-                                                        tempStructure.DOCKS_SHIPPING.service_charge = serviceJSON; 
-                                                        tempStructure.DOCKS_SHIPPING = jQuery.extend({}, tempStructure.DOCKS_SHIPPING, commodityJSON); 
+                                                        tempStructure.DOCKS_SHIPPING.service_charge = serviceJSON[0]; 
+                                                        tempStructure.DOCKS_SHIPPING = jQuery.extend({}, tempStructure.DOCKS_SHIPPING, commodityJSON[0]); 
+                                                        tempStructure.DOCKS_SHIPPING.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.DOCKS_SHIPPING = jQuery.extend({}, tempStructure.DOCKS_SHIPPING, commodityJSON[1]);
+                                                        tempStructure.DOCKS_SHIPPING.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.DOCKS_SHIPPING = jQuery.extend({}, tempStructure.DOCKS_SHIPPING, commodityJSON[2]); 
                                                         tempStructure.DOCKS_SHIPPING.bill = "service_charge+commodity_charge"; break;
                             case "Building Contractor": tempStructure = { "BUILDING_CONTRACTOR" : { "service_charge" : {} } }; 
-                                                        tempStructure.BUILDING_CONTRACTOR.service_charge = serviceJSON; 
-                                                        tempStructure.BUILDING_CONTRACTOR = jQuery.extend({}, tempStructure.BUILDING_CONTRACTOR, commodityJSON); 
+                                                        tempStructure.BUILDING_CONTRACTOR.service_charge = serviceJSON[0]; 
+                                                        tempStructure.BUILDING_CONTRACTOR = jQuery.extend({}, tempStructure.BUILDING_CONTRACTOR, commodityJSON[0]); 
+                                                        tempStructure.BUILDING_CONTRACTOR.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.BUILDING_CONTRACTOR = jQuery.extend({}, tempStructure.BUILDING_CONTRACTOR, commodityJSON[1]);
+                                                        tempStructure.BUILDING_CONTRACTOR.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.BUILDING_CONTRACTOR = jQuery.extend({}, tempStructure.BUILDING_CONTRACTOR, commodityJSON[2]); 
                                                         tempStructure.BUILDING_CONTRACTOR.bill = "service_charge+commodity_charge"; break;
                             case "Residential Construction": tempStructure = { "RESIDENTIAL_CONSTRUCTION" : { "service_charge" : {} } }; 
-                                                        tempStructure.RESIDENTIAL_CONSTRUCTION.service_charge = serviceJSON; 
-                                                        tempStructure.RESIDENTIAL_CONSTRUCTION = jQuery.extend({}, tempStructure.RESIDENTIAL_CONSTRUCTION, commodityJSON);
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION.service_charge = serviceJSON[0]; 
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION = jQuery.extend({}, tempStructure.RESIDENTIAL_CONSTRUCTION, commodityJSON[0]);
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION = jQuery.extend({}, tempStructure.RESIDENTIAL_CONSTRUCTION, commodityJSON[1]);
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.RESIDENTIAL_CONSTRUCTION = jQuery.extend({}, tempStructure.RESIDENTIAL_CONSTRUCTION, commodityJSON[2]); 
                                                         tempStructure.RESIDENTIAL_CONSTRUCTION.bill = "service_charge+commodity_charge"; break;
                             case "Other": tempStructure = { "OTHER" : { "service_charge" : {} } }; 
-                                                        tempStructure.OTHER.service_charge = serviceJSON; 
-                                                        tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON); 
+                                                        tempStructure.OTHER.service_charge = serviceJSON[0]; 
+                                                        tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON[0]); 
+                                                        tempStructure.OTHER.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON[1]);
+                                                        tempStructure.OTHER.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON[2]); 
                                                         tempStructure.OTHER.bill = "service_charge+commodity_charge"; break;
                         }
                         OWRSformat.rate_structure = jQuery.extend({}, OWRSformat.rate_structure, tempStructure);
