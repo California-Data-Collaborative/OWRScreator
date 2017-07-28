@@ -189,6 +189,8 @@ survey.utilities = utilityList;
                     subtitle.innerHTML = "";
                     clear(form);
                     
+					createSection(questionDict["intro"], "intro", "h5", form)
+					
                     QuestionTxt(survey.questions[0], 1, form);
                 
                     //Create Utility Name DropDown List
@@ -365,7 +367,7 @@ survey.utilities = utilityList;
                     fieldDiv.id = "fieldDiv";
                     capacityDiv.appendChild(fieldDiv);
                     
-                    QuestionTxt("Is there a Capacity Charge(s) for this Utility", 13, questionDiv);
+                    QuestionTxt("<b>Is there a Capacity Charge(s) for this Utility</b>", 13, questionDiv);
                     
                     Answer = document.createElement("span");
                     
@@ -407,7 +409,7 @@ survey.utilities = utilityList;
                             clear(meterDiv)
                         }
                         
-                        QuestionTxt("Select the Meter Sizes that have a Capacity Charge", 100, meterDiv);
+                        QuestionTxt("<b>Select the Meter Sizes that have a Capacity Charge</b>", 100, meterDiv);
                         
                         for(var i = 0; i < survey.meterSizes.length; ++i)
                         {
@@ -465,7 +467,7 @@ survey.utilities = utilityList;
                     if(fieldDiv.childNodes.length > 0)
                         clear(fieldDiv);
                     
-                    QuestionTxt("Enter The Capacity Charges Below:", 45, fieldDiv)
+                    QuestionTxt("<b>Enter The Capacity Charges Below:</b>", 45, fieldDiv)
                     
                     for(var i = 0; i < capacityMeterSizes.length; ++i)
                         {
@@ -491,6 +493,7 @@ survey.utilities = utilityList;
                             Answer.setAttribute("type", "text");
                             Answer.id = "capacityCharge" + i;
                             Answer.classList.add("form-control");
+							Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
                             inputGroup.appendChild(Answer);
                         }
                         
@@ -631,7 +634,7 @@ survey.utilities = utilityList;
                     
 					createSection(sectionTextDict["drought"], "drought", "h2", serviceList)
 					createSection(sectionTextDict["fixedDroughtCharge"], "fixedDroughtCharge", "h3", serviceList)
-                    QuestionTxt("Is there a fixed Drought Surcharge?", 5, serviceList);
+                    QuestionTxt(questionDict["isThereFixedDrought"], 5, serviceList);
                     
                     Answer = document.createElement("span");
                     
@@ -641,7 +644,7 @@ survey.utilities = utilityList;
                         Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
                         '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1)" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
-                        serviceChargeTheSame(1, "Is there a fixed Drought Surcharge?", "Fixed Drought Charge");
+                        serviceChargeTheSame(1, "questionDict['isThereFixedDrought']", "Fixed Drought Charge");
                     }
                     else
                     {  
@@ -656,7 +659,7 @@ survey.utilities = utilityList;
                     form.appendChild(commodityList);
                     
 					createSection(sectionTextDict["variableDroughtCharge"], "variableDroughtCharge", "h3", serviceList)
-                    QuestionTxt("Is There A Volumetric Drought Surcharge?", 9, commodityList);
+                    QuestionTxt(questionDict["isThereVolumeDrought"], 9, commodityList);
                     
                     Answer = document.createElement("span");
                     
@@ -665,7 +668,7 @@ survey.utilities = utilityList;
                         Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "Yes" checked = "true"/>Yes</label>'+
                         '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(1, "Is There A Volumetric Drought Surcharge?", "Volumetric Drought Surcharge");
+                        getCommodityChargeInfo(1, questionDict["isThereVolumeDrought"], "Volumetric Drought Surcharge");
                     }
                     else
                     {  
@@ -687,7 +690,7 @@ survey.utilities = utilityList;
                     
 					createSection(sectionTextDict["wastewater"], "wastewater", "h2", serviceList)
 					createSection(sectionTextDict["fixedWastewaterCharge"], "fixedWastewaterCharge", "h3", serviceList)
-                    QuestionTxt("Is there a fixed wasterwater charge?", 5, serviceList);
+                    QuestionTxt(questionDict["isThereFixedWastewater"], 5, serviceList);
                     
                     Answer = document.createElement("span");
                     
@@ -697,7 +700,7 @@ survey.utilities = utilityList;
                         Answer.innerHTML = '<label for = "YesServiceCharge2" class = "radio-inline"><input type = "radio" id = "YesServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2, \'Is there a fixed wasterwater charge?\', \'Fixed Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
                         '<label for = "NoServiceCharge2" class ="radio-inline"><input type = "radio" id = "NoServiceCharge2" name = "isServiceCharge2" onclick = "serviceChargeTheSame(2, \'Is there a fixed wasterwater charge?\', \'Fixed Wastewater Charge\')" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
-                        serviceChargeTheSame(2, "Is there a fixed wasterwater charge?", "Fixed Wastewater Charge");
+                        serviceChargeTheSame(2, questionDict["isThereFixedWastewater"], "Fixed Wastewater Charge");
                     }
                     else
                     {  
@@ -711,22 +714,22 @@ survey.utilities = utilityList;
                     commodityList.id = "commodityList2";
                     form.appendChild(commodityList);
                     
-                    QuestionTxt("Is There a Volumetric Wastewater Charge", 9, commodityList);
+                    QuestionTxt(questionDict["isThereVolumeWastewater"], 9, commodityList);
                     
                     Answer = document.createElement("span");
                     
                     if(isCommodityCharge[currentIndex][2])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge\', \'Volumetric Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge\', \'Volumetric Wastewater Charge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(2, "Is There a Volumetric Wastewater Charge", "Volumetric Wastewater Charge");
+                        getCommodityChargeInfo(2, questionDict["isThereVolumeWastewater"], "Volumetric Wastewater Charge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][2] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge\', \'Volumetric Wastewater Charge\')"value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge\', \'Volumetric Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')"value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -773,7 +776,10 @@ survey.utilities = utilityList;
                         // if not the first entry
                         if(currentIndex > 0)
                         {
-                            QuestionTxt("Is this " + chargeName + " the same as a previously entered " + chargeName + "?", 42, DIV);
+							q = "<b>Is this " + chargeName + " the same as one you previously entered into this survey?</b> " +
+									"If so, you may select 'Yes' and the customer class to save some time."
+							
+                            QuestionTxt(q, 42, DIV);
                             Answer = document.createElement("span");
                         
                             Answer.innerHTML = '<label for = "YesServiceSame' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesServiceSame' + chargeIdentifier + '" name = "isServiceSame' + chargeIdentifier + '" onclick = "getServiceSame(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" />Yes</label>'+
@@ -847,7 +853,7 @@ survey.utilities = utilityList;
                         
                         isServiceSame[currentIndex][chargeIdentifier] = true;
                         
-                        QuestionTxt("Select which " + chargeName + "is the Same?", 78, serviceSame);
+                        QuestionTxt("Select which customer class has the same " + chargeName, 78, serviceSame);
                         
                         Answer = document.createElement("select");
                 
@@ -939,7 +945,12 @@ survey.utilities = utilityList;
                 {
                     var serviceSame = document.getElementById("serviceSame" + chargeIdentifier + "Div");
                     
-                    QuestionTxt("Does the " + chargeName + " depend on anything?", 25, serviceSame);
+					q = "<b>Does the price of the " + chargeName + " depend on attributes of the customer account?</b>"+
+					"<br><br>"+
+					"For example, fixed charges often depend on meter size of the connection "+
+					"but they can also change depending on other attributes like which pressure zone the meter is located in."
+					
+                    QuestionTxt(q, 25, serviceSame);
                     Answer = document.createElement("span");
                         
                     Answer.innerHTML = '<label for = "YesServiceDepends' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesServiceDepends' + chargeIdentifier + '" name = "isServiceDepends' + chargeIdentifier + '" onclick = "getServiceChargeInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" />Yes</label>'+
@@ -998,7 +1009,7 @@ survey.utilities = utilityList;
                         if(service.childNodes.length > 0)
                             clear(service);
                         
-                        QuestionTxt("Enter the " + chargeName + "(In the form of 15.99):", 512, service);
+                        QuestionTxt("<b>Enter the " + chargeName + " (In the form of 15.99)</b>:", 512, service);
                         
                         divider = document.createElement("div");
                         divider.classList.add("form-group");
@@ -1017,6 +1028,7 @@ survey.utilities = utilityList;
                         Answer.setAttribute("type", "text");
                         Answer.id = "ServiceCharge" + chargeIdentifier;
                         Answer.classList.add("form-control");
+						Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
                         inputGroup.appendChild(Answer);
                         
                         if(serviceCharges[currentIndex][chargeIdentifier] != null)
@@ -1055,7 +1067,7 @@ survey.utilities = utilityList;
                             
                     if(Continue && ParametersToUse.length > 0)
                     {
-                        QuestionTxt("Enter The " + chargeName + " (In the form of 15.99):", 43, servicePriceDiv)
+                        QuestionTxt("<b>Enter The " + chargeName + " (In the form of 15.99):</b>", 43, servicePriceDiv)
                         serviceChargeCategories[currentIndex][chargeIdentifier] = [];
                         getCategories(serviceChargeCategories[currentIndex][chargeIdentifier], 0, ParametersToUse.length, "", "Rate:");
                             
@@ -1084,6 +1096,7 @@ survey.utilities = utilityList;
                             Answer.setAttribute("type", "text");
                             Answer.id = "serviceCharge" + chargeIdentifier + i;
                             Answer.classList.add("form-control");
+							Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
                             inputGroup.appendChild(Answer);
                         }
                             
@@ -1114,7 +1127,17 @@ survey.utilities = utilityList;
                     
                     if(RadioButton.checked == true)
                     {
-                        QuestionTxt("What Type of " + chargeName + " Does This Customer class contain" , 10, DIV);
+						q = "<b>What type of " + chargeName + "?</b>"+
+								"<br><br>"+
+								"Note that while a budget-based rate structure may include tiers, "+
+								"we consider 'Budget' and 'Tiered' as unique rate structures. "+
+								"<br><br>"+
+								"Please choose 'Budget' if the tier widths change based on "+
+								"attributes like household size, landscape area, ET, or on historic average use. "+
+								"For tier widths that change based on season or discrete temperature zones, "+
+								"please choose 'Tiered'."	
+						
+                        QuestionTxt(q , 10, DIV);
                         
                         Answer = document.createElement("span");
                         Answer.innerHTML = '<label for = "Uniform" class = "radio-inline"><input type = "radio" id = "Uniform' + chargeIdentifier + '" name = "CommodityStructure' + chargeIdentifier + '" onclick = "UniformDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Uniform"/>Uniform</label>'+
@@ -1288,7 +1311,7 @@ survey.utilities = utilityList;
                             
                             if(Continue && ParametersToUse.length > 0)
                             {
-                                QuestionTxt("Enter The Cost Per CCF(In the form of 15.99):", 12, uniformPriceDiv)
+                                QuestionTxt("<b>Enter The Cost Per CCF (In the form of 15.99):</b>", 12, uniformPriceDiv)
                                 commodityChargeCategories[currentIndex][chargeIdentifier] = [];
                                 getCategories(commodityChargeCategories[currentIndex][chargeIdentifier], 0, ParametersToUse.length, "", "Rate:");
                             
@@ -1317,6 +1340,7 @@ survey.utilities = utilityList;
                                     Answer.setAttribute("type", "text");
                                     Answer.id = "commodityCharge" + chargeIdentifier + i;
                                     Answer.classList.add("form-control");
+									Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
                                     inputGroup.appendChild(Answer);
                                 }
                             
@@ -1335,7 +1359,7 @@ survey.utilities = utilityList;
                     }
                     else if(isUniformDependsOn[currentIndex][chargeIdentifier] == 'No')
                     {
-                        QuestionTxt("Enter The Cost Per CCF(In the form of 15.99):", 12, uniformPriceDiv);
+                        QuestionTxt("<b>Enter The Cost Per CCF (In the form of 15.99):</b>", 12, uniformPriceDiv);
                        
                         inputGroup = document.createElement("div");
                         inputGroup.classList.add("input-group");
@@ -1350,6 +1374,7 @@ survey.utilities = utilityList;
                         Answer.setAttribute("type", "text");
                         Answer.id = "commodityCharge" + chargeIdentifier + "0";
                         Answer.classList.add("form-control");
+						Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
                         inputGroup.appendChild(Answer);
                         
                         if(commodityCharges[currentIndex][chargeIdentifier] != null)
@@ -1504,11 +1529,11 @@ survey.utilities = utilityList;
                         
                         if(commodityStructure[currentIndex][chargeIdentifier] == "Tiered")
                         {
-                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (As an Integer):", chargeIdentifier, chargeName);
+                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Start of each tier (see example above):", chargeIdentifier, chargeName);
                         }
                         else
                         {
-                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (As a percent like 100%):", chargeIdentifier, chargeName);
+                            createTierFields(Answer, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Start of each tier (see example above):", chargeIdentifier, chargeName);
                         }
                     }
                 }
@@ -1591,6 +1616,7 @@ survey.utilities = utilityList;
                     Answer = document.createElement("input");
                     Answer.setAttribute("type", "text");
                     Answer.classList.add("form-control");
+					Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
                     Answer.id = id + chargeIdentifier;
                     if(valueArray != null)
                     {
@@ -1616,15 +1642,21 @@ survey.utilities = utilityList;
                         clear(commodityDependsOnDiv);
                     }
                     
-                    QuestionTxt("Enter the Values Below:", 17, commodityDependsOnDiv);
+                    QuestionTxt(questionDict["budgetExplainer1"], 17, commodityDependsOnDiv);
                     
                     
-                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, "gpcd", "Gallons Per Capita Day:", "glyphicon-user", gpcd[currentIndex][chargeIdentifier], "60");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, "landscape_factor", "Landscape Factor:", "glyphicon-grain", landscape_factor[currentIndex][chargeIdentifier], ".7");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, "indoor", "Indoor Budget Equation:", "glyphicon-home", indoor[currentIndex][chargeIdentifier], "hhsize*gpcd*days_in_period*(1/748)");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, "outdoor", "Outdoor Budget Equation:", "glyphicon-globe", gpcd[currentIndex][chargeIdentifier], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
-                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, "budget", "Budget:", "glyphicon-usd", budget[currentIndex][chargeIdentifier], "indoor+outdoor");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
+						"gpcd", "Gallons Per Capita Day:", "glyphicon-user", gpcd[currentIndex][chargeIdentifier], "60");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
+						"landscape_factor", "Landscape Factor:", "glyphicon-grain", landscape_factor[currentIndex][chargeIdentifier], ".7");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
+						"indoor", "Indoor Budget Equation:", "glyphicon-home", indoor[currentIndex][chargeIdentifier], "hhsize*gpcd*days_in_period*(1/748)");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
+						"outdoor", "Outdoor Budget Equation:", "glyphicon-globe", gpcd[currentIndex][chargeIdentifier], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
+                    budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
+						"budget", "Budget:", "glyphicon-usd", budget[currentIndex][chargeIdentifier], "indoor+outdoor");
                     
+					QuestionTxt(questionDict["budgetExplainer2"], "budgetExplainer2", commodityDependsOnDiv);
                     
                     QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
                     Answer = document.createElement("select");
@@ -1798,7 +1830,7 @@ survey.utilities = utilityList;
                 
                 function getParameterValues(parameter, DIV, identifier, tierIdentifier, chargeIdentifier, chargeName)
                 {
-                    QuestionTxt("Select the values for " + parameter ,13 , DIV)
+                    QuestionTxt(dependsOnValueText(parameter) ,13 , DIV)
                     
                     switch(parameter)
                     {
@@ -2300,6 +2332,7 @@ survey.utilities = utilityList;
                             Answer = document.createElement("input");
                             Answer.setAttribute("type", "text");
                             Answer.classList.add("form-control");
+							Answer.setAttribute("onkeydown", "if (event.keyCode == 13) return false;");
                             Answer.id = identifier + chargeIdentifier + number;
                             number++;
                             
@@ -2309,9 +2342,16 @@ survey.utilities = utilityList;
                                 Answer.readOnly = true;
                             }
                             
-                            if(j == 1 && identifier == "tierStarts" &&  commodityStructure[currentIndex][chargeIdentifier] == 'Budget')
+                            if(identifier == "tierStarts" &&  commodityStructure[currentIndex][chargeIdentifier] == 'Budget')
                             {
-                                Answer.value = 'indoor';
+								if(j == 1)
+									Answer.placeholder = 'indoor (OR outdoor OR x%)';
+								else if(j==2)
+									Answer.placeholder = '100%';
+								else if(j==3)
+									Answer.placeholder = '125%';
+								else if(j==4)
+									Answer.placeholder = '150%';
                             }
                             
                             itemGroup.appendChild(Answer);
@@ -3854,6 +3894,23 @@ survey.utilities = utilityList;
                     section.innerHTML = sectionText;
                     section.setAttribute("id", name);
                     Parent.appendChild(section);
+				}
+				
+				function dependsOnValueText(param)
+				{
+					console.log(param)
+					switch(param)
+					{
+						case "Pressure Zone": return "<b>Select the values for Pressure Zone</b>. Here each pressure zone "+
+								"is assumed to have a numeric identifier. If your pressure zones are named "+
+								"in a different way, please assign a number to each and then proceed.";
+						case "Lot Size Group": return "<b>Select the values for Lot Size Group</b>. Here each group "+
+								"is assumed to have a numeric identifier. If your lot size groups are named "+
+								"in a different way, please assign a number to each and then proceed.";
+						case "City Limits": return "<b>Select the values for City Limits</b>. Different prices "+
+								"can then be set depending on whether a customer is inside the city limits or outside.";
+						default: return "<b>Select the values for " + param + "</b>";
+					} 
 				}
                 
                 function clear(parent)
