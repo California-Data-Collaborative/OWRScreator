@@ -564,7 +564,8 @@ survey.utilities = utilityList;
                     subtitle.innerHTML = SelectedRateStructures[index];
                     clear(form);
 					
-					
+					q = "Questions in this section refer to " + SelectedRateStructures[index] + " customers.";
+					QuestionTxt(q, "custClassExplainer", form);
                     
                     //Populates The Service Charge Div
                     var serviceList = document.createElement("div");
@@ -584,7 +585,7 @@ survey.utilities = utilityList;
                         Answer.innerHTML = '<label for = "YesServiceCharge0" class = "radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + questionDict["fixedServiceChargeQuestion"] + '\', \'Fixed Service Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
                         '<label for = "NoServiceCharge0" class ="radio-inline"><input type = "radio" id = "NoServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + questionDict["fixedServiceChargeQuestion"] + '\', \'Fixed Service Charge\')" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
-                        serviceChargeTheSame(0, survey.questions[4], "Fixed Service Charge");
+                        serviceChargeTheSame(0, questionDict["fixedServiceChargeQuestion"], "Fixed Service Charge");
                     }
                     else
                     {  
@@ -644,7 +645,7 @@ survey.utilities = utilityList;
                         Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
                         '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1)" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
-                        serviceChargeTheSame(1, "questionDict['isThereFixedDrought']", "Fixed Drought Charge");
+                        serviceChargeTheSame(1, questionDict["isThereFixedDrought"], "Fixed Drought Charge");
                     }
                     else
                     {  
@@ -760,7 +761,8 @@ survey.utilities = utilityList;
                     ButtonDiv.appendChild(Button);
                 }
                 
-                //Checks if The Service Charge is The Same as a Previously Service Charge If it is the same it calls the getServiceSame() Function
+                //Checks if The Service Charge is The Same as a previously entered Service Charge 
+				//If it is the same it calls the getServiceSame() Function
                 //If it isn't it goes to serviceChargeDepends()
                 function  serviceChargeTheSame(chargeIdentifier, Question, chargeName)
                 {
@@ -777,6 +779,7 @@ survey.utilities = utilityList;
                         if(currentIndex > 0)
                         {
 							q = "<b>Is this " + chargeName + " the same as one you previously entered into this survey?</b> " +
+									"<br><br>"+
 									"If so, you may select 'Yes' and the customer class to save some time."
 							
                             QuestionTxt(q, 42, DIV);
@@ -853,7 +856,7 @@ survey.utilities = utilityList;
                         
                         isServiceSame[currentIndex][chargeIdentifier] = true;
                         
-                        QuestionTxt("Select which customer class has the same " + chargeName, 78, serviceSame);
+                        QuestionTxt("<b>Select which customer class has the same " + chargeName +"</b>", 78, serviceSame);
                         
                         Answer = document.createElement("select");
                 
@@ -1127,7 +1130,7 @@ survey.utilities = utilityList;
                     
                     if(RadioButton.checked == true)
                     {
-						q = "<b>What type of " + chargeName + "?</b>"+
+						q = "<b>2.1) What type of " + chargeName + "?</b>"+
 								"<br><br>"+
 								"Note that while a budget-based rate structure may include tiers, "+
 								"we consider 'Budget' and 'Tiered' as unique rate structures. "+
@@ -1221,7 +1224,7 @@ survey.utilities = utilityList;
                         clear(commodityDependsOnDiv);
                     }
                     
-                    QuestionTxt("Does this Uniform " + chargeName + " depend on anything?", 11, commodityDependsOnDiv);
+                    QuestionTxt("<b>1.3) Does this Uniform " + chargeName + " depend on anything?</b>", 11, commodityDependsOnDiv);
                     
                     Answer = document.createElement("span");
                         
@@ -1398,7 +1401,7 @@ survey.utilities = utilityList;
                         clear(commodityDependsOnDiv);
                     }
                     
-                    QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
+                    QuestionTxt(questionDict["howManyTiers"], "howManyTiers", commodityDependsOnDiv);
                     Answer = document.createElement("select");
                     Answer.classList.add("form-control");
                     for(var i = 2; i <= 6; ++i)
@@ -1429,7 +1432,7 @@ survey.utilities = utilityList;
                     var tiers = document.getElementById("numOfTiers" + chargeIdentifier);
                     tierLevels[currentIndex][chargeIdentifier] = tiers.value;
                     
-                    Tier("tierStarts" + chargeIdentifier + "Div", survey.questions[10], 14, isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
+                    Tier("tierStarts" + chargeIdentifier + "Div", questionDict["doTiersDepend"], "doTiersDepend", isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
                     Tier("tierPrices" + chargeIdentifier + "Div", survey.questions[12], 15, isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
                     getTierStartsInfo(chargeIdentifier, chargeName);
                     getTierPricesInfo(chargeIdentifier, chargeName);
@@ -1492,7 +1495,7 @@ survey.utilities = utilityList;
                         {
                             clear(tierStartsDiv);
                         }
-                        QuestionTxt(survey.questions[10], 14,tierStartsDiv)
+                        QuestionTxt(questionDict["doTiersDepend"], "doTiersDepend",tierStartsDiv)
                         Answer = document.createElement("span");
                         
                         Answer.innerHTML = '<label for = "YesTierStarts' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesTierStarts' + chargeIdentifier + '" name = "isTierStartsDepends' + chargeIdentifier + '" onclick = "getTierStartsInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" checked = "true"/>'+
@@ -1519,7 +1522,7 @@ survey.utilities = utilityList;
                     else
                     {
                         isTierStartsDepends[currentIndex][chargeIdentifier] = false;
-                        Tier("tierStarts" + chargeIdentifier + "Div", survey.questions[10], 14, isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
+                        Tier("tierStarts" + chargeIdentifier + "Div", questionDict["doTiersDepend"], "doTiersDepend", isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
                        
                         Answer = document.createElement('div');
                         Answer.id = "tierStartsValues" + chargeIdentifier + "Div";
@@ -1658,7 +1661,7 @@ survey.utilities = utilityList;
                     
 					QuestionTxt(questionDict["budgetExplainer2"], "budgetExplainer2", commodityDependsOnDiv);
                     
-                    QuestionTxt(survey.questions[9], 11, commodityDependsOnDiv);
+                    QuestionTxt(questionDict["howManyTiers"], "howManyTiers", commodityDependsOnDiv);
                     Answer = document.createElement("select");
                     for(var i = 2; i <= 6; ++i)
                     {
@@ -1699,7 +1702,7 @@ survey.utilities = utilityList;
                     {
                         clear(DIV);
                     }
-                    QuestionTxt(survey.questions[11] ,13, DIV);
+                    QuestionTxt(questionDict["doPricesDepend"], "doPricesDepend", DIV);
                     
                     for(var i = 0; i < survey.commodityDependsOn.length; ++i)
                     {

@@ -49,6 +49,14 @@ questionDict = {
 					"<br><br>"+
 					"For example, service charges often depend on meter size of the connection "+
 					"but they can also change depending on other attributes like the pressure zone the meter is located in.",
+					
+	"howManyTiers": "<b>2.2) How Many Tiers?</b>",
+	
+	"doTiersDepend": "<b>2.3) Do the Tier Levels Depend On Anything?</b>"+
+						"<br><br>"+
+						"For example some rate structures change their tier widths seasonally, or based on discrete temerature zones.",
+						
+	"doPricesDepend": "<b>2.4) Do the Tier Prices Depend On Anything?</b>",
 				
 	"budgetExplainer1":"",
 	
@@ -114,11 +122,11 @@ questionList = [
 
 "DD",
 
-"<b>Do the Tier Levels Depend On Anything?</b>"+
+"<b>2.3) Do the Tier Levels Depend On Anything?</b>"+
 "<br><br>"+
 "For example some rate structures change their tier widths seasonally, or based on discrete temerature zones.", 
 
-"<b>1.2) What customer account attributes affect the price charged?</b>",
+"<b>What customer account attributes affect the price charged?</b>",
 
-"<b>Do the Tier Prices Depend On Anything?</b>"];
+"<b>2.4) Do the Tier Prices Depend On Anything?</b>"];
 
