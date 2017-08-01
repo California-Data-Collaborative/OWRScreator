@@ -1,4 +1,4 @@
-var surveyJSON = '{"title": "CaDC Open Water Rate Specification Tool",' +
+var surveyJSON = '{"title": "Open Water Rate Survey",' +
 '"billFrequency": ["Monthly", "BiMonthly", "Quarterly", "Annually", "Other"],'+
 '"rateStructures":['+
 '"Residential Single", "Residential Multi",'+
@@ -191,7 +191,7 @@ survey.utilities = utilityList;
                     
 					createSection(questionDict["intro"], "intro", "h5", form)
 					
-                    QuestionTxt(survey.questions[0], 1, form);
+                    QuestionTxt(questionDict["utilityNameQuestion"], "utilityNameQuestion", form);
                 
                     //Create Utility Name DropDown List
                     Answer = document.createElement("input");
@@ -222,7 +222,7 @@ survey.utilities = utilityList;
 						}
 					});
                 
-                    QuestionTxt(survey.questions[1], 2, form);
+                    QuestionTxt(questionDict["billFrequencyQuestion"], "billFrequencyQuestion", form);
                     
                     //Create Bill Frequency Drop Down
                     Answer = document.createElement("select");
@@ -235,7 +235,7 @@ survey.utilities = utilityList;
                     Answer.classList.add("form-control");
                     form.appendChild(Answer);
                     
-                    QuestionTxt(survey.questions[2], 3, form);
+                    QuestionTxt(questionDict["effectiveDateQuestion"], "effectiveDateQuestion", form);
                     
                     //Create Effective Date Date Input
                     Answer = document.createElement("input");
@@ -246,7 +246,7 @@ survey.utilities = utilityList;
                     form.appendChild(Answer);
 					$( "#effectiveDate" ).datepicker();
                     
-                    QuestionTxt(survey.questions[3], 4, form);
+                    QuestionTxt(questionDict["custClassQuestion"], "custClassQuestion", form);
                     
                     //Creates Checkboxes for all the Rate Structures
                     for(var i = 0; i < survey.rateStructures.length; ++i)
@@ -367,7 +367,7 @@ survey.utilities = utilityList;
                     fieldDiv.id = "fieldDiv";
                     capacityDiv.appendChild(fieldDiv);
                     
-                    QuestionTxt("<b>Is there a Capacity Charge(s) for this Utility</b>", 13, questionDiv);
+                    QuestionTxt("<b>5) Is there a Capacity Charge(s) for this Utility</b>", 13, questionDiv);
                     
                     Answer = document.createElement("span");
                     
@@ -409,7 +409,7 @@ survey.utilities = utilityList;
                             clear(meterDiv)
                         }
                         
-                        QuestionTxt("<b>Select the Meter Sizes that have a Capacity Charge</b>", 100, meterDiv);
+                        QuestionTxt("<b>5.1) Select the Meter Sizes that have a Capacity Charge</b>", 100, meterDiv);
                         
                         for(var i = 0; i < survey.meterSizes.length; ++i)
                         {
@@ -467,7 +467,7 @@ survey.utilities = utilityList;
                     if(fieldDiv.childNodes.length > 0)
                         clear(fieldDiv);
                     
-                    QuestionTxt("<b>Enter The Capacity Charges Below:</b>", 45, fieldDiv)
+                    QuestionTxt("<b>5.2) Enter The Capacity Charges Below:</b>", 45, fieldDiv)
                     
                     for(var i = 0; i < capacityMeterSizes.length; ++i)
                         {
@@ -572,25 +572,25 @@ survey.utilities = utilityList;
                     form.appendChild(serviceList);
                     
 					createSection(sectionTextDict["water"], "water", "h2", serviceList)
-					createSection(sectionTextDict["fixedServiceCharge"], "fixedServiceCharge", "h3", serviceList)
+					createSection(sectionTextDict["fixedServiceChargeSection"], "fixedServiceChargeSection", "h3", serviceList)
 					
-                    QuestionTxt(survey.questions[4], 5, serviceList);
+                    QuestionTxt(questionDict["fixedServiceChargeQuestion"], "fixedServiceChargeQuestion", serviceList);
                     
                     Answer = document.createElement("span");
                     
                     //
                     if(isServiceCharge[currentIndex][0])
                     {
-                        Answer.innerHTML = '<label for = "YesServiceCharge0" class = "radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + survey.questions[4] + '\', \'Fixed Service Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoServiceCharge0" class ="radio-inline"><input type = "radio" id = "NoServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + survey.questions[4] + '\', \'Fixed Service Charge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge0" class = "radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + questionDict["fixedServiceChargeQuestion"] + '\', \'Fixed Service Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoServiceCharge0" class ="radio-inline"><input type = "radio" id = "NoServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + questionDict["fixedServiceChargeQuestion"] + '\', \'Fixed Service Charge\')" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
                         serviceChargeTheSame(0, survey.questions[4], "Fixed Service Charge");
                     }
                     else
                     {  
                         isServiceCharge[currentIndex][0] = false;
-                        Answer.innerHTML = '<label for = "YesServiceCharge0" class ="radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + survey.questions[4] + '\', \'Fixed Service Charge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge0" class ="radio-inline"><input type = "radio" id = "NoServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + survey.questions[4] + '\', \'Fixed Service Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge0" class ="radio-inline"><input type = "radio" id = "YesServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + questionDict["fixedServiceChargeQuestion"] + '\', \'Fixed Service Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge0" class ="radio-inline"><input type = "radio" id = "NoServiceCharge0" name = "isServiceCharge0" onclick = "serviceChargeTheSame(0, \'' + questionDict["fixedServiceChargeQuestion"] + '\', \'Fixed Service Charge\')" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
                     
@@ -598,8 +598,8 @@ survey.utilities = utilityList;
                     commodityList.id = "commodityList0";
                     form.appendChild(commodityList);
                     
-					createSection(sectionTextDict["variableCommCharge"], "variableCommCharge", "h3", commodityList)
-                    QuestionTxt(survey.questions[6], 9, commodityList);
+					createSection(sectionTextDict["variableCommChargeSection"], "variableCommChargeSection", "h3", commodityList)
+                    QuestionTxt(questionDict["variableCommChargeQuestion"], "variableCommChargeQuestion", commodityList);
                     
                     Answer = document.createElement("span");
                     
@@ -945,7 +945,7 @@ survey.utilities = utilityList;
                 {
                     var serviceSame = document.getElementById("serviceSame" + chargeIdentifier + "Div");
                     
-					q = "<b>Does the price of the " + chargeName + " depend on attributes of the customer account?</b>"+
+					q = "<b>1.1) Does the price of the " + chargeName + " depend on attributes of the customer account?</b>"+
 					"<br><br>"+
 					"For example, fixed charges often depend on meter size of the connection "+
 					"but they can also change depending on other attributes like which pressure zone the meter is located in."

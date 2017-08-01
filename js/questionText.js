@@ -1,7 +1,7 @@
 sectionTextDict = {
 	"water":"Water Rates",
-	"fixedServiceCharge":"Fixed Service Charge",
-	"variableCommCharge":"Variable Commodity Charge",
+	"fixedServiceChargeSection":"Fixed Service Charge",
+	"variableCommChargeSection":"Variable Commodity Charge",
 	"drought":"Drought Rates",
 	"fixedDroughtCharge":"Fixed Drought Charge",
 	"variableDroughtCharge":"Variable Drought Charge",
@@ -12,8 +12,38 @@ sectionTextDict = {
 
 questionDict = {
 	"intro": "This survey is designed to gather detailed technical information about the structure and pricing "+
-				"of your water rates. It will probably be helpful to have a copy of your current rate information "+
-				"on hand before beginning.",
+				"of your water rates. Your response will be stored in a "+
+				"<a href='https://github.com/California-Data-Collaborative/Open-Water-Rate-Specification/#open-water-rate-specification' target='_blank'> "+
+					"public database </a> of water rate information "+
+				"being developed by the CaDC, where it will serve as a resource to expand our collective knowledge "+
+				"of water pricing trends. "+
+				"<br><br>"+
+				"Completing this portion of the survey should take 10-15 minutes per customer class. " +
+				"Please ensure that you have adequate time available before beginning as your responses can not be "+
+				"saved part way through. "+
+				"It may be helpful to have a copy of your current rate information on hand before beginning.",
+				
+	"utilityNameQuestion": "<b>1) Enter the Name of the Utility:</b>",
+	
+	"billFrequencyQuestion": "<b>2) Enter the Bill Frequency:</b>"+
+						"<br><br>"+
+						"In the case of different billing frequencies for different customers, please choose the most common case.",
+						
+	"effectiveDateQuestion": "<b>3) Enter the Effective Date of this Rate Structure:</b>",
+	
+	"custClassQuestion": "<b>4) Select the Customer Classes Used by the Utility:</b>"+
+							"<br><br>"+
+							"Note: Not all rate structures will break neatly into these categories. "+
+							"If your rate codes span multiple customer classes (e.g. single and multifamily are billed the same) "+
+							"please provide the same pricing information for both classes."+
+							"<br><br>"+
+							"Alternately, there may be cases where "+
+							"a single customer class (e.g. commercial) is broken up into a number of different rate codes. "+
+							"In this case, please use your best judgement and provide information for the most common case.",
+							
+	"fixedServiceChargeQuestion": "<b>1) Are customers in this class charged a fixed Service Charge?</b>",
+	
+	"variableCommChargeQuestion": "<b>2) Are customers in this class charged a variable Commodity Charge?</b>", 
 				
 	"serviceChargeDepends": "<b>Does the price of the fixed Service Charge depend on attributes of the customer account?</b>"+
 					"<br><br>"+
@@ -54,15 +84,15 @@ questionDict = {
 }
 
 questionList = [
-"<b>Enter the Name of the Utility:</b>", 
+"<b>1) Enter the Name of the Utility:</b>", 
 
-"<b>Enter the Bill Frequency:</b>"+
+"<b>2) Enter the Bill Frequency:</b>"+
 "<br><br>"+
 "In the case of different billing frequencies for different customers, please choose the most common case.",
 
-"<b>Enter the Effective Date of this Rate Structure:</b>", 
+"<b>3) Enter the Effective Date of this Rate Structure:</b>", 
 
-"<b>Select the Customer Classes Used by the Utility:</b>"+
+"<b>4) Select the Customer Classes Used by the Utility:</b>"+
 "<br><br>"+
 "Note: Not all rate structures will break neatly into these categories. "+
 "If your rate codes span multiple customer classes (e.g. single and multifamily are billed the same) "+
@@ -72,7 +102,7 @@ questionList = [
 "a single customer class (e.g. commercial) is broken up into a number of different rate codes. "+
 "In this case, please use your best judgement and provide information for the most common case.",
 
-"<b>Are customers in this class charged a fixed Service Charge?</b>",
+"<b>1) Are customers in this class charged a fixed Service Charge?</b>",
  
 "<b>Does the Fixed Service Charge depend on the following:</b>",
 
@@ -82,11 +112,13 @@ questionList = [
 
 "<b>How Many Tiers?</b>",
 
+"DD",
+
 "<b>Do the Tier Levels Depend On Anything?</b>"+
 "<br><br>"+
 "For example some rate structures change their tier widths seasonally, or based on discrete temerature zones.", 
 
-"<b>What customer account attributes affect the price charged?</b>",
+"<b>1.2) What customer account attributes affect the price charged?</b>",
 
 "<b>Do the Tier Prices Depend On Anything?</b>"];
 

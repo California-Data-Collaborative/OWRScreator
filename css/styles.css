@@ -15,7 +15,7 @@ margin-bottom: 30px;*/
 overflow: hidden;
 }
 
-h2:after {
+.panel-body h2:after {
     content:' ';
     display:block;
     border:2px solid #d0d0d0;
