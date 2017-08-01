@@ -557,7 +557,7 @@ survey.utilities = utilityList;
                 
                 //Creates All Rate Structure/Customer Class Pages
                 function RateStructure(index)
-                {
+                {window.scroll(0, 0);
                     primeArrays(0); primeArrays(1); primeArrays(2);
                     //Sets title to Utility Name and Subtitle to Cusstomer class and Clears page
                     title.innerHTML = UtilityName;
