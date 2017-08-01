@@ -748,15 +748,16 @@ survey.utilities = utilityList;
                     
                     
                     var Button = document.createElement("span");
-                    if(currentIndex == SelectedRateStructures.length - 1)  
+                    //final page?
+					if(currentIndex == SelectedRateStructures.length - 1)  
                     {
-                        Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()" class ="btn">Previous</button>' + 
+                        Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()" class ="btn">Previous Customer Class</button>' + 
                         '<button type = "button" onclick = "NextGetAnswers()" class = "btn">Complete</button>';
                     }
                     else
                     {
                         Button.innerHTML = '<button type = "button" style = "margin-right: 10px" onclick = "PreviousGetAnswers()" class = "btn">Previous</button>' + 
-                        '<button type = "button" onclick = "NextGetAnswers()"class = "btn">Next</button>';
+                        '<button type = "button" onclick = "NextGetAnswers()"class = "btn">Next Customer Class</button>';
                     }
                     ButtonDiv.appendChild(Button);
                 }
@@ -1143,9 +1144,9 @@ survey.utilities = utilityList;
                         QuestionTxt(q , 10, DIV);
                         
                         Answer = document.createElement("span");
-                        Answer.innerHTML = '<label for = "Uniform" class = "radio-inline"><input type = "radio" id = "Uniform' + chargeIdentifier + '" name = "CommodityStructure' + chargeIdentifier + '" onclick = "UniformDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Uniform"/>Uniform</label>'+
-                        '<label for = "Tiered" class = "radio-inline"><input type = "radio" id = "Tiered' + chargeIdentifier + '" name = "CommodityStructure' + chargeIdentifier + '" onclick = "TieredDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Tiered"/>Tiered</label>'+
-                        '<label for = "Budget" class = "radio-inline"><input type = "radio" id = "Budget' + chargeIdentifier + '" name = "CommodityStructure' + chargeIdentifier + '" onclick = "BudgetDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Budget"/>Budget</label>';
+                        Answer.innerHTML = '<label for = "Uniform' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "Uniform' + chargeIdentifier + '" name = "CommodityStructure' + chargeIdentifier + '" onclick = "UniformDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Uniform"/>Uniform</label>'+
+                        '<label for = "Tiered' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "Tiered' + chargeIdentifier + '" name = "CommodityStructure' + chargeIdentifier + '" onclick = "TieredDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Tiered"/>Tiered</label>'+
+                        '<label for = "Budget' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "Budget' + chargeIdentifier + '" name = "CommodityStructure' + chargeIdentifier + '" onclick = "BudgetDepends(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Budget"/>Budget</label>';
                         
                         DIV.appendChild(Answer);
                         
