@@ -11,17 +11,12 @@ sectionTextDict = {
 };
 
 questionDict = {
-	"intro": "This survey is designed to gather detailed technical information about the structure and pricing "+
-				"of your water rates. Your response will be stored in a "+
-				"<a href='https://github.com/California-Data-Collaborative/Open-Water-Rate-Specification/#open-water-rate-specification' target='_blank'> "+
-					"public database </a> of water rate information "+
-				"being developed by the CaDC, where it will serve as a resource to expand our collective knowledge "+
-				"of water pricing trends. "+
+	"intro": "This portion of the survey is designed to gather detailed technical information about the structure and pricing "+
+				"of your water rates."+
 				"<br><br>"+
-				"Completing this portion of the survey should take 10-15 minutes per customer class. " +
-				"Please ensure that you have adequate time available before beginning as your responses can not be "+
-				"saved part way through. "+
-				"It may be helpful to have a copy of your current rate information on hand before beginning.",
+				"<font color='red'>ATTENTION:<br>"+
+				"Please DO NOT refresh the page or hit the 'back' button in your browser. Instead use the 'Next' and 'Previous' "+
+				"buttons at the bottom of the page.</font>",
 				
 	"utilityNameQuestion": "<b>1) Enter the Name of the Utility:</b>",
 	
