@@ -22,7 +22,6 @@ var surveyJSON = '{"title": "Open Water Rate Survey",' +
 '"month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],'+
 '"cityLimits": ["Inside City", "Outside City"]}'
 var survey = JSON.parse(surveyJSON);
-survey.questions = questionList;
 survey.utilities = utilityList;
 
                 var form = document.getElementById("survey");
@@ -606,16 +605,16 @@ survey.utilities = utilityList;
                     
                     if(isCommodityCharge[currentIndex][0])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + survey.questions[6] + '\', \'Volumetric Commodity Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + survey.questions[6] + '\', \'Volumetric Commodity Charge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(0, survey.questions[6], "Volumetric Commodity Charge");
+                        getCommodityChargeInfo(0, questionDict["variableCommChargeQuestion"], "Volumetric Commodity Charge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][0] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + survey.questions[6] + '\', \'Volumetric Commodity Charge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + survey.questions[6] + '\', \'Volumetric Commodity Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -1434,7 +1433,7 @@ survey.utilities = utilityList;
                     tierLevels[currentIndex][chargeIdentifier] = tiers.value;
                     
                     Tier("tierStarts" + chargeIdentifier + "Div", questionDict["doTiersDepend"], "doTiersDepend", isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
-                    Tier("tierPrices" + chargeIdentifier + "Div", survey.questions[12], 15, isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
+                    Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doPricesDepend"], "doPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
                     getTierStartsInfo(chargeIdentifier, chargeName);
                     getTierPricesInfo(chargeIdentifier, chargeName);
                 }
@@ -1557,7 +1556,7 @@ survey.utilities = utilityList;
                         {
                             clear(tierPricesDiv);
                         }
-                        QuestionTxt(survey.questions[12], 15,tierPricesDiv)
+                        QuestionTxt(questionDict["doPricesDepend"], "doPricesDepend", tierPricesDiv)
                         Answer = document.createElement("span");
                         
                         Answer.innerHTML = '<label for = "YesTierPrices' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesTierPrices' + chargeIdentifier + '" name = "isTierPricesDepends' + chargeIdentifier + '" onclick = "getTierPricesInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" checked = "true"/>'+
@@ -1584,7 +1583,7 @@ survey.utilities = utilityList;
                     else
                     {
                         isTierPricesDepends[currentIndex][chargeIdentifier] = false;
-                        Tier("tierPrices" + chargeIdentifier + "Div", survey.questions[12], 15, isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
+                        Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doPricesDepend"], "doPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
                         
                         Answer = document.createElement('div');
                         Answer.id = "tierPricesValues" + chargeIdentifier + "Div";
