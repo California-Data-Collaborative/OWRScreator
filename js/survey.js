@@ -779,7 +779,7 @@ survey.utilities = utilityList;
                         // if not the first entry
                         if(currentIndex > 0)
                         {
-							q = "<b>Is this " + chargeName + " the same as one you previously entered into this survey?</b> " +
+							q = "<b>1b) Is this " + chargeName + " the same as one you previously entered into this survey?</b> " +
 									"<br><br>"+
 									"If so, you may select 'Yes' and the customer class to save some time."
 							
@@ -2108,7 +2108,7 @@ survey.utilities = utilityList;
                             {
                                 if(commodityStructure[currentIndex][chargeIdentifier] == "Tiered")
                                 {
-                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (Must be an Integer): ", chargeIdentifier);
+                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (Must be a whole number): ", chargeIdentifier);
                                 }
                                 else
                                 {
@@ -2552,7 +2552,14 @@ survey.utilities = utilityList;
                             if(isServiceCharge[serviceSameStructure[currentIndex][i]][i] == false)
                             {
                                 Continue = false;
-                                alert("The Service Charge for the Structure you Selected does not contain a service charge select another.")
+								alertText = "You said that this customer class has the same fixed service charge as a previously entered customer class. "+
+											"However, the previous customer class you selected does not appear to have a fixed service charge."+
+											"\n\n"+
+											"Please do one of the following:\n"+
+											"* Select a different customer class in section (1b)\n"+
+											"* Change your response to question (1)\n"+
+											"* Return to the previous customer class using the 'Previous' button below and enter the proper information."
+                                alert(alertText);
                             }
                         }
                     }
@@ -2671,7 +2678,7 @@ survey.utilities = utilityList;
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be an integer");
+                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2709,7 +2716,7 @@ survey.utilities = utilityList;
                                             }
                                             else
                                             {
-                                                alert("The Tier Level for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be an integer");
+                                                alert("The Tier Level for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number");
                                                 Continue = false;
                                             } 
                                         }
@@ -3122,7 +3129,9 @@ survey.utilities = utilityList;
                             if(isServiceCharge[structure][j])
                             {
                                 if(!isServiceDepends[structure][j])
-                                {
+                                {	console.log("serviceCharges: "+serviceCharges);
+									console.log("currentIndex: "+currentIndex);
+									console.log("j: "+j);
                                     serviceJSON[j] = Number(serviceCharges[currentIndex][j][0]);
                                 }
                                 else
