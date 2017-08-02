@@ -49,6 +49,14 @@ questionDict = {
 					"<br><br>"+
 					"For example, service charges often depend on meter size of the connection "+
 					"but they can also change depending on other attributes like the pressure zone the meter is located in.",
+					
+	"howManyTiers": "<b>2.2) How Many Tiers?</b>",
+	
+	"doTiersDepend": "<b>2.3) Do the Tier Levels Depend On Anything?</b>"+
+						"<br><br>"+
+						"For example some rate structures change their tier widths seasonally, or based on discrete temerature zones.",
+						
+	"doPricesDepend": "<b>2.4) Do the Tier Prices Depend On Anything?</b>",
 				
 	"budgetExplainer1":"",
 	
@@ -82,43 +90,4 @@ questionDict = {
 	"isThereFixedWastewater":"<b>Is there a fixed wasterwater charge?</b>",
 	"isThereVolumeWastewater":"<b>Is There a Volumetric Wastewater Charge?</b>",
 }
-
-questionList = [
-"<b>1) Enter the Name of the Utility:</b>", 
-
-"<b>2) Enter the Bill Frequency:</b>"+
-"<br><br>"+
-"In the case of different billing frequencies for different customers, please choose the most common case.",
-
-"<b>3) Enter the Effective Date of this Rate Structure:</b>", 
-
-"<b>4) Select the Customer Classes Used by the Utility:</b>"+
-"<br><br>"+
-"Note: Not all rate structures will break neatly into these categories. "+
-"If your rate codes span multiple customer classes (e.g. single and multifamily are billed the same) "+
-"please provide the same pricing information for both classes."+
-"<br><br>"+
-"Alternately, there may be cases where "+
-"a single customer class (e.g. commercial) is broken up into a number of different rate codes. "+
-"In this case, please use your best judgement and provide information for the most common case.",
-
-"<b>1) Are customers in this class charged a fixed Service Charge?</b>",
- 
-"<b>Does the Fixed Service Charge depend on the following:</b>",
-
-"<b>Are customers in this class charged a variable Commodity Charge?</b>", 
-
-"<b>Does this Uniform Commodity Charge Depend On Anything?</b>", 
-
-"<b>How Many Tiers?</b>",
-
-"DD",
-
-"<b>Do the Tier Levels Depend On Anything?</b>"+
-"<br><br>"+
-"For example some rate structures change their tier widths seasonally, or based on discrete temerature zones.", 
-
-"<b>1.2) What customer account attributes affect the price charged?</b>",
-
-"<b>Do the Tier Prices Depend On Anything?</b>"];
 
