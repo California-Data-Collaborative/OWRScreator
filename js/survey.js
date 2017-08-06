@@ -3176,7 +3176,7 @@ survey.utilities = utilityList;
                                 {	console.log("serviceCharges: "+serviceCharges);
 									console.log("currentIndex: "+currentIndex);
 									console.log("j: "+j);
-                                    serviceJSON[j] = Number(serviceCharges[currentIndex][j][0]);
+                                    serviceJSON[j] = Number(serviceCharges[structure][j][0]);
                                 }
                                 else
                                 {
