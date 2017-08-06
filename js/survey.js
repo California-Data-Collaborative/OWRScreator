@@ -77,6 +77,7 @@ survey.utilities = utilityList;
                 var indoor = [];
                 var outdoor = [];
                 var budget = [];
+                var billingUnits = [];
                 
                 var uniformDependsOn = [];
                 var commodityMeterSize = [];
@@ -159,6 +160,8 @@ survey.utilities = utilityList;
                         outdoor[currentIndex] = [];
                     if(budget[currentIndex] == null)
                         budget[currentIndex] = [];
+                    if(billingUnits[currentIndex] == null)
+                        billingUnits[currentIndex] = [];
                     
                     if(uniformDependsOn[currentIndex] == null)
                         uniformDependsOn[currentIndex] = [];
@@ -298,12 +301,6 @@ survey.utilities = utilityList;
                             }
                         }
                     }
-                    
-                    //Styles DropDown Lists
-                    $(document).ready(function() {
-                    $(".select").select2();
-                    });
-                    
                 }
                 
                 //Gets Data from first page and calls RateStructure Function
@@ -848,6 +845,9 @@ survey.utilities = utilityList;
                 {
                     var serviceSame = document.getElementById("serviceSame" + chargeIdentifier + "Div")
                     
+                    if(serviceSame.childNodes.length > 0)
+                        clear(serviceSame);
+                    
                     var radiobutton = document.getElementById("YesServiceSame" + chargeIdentifier);
                     if(radiobutton.checked)
                     {
@@ -876,7 +876,7 @@ survey.utilities = utilityList;
                     }
                     else
                     {
-                        if(serviceSame.childNodes.length> 0)
+                        if(serviceSame.childNodes.length > 0)
                             clear(serviceSame);
                         
                         serviceChargeDepends(chargeIdentifier, chargeName);
@@ -948,6 +948,9 @@ survey.utilities = utilityList;
                 {
                     var serviceSame = document.getElementById("serviceSame" + chargeIdentifier + "Div");
                     
+                    if(serviceSame.childNodes.length > 0)
+                        clear(serviceSame);
+                    
 					q = "<b>1.1) Does the price of the " + chargeName + " depend on attributes of the customer account?</b>"+
 					"<br><br>"+
 					"For example, fixed charges often depend on meter size of the connection "+
@@ -983,6 +986,9 @@ survey.utilities = utilityList;
                     isServiceDepends[currentIndex][chargeIdentifier] = RadioButton.checked;
                     
                     var service = document.getElementById("serviceStuff" + chargeIdentifier + "Div");
+                    
+                    if(service.childNodes.length > 0)
+                        clear(service);
                     
                     if(RadioButton.checked == true)
                     {
@@ -1122,7 +1128,7 @@ survey.utilities = utilityList;
                 //yes: create radio buttons to choose between uniform/tiered/budget
                 function getCommodityChargeInfo(chargeIdentifier, Question, chargeName)
                 {
-                    var DIV = document.getElementById("commodityList" + chargeIdentifier)
+                    var DIV = document.getElementById("commodityList" + chargeIdentifier);
                     
                     var RadioButton = document.getElementById("YesCommodityCharge" + chargeIdentifier);
                     
@@ -1314,7 +1320,9 @@ survey.utilities = utilityList;
                             
                             if(Continue && ParametersToUse.length > 0)
                             {
-                                QuestionTxt("<b>Enter The Cost Per CCF (In the form of 15.99):</b>", 12, uniformPriceDiv)
+                                billUnit(chargeIdentifier, uniformPriceDiv);
+                                
+                                QuestionTxt("<b>Enter The Cost Per " + billingUnits[currentIndex][chargeIdentifier] + " (In the form of 15.99):</b>", 12, uniformPriceDiv)
                                 commodityChargeCategories[currentIndex][chargeIdentifier] = [];
                                 getCategories(commodityChargeCategories[currentIndex][chargeIdentifier], 0, ParametersToUse.length, "", "Rate:");
                             
@@ -1362,7 +1370,9 @@ survey.utilities = utilityList;
                     }
                     else if(isUniformDependsOn[currentIndex][chargeIdentifier] == 'No')
                     {
-                        QuestionTxt("<b>Enter The Cost Per CCF (In the form of 15.99):</b>", 12, uniformPriceDiv);
+                        billUnit(chargeIdentifier, uniformPriceDiv);
+                        
+                        QuestionTxt("<b>Enter The Cost Per " + billingUnits[currentIndex][chargeIdentifier] + " (In the form of 15.99):</b>", 12, uniformPriceDiv);
                        
                         inputGroup = document.createElement("div");
                         inputGroup.classList.add("input-group");
@@ -1388,6 +1398,36 @@ survey.utilities = utilityList;
                     }
                 }
                 
+                function billUnit(chargeIdentifier, DIV)
+                {
+                    QuestionTxt("<b>Select The Billing Unit</b>", 45, DIV);
+                    
+                    Answer = document.createElement("span");
+                    Answer.innerHTML = '<label for = "BillUnits' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesBillUnits' + chargeIdentifier + '" name = "isBillUnits' + chargeIdentifier + '" onclick = "changeBillUnits(' + chargeIdentifier + ', 0)" value = "kgal" />'+
+                    'Kgal</label>'+
+                    '<label for = "BillUnits' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "NoBillUnits' + chargeIdentifier + '" name = "isBillUnits' + chargeIdentifier + '" onclick = "changeBillUnits(' + chargeIdentifier + ', 1)" value = "ccf"/>'+
+                    'CCF</label>';
+                    DIV.appendChild(Answer);
+                    
+                    var Radio = document.getElementById("YesBillUnits" + chargeIdentifier);
+                    var CCF = document.getElementById("NoBillUnits" + chargeIdentifier);
+                    
+                    if(billingUnits[currentIndex][chargeIdentifier] != null)
+                    {
+                        if(billingUnits[currentIndex][chargeIdentifier] == "ccf")
+                            CCF.checked = true;
+                        else
+                            Radio.checked = true;
+                    }
+                }
+                
+                function changeBillUnits(chargeIdentifier, num)
+                {
+                    if(num == 0)
+                        billingUnits[currentIndex][chargeIdentifier] = "kgal";
+                    else
+                        billingUnits[currentIndex][chargeIdentifier] = "ccf";
+                }
                 
                 function TieredDepends(chargeIdentifier, chargeName)
                 {
@@ -1488,6 +1528,7 @@ survey.utilities = utilityList;
                     var Radio = document.getElementById("YesTierStarts" + chargeIdentifier);
                     var tierStartsDiv = document.getElementById("tierStarts" + chargeIdentifier + "Div");
                     
+                    
                     if(Radio.checked)
                     {
                         isTierStartsDepends[currentIndex][chargeIdentifier] = true;
@@ -1495,6 +1536,10 @@ survey.utilities = utilityList;
                         {
                             clear(tierStartsDiv);
                         }
+                        
+                        if(commodityStructure[currentIndex][chargeIdentifier])
+                            billUnit(chargeIdentifier, tierStartsDiv);
+                        
                         QuestionTxt(questionDict["doTiersDepend"], "doTiersDepend",tierStartsDiv)
                         Answer = document.createElement("span");
                         
@@ -3131,7 +3176,7 @@ survey.utilities = utilityList;
                                 {	console.log("serviceCharges: "+serviceCharges);
 									console.log("currentIndex: "+currentIndex);
 									console.log("j: "+j);
-                                    serviceJSON[j] = Number(serviceCharges[currentIndex][j][0]);
+                                    serviceJSON[j] = Number(serviceCharges[structure][j][0]);
                                 }
                                 else
                                 {
@@ -3196,6 +3241,13 @@ survey.utilities = utilityList;
                                                     "volumetric_wastewater_charge" : "flat_rate_waste*usage_ccf",
                                                     "flat_rate_waste" : {}
                                                 }; break;
+                                    }
+                                    
+                                    switch(j)
+                                    {
+                                        case 0: commodityJSON[j].billing_unit_commodity = billingUnits[structure][j]; break;
+                                        case 1: commodityJSON[j].billing_unit_drought = billingUnits[structure][j]; break;
+                                        case 2: commodityJSON[j].billing_unit_waste = billingUnits[structure][j]; break;
                                     }
                                     
                                     if(isUniformDependsOn[structure][j] == 'No')
@@ -3277,6 +3329,14 @@ survey.utilities = utilityList;
                                                     "volumetric_wastewater_charge" : "Tiered"
                                                 }; break;
                                     }
+                                    
+                                    switch(j)
+                                    {
+                                        case 0: commodityJSON[j].tiered_billing_unit_commodity = billingUnits[structure][j]; break;
+                                        case 1: commodityJSON[j].tiered_billing_unit_drought = billingUnits[structure][j]; break;
+                                        case 2: commodityJSON[j].tiered_billing_unit_waste = billingUnits[structure][j]; break;
+                                    }
+                                    
                                     if(isTierStartsDepends[structure][j])
                                     {
                                         switch(j)
@@ -3467,6 +3527,13 @@ survey.utilities = utilityList;
                                         case 2: commodityJSON[j]  = {
                                                     "volumetric_wastewater_charge" : "Budget"
                                                 }; break;
+                                    }
+                                    
+                                    switch(j)
+                                    {
+                                        case 0: commodityJSON[j].budget_billing_unit_commodity = billingUnits[structure][j]; break;
+                                        case 1: commodityJSON[j].budget_billing_unit_drought = billingUnits[structure][j]; break;
+                                        case 2: commodityJSON[j].budget_billing_unit_waste = billingUnits[structure][j]; break;
                                     }
                                     
                                     switch(j)
