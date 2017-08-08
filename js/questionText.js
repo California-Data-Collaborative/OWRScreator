@@ -38,22 +38,21 @@ questionDict = {
 							"a single customer class (e.g. commercial) is broken up into a number of different rate codes. "+
 							"In this case, please use your best judgement and provide information for the most common case.",
 							
-	"fixedServiceChargeQuestion": "<b>1) Are customers in this class charged a fixed Service Charge?</b>",
+	"fixedServiceChargeQuestion": "<b>1) Are customers in this class charged a Fixed Service Charge?</b>",
+	
+	"doFixedPricesDepend": "<b>1.2) What attributes does the price depend on?</b>",
 	
 	"variableCommChargeQuestion": "<b>2) Are customers in this class charged a variable Commodity Charge?</b>", 
-				
-	"serviceChargeDepends": "<b>Does the price of the fixed Service Charge depend on attributes of the customer account?</b>"+
-					"<br><br>"+
-					"For example, service charges often depend on meter size of the connection "+
-					"but they can also change depending on other attributes like the pressure zone the meter is located in.",
 					
 	"howManyTiers": "<b>2.2) How Many Tiers?</b>",
 	
-	"doTiersDepend": "<b>2.3) Do the Tier Levels Depend On Anything?</b>"+
+	"doTiersDepend": "<b>2.3) Do the Tier Definitions Depend On Anything?</b>"+
 						"<br><br>"+
-						"For example some rate structures change their tier widths seasonally, or based on discrete temerature zones.",
+						"For example some rate structures change their tier definitions seasonally, or based on discrete temperature zones.",
 						
-	"doPricesDepend": "<b>2.4) Do the Tier Prices Depend On Anything?</b>",
+	"doTierPricesDepend": "<b>2.4) Do the Tier Prices Depend On Customer Attributes?</b>",
+	
+	"tierPricesDependWhat": "<b>2.5) What attributes do the tier prices dppend on?</b>",
 				
 	"budgetExplainer1":"",
 	
@@ -81,10 +80,10 @@ questionDict = {
 						"<br><br>"+
 						"The second question will ask for the corresponding rates for the budget rates described. ",
 						
-	"isThereFixedDrought":"<b>Is there a fixed Drought Surcharge?</b>",
-	"isThereVolumeDrought":"<b>Is There A Volumetric Drought Surcharge?</b>",
+	"isThereFixedDrought":"<b>Is there a Fixed Drought Surcharge? (also referred to as drought rates, water shortage charges, or similar):</b>",
+	"isThereVolumeDrought":"<b>Is There A Variable Drought Surcharge? (also referred to as drought rates, water shortage charges, or similar):</b>",
 	
 	"isThereFixedWastewater":"<b>Is there a fixed wasterwater charge?</b>",
-	"isThereVolumeWastewater":"<b>Is There a Volumetric Wastewater Charge?</b>",
+	"isThereVolumeWastewater":"<b>Is There a Variable Wastewater Charge?</b>",
 }
 

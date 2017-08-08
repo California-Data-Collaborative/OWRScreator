@@ -611,16 +611,16 @@ survey.utilities = utilityList;
                     
                     if(isCommodityCharge[currentIndex][0])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Variable Commodity Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Variable Commodity Charge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(0, questionDict["variableCommChargeQuestion"], "Volumetric Commodity Charge");
+                        getCommodityChargeInfo(0, questionDict["variableCommChargeQuestion"], "Variable Commodity Charge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][0] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Variable Commodity Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Variable Commodity Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -647,7 +647,7 @@ survey.utilities = utilityList;
                     //
                     if(isServiceCharge[currentIndex][1])
                     {
-                        Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a Fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
                         '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1)" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
                         serviceChargeTheSame(1, questionDict["isThereFixedDrought"], "Fixed Drought Charge");
@@ -655,8 +655,8 @@ survey.utilities = utilityList;
                     else
                     {  
                         isServiceCharge[currentIndex][1] = false;
-                        Answer.innerHTML = '<label for = "YesServiceCharge1" class ="radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge1" class ="radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a Fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a Fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
                     
@@ -671,16 +671,16 @@ survey.utilities = utilityList;
                     
                     if(isCommodityCharge[currentIndex][1])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Variable Drought Surcharge?\', \'Variable Drought Surcharge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Variable Drought Surcharge?\', \'Variable Drought Surcharge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(1, questionDict["isThereVolumeDrought"], "Volumetric Drought Surcharge");
+                        getCommodityChargeInfo(1, questionDict["isThereVolumeDrought"], "Variable Drought Surcharge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][1] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Variable Drought Surcharge?\', \'Variable Drought Surcharge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Variable Drought Surcharge?\', \'Variable Drought Surcharge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -726,16 +726,16 @@ survey.utilities = utilityList;
                     
                     if(isCommodityCharge[currentIndex][2])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Variable Wastewater Charge?\', \'Variable Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Variable Wastewater Charge?\', \'Variable Wastewater Charge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(2, questionDict["isThereVolumeWastewater"], "Volumetric Wastewater Charge");
+                        getCommodityChargeInfo(2, questionDict["isThereVolumeWastewater"], "Variable Wastewater Charge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][2] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')"value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Variable Wastewater Charge?\', \'Variable Wastewater Charge\')"value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Variable Wastewater Charge?\', \'Variable Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     */
@@ -1150,9 +1150,9 @@ survey.utilities = utilityList;
 								"Note that while a budget-based rate structure may include tiers, "+
 								"we consider 'Budget' and 'Tiered' as unique rate structures. "+
 								"<br><br>"+
-								"Please choose 'Budget' if the tier widths change based on "+
-								"attributes like household size, landscape area, ET, or on historic average use. "+
-								"For tier widths that change based on season or discrete temperature zones, "+
+								"Please choose 'Budget' if the tier definitions change based on "+
+								"attributes like household size, landscape area, evapotranspiration, or on historic average use. "+
+								"For tier definitions that change based on season or discrete temperature zones, "+
 								"please choose 'Tiered'."	
 						
                         QuestionTxt(q , 10, DIV);
@@ -1239,7 +1239,7 @@ survey.utilities = utilityList;
                         clear(commodityDependsOnDiv);
                     }
                     
-                    QuestionTxt("<b>1.3) Does this Uniform " + chargeName + " depend on anything?</b>", 11, commodityDependsOnDiv);
+                    QuestionTxt("<b>2.2) Does this Uniform " + chargeName + " depend on anything?</b>", 11, commodityDependsOnDiv);
                     
                     Answer = document.createElement("span");
                         
@@ -1482,7 +1482,7 @@ survey.utilities = utilityList;
                     tierLevels[currentIndex][chargeIdentifier] = tiers.value;
                     
                     Tier("tierStarts" + chargeIdentifier + "Div", questionDict["doTiersDepend"], "doTiersDepend", isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
-                    Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doPricesDepend"], "doPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
+                    Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doTierPricesDepend"], "doTierPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
                     getTierStartsInfo(chargeIdentifier, chargeName);
                     getTierPricesInfo(chargeIdentifier, chargeName);
                 }
@@ -1610,7 +1610,7 @@ survey.utilities = utilityList;
                         {
                             clear(tierPricesDiv);
                         }
-                        QuestionTxt(questionDict["doPricesDepend"], "doPricesDepend", tierPricesDiv)
+                        QuestionTxt(questionDict["doTierPricesDepend"], "doTierPricesDepend", tierPricesDiv)
                         Answer = document.createElement("span");
                         
                         Answer.innerHTML = '<label for = "YesTierPrices' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesTierPrices' + chargeIdentifier + '" name = "isTierPricesDepends' + chargeIdentifier + '" onclick = "getTierPricesInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" checked = "true"/>'+
@@ -1637,7 +1637,7 @@ survey.utilities = utilityList;
                     else
                     {
                         isTierPricesDepends[currentIndex][chargeIdentifier] = false;
-                        Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doPricesDepend"], "doPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
+                        Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doTierPricesDepend"], "doTierPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
                         
                         Answer = document.createElement('div');
                         Answer.id = "tierPricesValues" + chargeIdentifier + "Div";
@@ -1756,7 +1756,15 @@ survey.utilities = utilityList;
                     {
                         clear(DIV);
                     }
-                    QuestionTxt(questionDict["doPricesDepend"], "doPricesDepend", DIV);
+					
+					if(DIVname.substring(0,7) === "service"){
+						QuestionTxt(questionDict["doFixedPricesDepend"], "doTierPricesDepend", DIV);
+					}
+					else
+					{
+						QuestionTxt(questionDict["tierPricesDependWhat"], "tierPricesDependWhat", DIV);
+					}
+                    
                     
                     for(var i = 0; i < survey.commodityDependsOn.length; ++i)
                     {
@@ -2161,11 +2169,11 @@ survey.utilities = utilityList;
                             {
                                 if(commodityStructure[currentIndex][chargeIdentifier] == "Tiered")
                                 {
-                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (Must be a whole number): ", chargeIdentifier);
+                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Definitions (Must be a whole number): ", chargeIdentifier);
                                 }
                                 else
                                 {
-                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (Must be in the format 100%): ", chargeIdentifier);
+                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Definitions (Must be in the format 100%): ", chargeIdentifier);
                                 }
                             }
                         }
@@ -2747,7 +2755,7 @@ survey.utilities = utilityList;
                                     else
                                     {
                                         Continue = false;
-                                        alert("No parameters Selected for Tier Levels");
+                                        alert("No parameters Selected for Tier Definitions");
                                     }
                                 }
                                 else
@@ -2982,7 +2990,7 @@ survey.utilities = utilityList;
                                     else
                                     {
                                         Continue = false;
-                                        alert("No parameters Selected for Tier Levels");
+                                        alert("No parameters Selected for Tier Definitions");
                                     }
                                 }
                                 else
@@ -3243,11 +3251,11 @@ survey.utilities = utilityList;
                                                     "flat_rate_commodity" : {}
                                                 }; break;
                                         case 1: commodityJSON[j]  = {
-                                                    "volumetric_drought_surcharge" : "flat_rate_drought*usage_ccf",
+                                                    "variable_drought_surcharge" : "flat_rate_drought*usage_ccf",
                                                     "flat_rate_drought" : {}
                                                 }; break;
                                         case 2: commodityJSON[j]  = {
-                                                    "volumetric_wastewater_charge" : "flat_rate_waste*usage_ccf",
+                                                    "variable_wastewater_charge" : "flat_rate_waste*usage_ccf",
                                                     "flat_rate_waste" : {}
                                                 }; break;
                                     }
@@ -3332,10 +3340,10 @@ survey.utilities = utilityList;
                                                     "commodity_charge" : "Tiered"
                                                 }; break;
                                         case 1: commodityJSON[j]  = {
-                                                    "volumetric_drought_surcharge" : "Tiered"
+                                                    "variable_drought_surcharge" : "Tiered"
                                                 }; break;
                                         case 2: commodityJSON[j]  = {
-                                                    "volumetric_wastewater_charge" : "Tiered"
+                                                    "variable_wastewater_charge" : "Tiered"
                                                 }; break;
                                     }
                                     
@@ -3531,10 +3539,10 @@ survey.utilities = utilityList;
                                                     "commodity_charge" : "Budget"
                                                 }; break;
                                         case 1: commodityJSON[j]  = {
-                                                    "volumetric_drought_surcharge" : "Budget"
+                                                    "variable_drought_surcharge" : "Budget"
                                                 }; break;
                                         case 2: commodityJSON[j]  = {
-                                                    "volumetric_wastewater_charge" : "Budget"
+                                                    "variable_wastewater_charge" : "Budget"
                                                 }; break;
                                     }
                                     
@@ -3759,10 +3767,10 @@ survey.utilities = utilityList;
                                                     "commodity_charge" : 0
                                                 }; break;
                                         case 1: commodityJSON[j]  = {
-                                                    "volumetric_drought_surcharge" : 0
+                                                    "variable_drought_surcharge" : 0
                                                 }; break;
                                         case 2: commodityJSON[j]  = {
-                                                    "volumetric_wastewater_charge" : 0
+                                                    "variable_wastewater_charge" : 0
                                                 }; break;
                                     } 
                         };
@@ -3920,7 +3928,7 @@ survey.utilities = utilityList;
                                                         tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON[1]);
                                                         tempStructure.OTHER.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON[2]); 
-                                                        tempStructure.OTHER.bill = "service_charge+commodity_charge+fixed_wastewater_charge+volumetric_wastewater_charge"; break;
+                                                        tempStructure.OTHER.bill = "service_charge+commodity_charge+fixed_wastewater_charge+variable_wastewater_charge"; break;
                         }
                         OWRSformat.rate_structure = jQuery.extend({}, OWRSformat.rate_structure, tempStructure);
                     }
