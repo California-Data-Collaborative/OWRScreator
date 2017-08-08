@@ -26,9 +26,11 @@ questionDict = {
 						
 	"effectiveDateQuestion": "<b>3) Enter the Effective Date of this Rate Structure:</b>",
 	
-	"custClassQuestion": "<b>4) Select the Customer Classes Used by the Utility:</b>"+
+	"custClassQuestion": "<b>4) Select the Customer Classes to Report in This Survey:</b>"+
 							"<br><br>"+
-							"Note: Not all rate structures will break neatly into these categories. "+
+							"Note: Please complete single-family rates and as many other classes as you are comfortable providing."+
+							"<br><br>"+
+							"Not all rate structures will break neatly into these categories. "+
 							"If your rate codes span multiple customer classes (e.g. single and multifamily are billed the same) "+
 							"please provide the same pricing information for both classes."+
 							"<br><br>"+

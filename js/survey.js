@@ -1,15 +1,13 @@
 var surveyJSON = '{"title": "Open Water Rate Survey",' +
-'"billFrequency": ["Monthly", "BiMonthly", "Quarterly", "Annually", "Other"],'+
+'"billFrequency": ["Monthly", "Bi-Monthly", "Quarterly", "Annually", "Semi-Annually"],'+
 '"rateStructures":['+
-'"Residential Single", "Residential Multi",'+
+'"Single-Family Residential", "Multi-Family Residential",'+
 '"Irrigation", "Commercial",'+
-'"Industrial", "Institutional",'+
-'"Fire Service", "Non-Potable",'+
-'"Non-Residential", "Unmetered",'+
-'"Reclaimed", "Governmental",'+
-'"Interruptible", "Docks Shipping",'+
+'"Industrial", "Institutional", "Agriculture",'+
+'"Fire Service", "Raw Water",'+
+'"Non-Residential", "Unmetered", "Governmental",'+
+'"Interruptible",'+
 '"Potable", "Recycled",'+
-'"Building Contractor", "Residential Construction",'+
 '"Other"],'+
 '"commodityDependsOn": ["Meter Size", "Meter Type", "Season", "Temperature Zone", "Pressure Zone", '+
 '"Lot Size Group", "Month", "City Limits"],'+
@@ -259,7 +257,18 @@ survey.utilities = utilityList;
                         
                         Answer = document.createElement("label");
                         Answer.setAttribute("for", "custClass" + i); 
-                        Answer.innerHTML = '<input type = "checkbox" id = "custClass'+ i +'" value = "' + survey.rateStructures[i] +'"/> ' + survey.rateStructures[i] + '';
+						
+						if(survey.rateStructures[i] === "Single-Family Residential")
+						{
+							Answer.innerHTML = '<input type = "checkbox" id = "custClass'+ i +
+												'" value = "' + survey.rateStructures[i] +'" checked/> ' + survey.rateStructures[i] + '';
+						}
+						else
+						{
+							Answer.innerHTML = '<input type = "checkbox" id = "custClass'+ i +
+												'" value = "' + survey.rateStructures[i] +'"/> ' + survey.rateStructures[i] + '';
+						}
+                        
                         DIV.appendChild(Answer); 
                     }
                     
@@ -560,8 +569,8 @@ survey.utilities = utilityList;
                     subtitle.innerHTML = SelectedRateStructures[index];
                     clear(form);
 					
-					q = "Questions in this section refer to " + SelectedRateStructures[index] + " customers.";
-					QuestionTxt(q, "custClassExplainer", form);
+					s = "<p style='color: #66afe9;'>Questions in this section refer to " + SelectedRateStructures[index] + " customers</p>";
+					createSection(s, "custClassExplainer", "h4", form);
                     
                     //Populates The Service Charge Div
                     var serviceList = document.createElement("div");
@@ -680,7 +689,7 @@ survey.utilities = utilityList;
                     
                     
                     
-                    
+                    /*
                     var serviceList = document.createElement("div");
                     serviceList.id = "serviceList2";
                     form.appendChild(serviceList);
@@ -729,7 +738,7 @@ survey.utilities = utilityList;
                         '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
-                    
+                    */
                     
                     
                     
@@ -3760,7 +3769,7 @@ survey.utilities = utilityList;
                         }
                         switch(SelectedRateStructures[structure])
                         {
-                            case "Residential Single": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
+                            case "Single-Family Residential": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
                                                         tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON[0] ;
                                                         tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON[0]); 
                                                         tempStructure.RESIDENTIAL_SINGLE.fixed_drought_surcharge = serviceJSON[1] ;
@@ -3768,7 +3777,7 @@ survey.utilities = utilityList;
                                                         tempStructure.RESIDENTIAL_SINGLE.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON[2]); 
                                                         tempStructure.RESIDENTIAL_SINGLE.bill = "service_charge+commodity_charge"; break;
-                            case "Residential Multi": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
+                            case "Multi-Family Residential": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
                                                         tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON[0]; 
                                                         tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON[0]); 
                                                         tempStructure.RESIDENTIAL_MULTI.fixed_drought_surcharge = serviceJSON[1] ;
@@ -3816,14 +3825,14 @@ survey.utilities = utilityList;
                                                         tempStructure.FIRE_SERVICE.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.FIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON[2]); 
                                                         tempStructure.FIRE_SERVICE.bill = "service_charge+commodity_charge"; break;
-                            case "Non-Potable": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } };
-                                                        tempStructure.NONPOTABLE.service_charge = serviceJSON[0]; 
-                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[0]); 
-                                                        tempStructure.NONPOTABLE.fixed_drought_surcharge = serviceJSON[1] ;
-                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[1]);
-                                                        tempStructure.NONPOTABLE.fixed_wastewater_charge = serviceJSON[2] ;
-                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[2]); 
-                                                        tempStructure.NONPOTABLE.bill = "service_charge+commodity_charge"; break;
+                            case "Raw Water": tempStructure = { "RAW" : { "service_charge" : {} } };
+                                                        tempStructure.RAW.service_charge = serviceJSON[0]; 
+                                                        tempStructure.RAW = jQuery.extend({}, tempStructure.RAW, commodityJSON[0]); 
+                                                        tempStructure.RAW.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.RAW = jQuery.extend({}, tempStructure.RAW, commodityJSON[1]);
+                                                        tempStructure.RAW.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.RAW = jQuery.extend({}, tempStructure.RAW, commodityJSON[2]); 
+                                                        tempStructure.RAW.bill = "service_charge+commodity_charge"; break;
                             case "Potable": tempStructure = { "POTABLE" : { "service_charge" : {} } };
                                                         tempStructure.POTABLE.service_charge = serviceJSON[0]; 
                                                         tempStructure.POTABLE = jQuery.extend({}, tempStructure.POTABLE, commodityJSON[0]); 
@@ -3848,6 +3857,14 @@ survey.utilities = utilityList;
                                                         tempStructure.NON_RESIDENTIAL.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON[2]); 
                                                         tempStructure.NON_RESIDENTIAL.bill = "service_charge+commodity_charge"; break;
+							case "Agriculture": tempStructure = { "AGRICULTURAL" : { "service_charge" : {} } }; 
+                                                        tempStructure.AGRICULTURAL.service_charge = serviceJSON[0]; 
+                                                        tempStructure.AGRICULTURAL = jQuery.extend({}, tempStructure.AGRICULTURAL, commodityJSON[0]); 
+                                                        tempStructure.AGRICULTURAL.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.AGRICULTURAL = jQuery.extend({}, tempStructure.AGRICULTURAL, commodityJSON[1]);
+                                                        tempStructure.AGRICULTURAL.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.AGRICULTURAL = jQuery.extend({}, tempStructure.AGRICULTURAL, commodityJSON[2]); 
+                                                        tempStructure.AGRICULTURAL.bill = "service_charge+commodity_charge"; break;
                             case "Unmetered": tempStructure = { "UNMETERED" : { "service_charge" : {} } };
                                                         tempStructure.UNMETERED.service_charge = serviceJSON[0]; 
                                                         tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON[0]); 
@@ -3856,14 +3873,6 @@ survey.utilities = utilityList;
                                                         tempStructure.UNMETERED.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON[2]); 
                                                         tempStructure.UNMETERED.bill = "service_charge+commodity_charge"; break;
-                            case "Reclaimed": tempStructure = { "RECLAIMED" : { "service_charge" : {} } }; 
-                                                        tempStructure.RECLAIMED.service_charge = serviceJSON[0]; 
-                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[0]); 
-                                                        tempStructure.RECLAIMED.fixed_drought_surcharge = serviceJSON[1] ;
-                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[1]);
-                                                        tempStructure.RECLAIMED.fixed_wastewater_charge = serviceJSON[2] ;
-                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[2]); 
-                                                        tempStructure.RECLAIMED.bill = "service_charge+commodity_charge"; break;
                             case "Governmental": tempStructure = { "GOVERNMENTAL" : { "service_charge" : {} } }; 
                                                         tempStructure.GOVERNMENTAL.service_charge = serviceJSON[0]; 
                                                         tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON[0]); 
@@ -3997,5 +4006,9 @@ survey.utilities = utilityList;
                     while(parent.firstChild)
                     {  parent.removeChild(parent.firstChild); }
                 }
+				
+				window.onbeforeunload = function(){
+				  return 'Are you sure you want to leave? Your responses will not be saved until the end.';
+				};		
                 
                 MainPage();
