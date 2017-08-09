@@ -562,7 +562,8 @@ survey.utilities = utilityList;
                 
                 //Creates All Rate Structure/Customer Class Pages
                 function RateStructure(index)
-                {window.scroll(0, 0);
+                {
+					window.scroll(0, 0);
                     primeArrays(0); primeArrays(1); primeArrays(2);
                     //Sets title to Utility Name and Subtitle to Cusstomer class and Clears page
                     title.innerHTML = UtilityName;
@@ -647,16 +648,16 @@ survey.utilities = utilityList;
                     //
                     if(isServiceCharge[currentIndex][1])
                     {
-                        Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a Fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1)" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, questionDict[\'isThereFixedDrought\'], \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, questionDict[\'isThereFixedDrought\'], \'Fixed Drought Charge\')" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
                         serviceChargeTheSame(1, questionDict["isThereFixedDrought"], "Fixed Drought Charge");
                     }
                     else
                     {  
                         isServiceCharge[currentIndex][1] = false;
-                        Answer.innerHTML = '<label for = "YesServiceCharge1" class ="radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a Fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a Fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge1" class ="radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, questionDict[\'isThereFixedDrought\'], \'Fixed Drought Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, questionDict[\'isThereFixedDrought\'], \'Fixed Drought Charge\')" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
                     
@@ -664,7 +665,7 @@ survey.utilities = utilityList;
                     commodityList.id = "commodityList1";
                     form.appendChild(commodityList);
                     
-					createSection(sectionTextDict["variableDroughtCharge"], "variableDroughtCharge", "h3", serviceList)
+					createSection(sectionTextDict["variableDroughtCharge"], "variableDroughtCharge", "h3", commodityList)
                     QuestionTxt(questionDict["isThereVolumeDrought"], 9, commodityList);
                     
                     Answer = document.createElement("span");
@@ -770,7 +771,7 @@ survey.utilities = utilityList;
                 //Checks if The Service Charge is The Same as a previously entered Service Charge 
 				//If it is the same it calls the getServiceSame() Function
                 //If it isn't it goes to serviceChargeDepends()
-                function  serviceChargeTheSame(chargeIdentifier, Question, chargeName)
+                function serviceChargeTheSame(chargeIdentifier, Question, chargeName)
                 {
                     var DIV = document.getElementById("serviceList" + chargeIdentifier);
                     //
@@ -836,6 +837,18 @@ survey.utilities = utilityList;
                         clear(DIV);
                         serviceParameters[currentIndex][chargeIdentifier] = [];
                         
+						if(chargeIdentifier === 1)
+						{
+							createSection(sectionTextDict["drought"], "drought", "h2", DIV)
+							createSection(sectionTextDict["fixedDroughtCharge"], "fixedDroughtCharge", "h3", DIV)
+						}
+						else if(chargeIdentifier === 0)
+						{
+							createSection(sectionTextDict["water"], "water", "h2", DIV)
+							createSection(sectionTextDict["fixedServiceChargeSection"], "fixedServiceChargeSection", "h3", DIV)
+						}
+						
+						
                         QuestionTxt(Question, 5, DIV);
                         
                         Answer = document.createElement("span");
