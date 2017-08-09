@@ -18,15 +18,15 @@ questionDict = {
 				"Please DO NOT refresh the page or hit the 'back' button in your browser. Instead use the 'Next' and 'Previous' "+
 				"buttons at the bottom of the page.</font>",
 				
-	"utilityNameQuestion": "<b>1) Enter the Name of the Utility:</b>",
+	"utilityNameQuestion": "<b>1) Enter the name of the utility:</b>",
 	
-	"billFrequencyQuestion": "<b>2) Enter the Bill Frequency:</b>"+
+	"billFrequencyQuestion": "<b>2) Enter the bill frequency:</b>"+
 						"<br><br>"+
 						"In the case of different billing frequencies for different customers, please choose the most common case.",
 						
-	"effectiveDateQuestion": "<b>3) Enter the Effective Date of this Rate Structure:</b>",
+	"effectiveDateQuestion": "<b>3) Enter the effective date of this rate structure:</b>",
 	
-	"custClassQuestion": "<b>4) Select the Customer Classes to Report in This Survey:</b>"+
+	"custClassQuestion": "<b>4) Select the customer classes to report in this survey:</b>"+
 							"<br><br>"+
 							"Note: Please complete single-family rates and as many other classes as you are comfortable providing."+
 							"<br><br>"+
@@ -42,17 +42,17 @@ questionDict = {
 	
 	"doFixedPricesDepend": "<b>1.2) What attributes does the price depend on?</b>",
 	
-	"variableCommChargeQuestion": "<b>2) Are customers in this class charged a variable Commodity Charge?</b>", 
+	"variableCommChargeQuestion": "<b>2) Are customers in this class charged a Variable Commodity Charge?</b>", 
 					
-	"howManyTiers": "<b>2.2) How Many Tiers?</b>",
+	"howManyTiers": "<b>2.2) How many tiers?</b>",
 	
-	"doTiersDepend": "<b>2.3) Do the Tier Definitions Depend On Anything?</b>"+
+	"doTiersDepend": "<b>2.3) Do the tier definitions depend on customer attributes?</b>"+
 						"<br><br>"+
 						"For example some rate structures change their tier definitions seasonally, or based on discrete temperature zones.",
 						
-	"doTierPricesDepend": "<b>2.4) Do the Tier Prices Depend On Customer Attributes?</b>",
+	"doTierPricesDepend": "<b>2.4) Do the tier prices depend on customer attributes?</b>",
 	
-	"tierPricesDependWhat": "<b>2.5) What attributes do the tier prices dppend on?</b>",
+	"tierPricesDependWhat": "<b>2.5) What attributes do the tier prices depend on?</b>",
 				
 	"budgetExplainer1":"",
 	
@@ -81,7 +81,7 @@ questionDict = {
 						"The second question will ask for the corresponding rates for the budget rates described. ",
 						
 	"isThereFixedDrought":"<b>Is there a Fixed Drought Surcharge? (also referred to as drought rates, water shortage charges, or similar):</b>",
-	"isThereVolumeDrought":"<b>Is There A Variable Drought Surcharge? (also referred to as drought rates, water shortage charges, or similar):</b>",
+	"isThereVolumeDrought":"<b>Is there a Variable Drought Surcharge? (also referred to as drought rates, water shortage charges, or similar):</b>",
 	
 	"isThereFixedWastewater":"<b>Is there a fixed wasterwater charge?</b>",
 	"isThereVolumeWastewater":"<b>Is There a Variable Wastewater Charge?</b>",
