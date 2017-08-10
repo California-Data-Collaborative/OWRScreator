@@ -12,7 +12,9 @@ sectionTextDict = {
 
 questionDict = {
 	"intro": "This portion of the survey is designed to gather detailed technical information about the structure and pricing "+
-				"of your water rates."+
+				"of your water rates. "+
+				"<br><br>"+
+				"For inquiries, please contact Kevin Kostiuk < KKostiuk@raftelis.com >"+
 				"<br><br>"+
 				"<font color='red'>ATTENTION:<br>"+
 				"Please DO NOT refresh the page or hit the 'back' button in your browser. Instead use the 'Next' and 'Previous' "+
@@ -23,6 +25,8 @@ questionDict = {
 	"billFrequencyQuestion": "<b>2) Enter the bill frequency:</b>"+
 						"<br><br>"+
 						"In the case of different billing frequencies for different customers, please choose the most common case.",
+						
+	"billingUnitQuestion": "<b>Select the billing unit:</b>",
 						
 	"effectiveDateQuestion": "<b>3) Enter the effective date of this rate structure:</b>",
 	

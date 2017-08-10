@@ -26,6 +26,7 @@ survey.utilities = utilityList;
                 var title = document.getElementById("Header");
                 var subtitle = document.getElementById("lilHeader");
                 var currentIndex = 0;
+				var surveyIsCompleted = false;
                 
                 var Question;
                 var Answer;
@@ -34,6 +35,7 @@ survey.utilities = utilityList;
                 
                 var UtilityName = "";
                 var BillFrequency = "";
+				var BillingUnit = "ccf";
                 var EffectiveDate = "";
                 var SelectedRateStructures = [];
                 var ServiceSame = [];
@@ -75,7 +77,7 @@ survey.utilities = utilityList;
                 var indoor = [];
                 var outdoor = [];
                 var budget = [];
-                var billingUnits = [];
+                //var billingUnits = [];
                 
                 var uniformDependsOn = [];
                 var commodityMeterSize = [];
@@ -158,8 +160,8 @@ survey.utilities = utilityList;
                         outdoor[currentIndex] = [];
                     if(budget[currentIndex] == null)
                         budget[currentIndex] = [];
-                    if(billingUnits[currentIndex] == null)
-                        billingUnits[currentIndex] = [];
+                    //if(billingUnits[currentIndex] == null)
+                    //    billingUnits[currentIndex] = [];
                     
                     if(uniformDependsOn[currentIndex] == null)
                         uniformDependsOn[currentIndex] = [];
@@ -234,6 +236,18 @@ survey.utilities = utilityList;
                     Answer.id = "billFrequency";
                     Answer.classList.add("form-control");
                     form.appendChild(Answer);
+					
+					QuestionTxt(questionDict["billingUnitQuestion"], "billingUnitQuestion", form);
+                    
+                    //Create Billing Unit Radio button
+                    Answer = document.createElement("span");
+                    Answer.innerHTML = '<label for = "YesBillUnits" class = "radio-inline"><input type = "radio" id = "YesBillUnits" name = "BillUnits" onclick = "BillingUnit=\'kgal\'" value = "kgal" />'+
+                    'Kgal (1000 gallons)</label>'+
+                    '<label for = "BillUnits" class = "radio-inline"><input type = "radio" id = "NoBillUnits" name = "BillUnits" onclick = "BillingUnit=\'ccf\'" value = "ccf" checked/>'+
+                    'CCF (748.052 gallons)</label>';
+                    Answer.id = "billingUnit";
+                    Answer.classList.add("form-control");
+                    form.appendChild(Answer);
                     
                     QuestionTxt(questionDict["effectiveDateQuestion"], "effectiveDateQuestion", form);
                     
@@ -287,6 +301,7 @@ survey.utilities = utilityList;
                     {
                         document.getElementById("utilityName").value = UtilityName;
                         document.getElementById("billFrequency").value = BillFrequency;
+						setBillingUnit();
                         document.getElementById("effectiveDate").value = EffectiveDate;
                         
                         for(var i = 0; i < 17; ++i)
@@ -537,12 +552,12 @@ survey.utilities = utilityList;
                                 }
                                 else
                                 {
-                                    var regex = /^\d+(?:.\d{2})$/.test(temp.value);
+                                    var regex = /^\d+(\.\d+)?$/.test(temp.value);
                                     if(regex)
                                         capacityCharges.push(temp.value);
                                     else
                                     {
-                                        alert("Charge Must be entered in the format  15.99");
+                                        alert("Charge price must be a non-negative number");
                                         Continue = false;
                                         i = capacityMeterSizes.length;
                                     }
@@ -1040,7 +1055,7 @@ survey.utilities = utilityList;
                         if(service.childNodes.length > 0)
                             clear(service);
                         
-                        QuestionTxt("<b>Enter the " + chargeName + " (In the form of 15.99)</b>:", 512, service);
+                        QuestionTxt("<b>Enter the " + chargeName + " (In the form of 15.99):</b>", 512, service);
                         
                         divider = document.createElement("div");
                         divider.classList.add("form-group");
@@ -1342,9 +1357,9 @@ survey.utilities = utilityList;
                             
                             if(Continue && ParametersToUse.length > 0)
                             {
-                                billUnit(chargeIdentifier, uniformPriceDiv);
+                                //billUnit(chargeIdentifier, uniformPriceDiv);
                                 
-                                QuestionTxt("<b>Enter The Cost Per " + billingUnits[currentIndex][chargeIdentifier] + " (In the form of 15.99):</b>", 12, uniformPriceDiv)
+                                QuestionTxt("<b>Enter the cost per unit (In the form of 15.99):</b>", 12, uniformPriceDiv)
                                 commodityChargeCategories[currentIndex][chargeIdentifier] = [];
                                 getCategories(commodityChargeCategories[currentIndex][chargeIdentifier], 0, ParametersToUse.length, "", "Rate:");
                             
@@ -1392,9 +1407,9 @@ survey.utilities = utilityList;
                     }
                     else if(isUniformDependsOn[currentIndex][chargeIdentifier] == 'No')
                     {
-                        billUnit(chargeIdentifier, uniformPriceDiv);
+                        //billUnit(chargeIdentifier, uniformPriceDiv);
                         
-                        QuestionTxt("<b>Enter The Cost Per " + billingUnits[currentIndex][chargeIdentifier] + " (In the form of 15.99):</b>", 12, uniformPriceDiv);
+                        QuestionTxt("<b>Enter the cost per unit (In the form of 15.99):</b>", 12, uniformPriceDiv);
                        
                         inputGroup = document.createElement("div");
                         inputGroup.classList.add("input-group");
@@ -1420,6 +1435,7 @@ survey.utilities = utilityList;
                     }
                 }
                 
+				/*
                 function billUnit(chargeIdentifier, DIV)
                 {
                     QuestionTxt("<b>Select The Billing Unit</b>", 45, DIV);
@@ -1443,6 +1459,7 @@ survey.utilities = utilityList;
                     }
                 }
                 
+				
                 function changeBillUnits(chargeIdentifier, num)
                 {
                     if(num == 0)
@@ -1450,6 +1467,21 @@ survey.utilities = utilityList;
                     else
                         billingUnits[currentIndex][chargeIdentifier] = "ccf";
                 }
+				*/
+				
+				function setBillingUnit()
+				{
+					var Kgal = document.getElementById("YesBillUnits");
+                    var CCF = document.getElementById("NoBillUnits");
+                    
+                    if(BillingUnit != "")
+                    {
+                        if(BillingUnit == "ccf")
+                            CCF.checked = true;
+                        else
+                            Kgal.checked = true;
+                    }
+				}
                 
                 function TieredDepends(chargeIdentifier, chargeName)
                 {
@@ -1559,8 +1591,8 @@ survey.utilities = utilityList;
                             clear(tierStartsDiv);
                         }
                         
-                        if(commodityStructure[currentIndex][chargeIdentifier])
-                            billUnit(chargeIdentifier, tierStartsDiv);
+                        //if(commodityStructure[currentIndex][chargeIdentifier])
+                            //billUnit(chargeIdentifier, tierStartsDiv);
                         
                         QuestionTxt(questionDict["doTiersDepend"], "doTiersDepend",tierStartsDiv)
                         Answer = document.createElement("span");
@@ -2571,14 +2603,14 @@ survey.utilities = utilityList;
                                                 }
                                                 else
                                                 {
-                                                    var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                                    var regex = /^\d+(\.\d+)?$/.test(tempCharge.value);
                                                     if(regex)
                                                     {
                                                         serviceCharges[currentIndex][i].push(tempCharge.value);
                                                     }
                                                     else
                                                     {
-                                                        alert("Service Charge at row " + (j + 1) + " must be in the Format 1.00");
+                                                        alert("Service Charge at row " + (j + 1) + " must be a non-negative number");
                                                         Continue = false;
                                                     }
                                                 }
@@ -2607,7 +2639,7 @@ survey.utilities = utilityList;
                                 }
                                 else
                                 {
-                                    var regex = /^\d+(?:.\d{2})$/.test(temp.value);
+                                    var regex = /^\d+(\.\d+)?$/.test(temp.value);
                                     if(regex)
                                     {
                                         serviceCharges[currentIndex][i] = []
@@ -2615,7 +2647,7 @@ survey.utilities = utilityList;
                                     }
                                     else
                                     {
-                                        alert("The service charge must be in the Format 1.00");
+                                        alert("The service charge must be a non-negative number");
                                         Continue = false;
                                     }
                                 }
@@ -2655,17 +2687,17 @@ survey.utilities = utilityList;
                                 {
                                     var Charge = document.getElementById("commodityCharge" + i + "0");
                                     if(Charge.value == "")
-                                    { alert("You must enter a rate"); Continue = false; } 
+                                    { alert("You must enter a uniform rate"); Continue = false; } 
                                     else
                                     { 
-                                        var regex = /^\d+(?:.\d{2})$/.test(Charge.value);
-                                        if(regex)
+                                        var regex = /^\d+(\.\d+)?$/.test(Charge.value);
+                                        if(regex && parseFloat(Charge.value) >= 0)
                                         {
                                             commodityCharges[currentIndex][i].push(Charge.value);
                                         }
                                         else
                                         {
-                                            alert('Rate must be in the Format 1.00');
+                                            alert('Rate must be a non-negative number');
                                             Continue = false;
                                         }
                                     }
@@ -2691,14 +2723,14 @@ survey.utilities = utilityList;
                                                     }
                                                     else
                                                     {
-                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
-                                                        if(regex)
+                                                        var regex = /^\d+(\.\d+)?$/.test(tempCharge.value);
+                                                        if(regex && parseFloat(tempCharge.value) >= 0)
                                                         {
                                                             commodityCharges[currentIndex][i].push(tempCharge.value);
                                                         }
                                                         else
                                                         {
-                                                            alert("Commodity Charge at row " + (j + 1) + " must be in the Format 1.00");
+                                                            alert("Commodity Charge at tier " + (j + 1) + " must be a non-negative number");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2745,14 +2777,14 @@ survey.utilities = utilityList;
                                                     else
                                                     {
                                                         var regex = /^\d+$/.test(tempCharge.value);
-                                                        if(regex)
+                                                        if(regex && parseFloat(tempCharge.value) >= 0)
                                                         {
                                                             tierStartsValues[currentIndex][i].push(tempCharge.value);
                                                         }
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number");
+                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number and non-negative");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2784,13 +2816,13 @@ survey.utilities = utilityList;
                                         else
                                         { 
                                             var regex = /^\d+$/.test(Level.value);
-                                            if(regex)
+                                            if(regex && parseFloat(Level.value) >= 0)
                                             {
                                                 tierStartsValues[currentIndex][i].push(Level.value);
                                             }
                                             else
                                             {
-                                                alert("The Tier Level for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number");
+                                                alert("The Tier Level for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number and non-negative");
                                                 Continue = false;
                                             } 
                                         }
@@ -2819,15 +2851,15 @@ survey.utilities = utilityList;
                                                     }
                                                     else
                                                     {
-                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
-                                                        if(regex)
+                                                        var regex = /^\d+(\.\d+)?$/.test(tempCharge.value);
+                                                        if(regex && parseFloat(tempCharge.value) >= 0)
                                                         {
                                                             commodityCharges[currentIndex][i].push(tempCharge.value);
                                                         }
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][i][tempIndex].replace(" Rate:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the Format 1.00");
+                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][i][tempIndex].replace(" Rate:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a non-negative number");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2858,14 +2890,14 @@ survey.utilities = utilityList;
                                         } 
                                         else
                                         { 
-                                            var regex = /^\d+(?:.\d{2})$/.test(Price.value);
-                                            if(regex)
+                                            var regex = /^\d+(\.\d+)?$/.test(Price.value);
+                                            if(regex && parseFloat(Price.value) >= 0)
                                             {
                                                 commodityCharges[currentIndex][i].push(Price.value);
                                             }
                                             else
                                             {
-                                                alert("The Tier Price for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the Format 1.00");
+                                                alert("The Tier Price for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a non-negative number");
                                                 Continue = false;
                                             } 
                                         }
@@ -3069,7 +3101,7 @@ survey.utilities = utilityList;
                                                     }
                                                     else
                                                     {
-                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                                        var regex = /^\d+(\.\d+)?$/.test(tempCharge.value);
                                                         if(regex)
                                                         {
                                                             commodityCharges[currentIndex][i].push(tempCharge.value);
@@ -3077,7 +3109,7 @@ survey.utilities = utilityList;
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][i][tempIndex].replace(" Rate:", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the Format 1.00");
+                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][i][tempIndex].replace(" Rate:", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a non-negative number");
                                                             Continue = false;
                                                         }
                                                     }
@@ -3108,14 +3140,14 @@ survey.utilities = utilityList;
                                         } 
                                         else
                                         { 
-                                            var regex = /^\d+(?:.\d{2})$/.test(Price.value);
+                                            var regex = /^\d+(\.\d+)?$/.test(Price.value);
                                             if(regex)
                                             {
                                                 commodityCharges[currentIndex][i].push(Price.value);
                                             }
                                             else
                                             {
-                                                alert("The Tier Price for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the Format 1.00");
+                                                alert("The Tier Price for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a non-negative number");
                                                 Continue = false;
                                             } 
                                         }
@@ -3163,7 +3195,8 @@ survey.utilities = utilityList;
                        "metadata" : {
                             "effective_date" : "" + EffectiveDate + "",
                             "utility_name" : "" + UtilityName + "",
-                            "bill_frequency" : "" + BillFrequency + ""
+                            "bill_frequency" : "" + BillFrequency + "",
+							"bill_unit" : "" + BillingUnit + ""
                        },
                        "rate_structure" : {
                        
@@ -3272,14 +3305,14 @@ survey.utilities = utilityList;
                                                     "flat_rate_waste" : {}
                                                 }; break;
                                     }
-                                    
+                                    /*
                                     switch(j)
                                     {
                                         case 0: commodityJSON[j].billing_unit_commodity = billingUnits[structure][j]; break;
                                         case 1: commodityJSON[j].billing_unit_drought = billingUnits[structure][j]; break;
                                         case 2: commodityJSON[j].billing_unit_waste = billingUnits[structure][j]; break;
                                     }
-                                    
+                                    */
                                     if(isUniformDependsOn[structure][j] == 'No')
                                     {
                                         switch(j)
@@ -3359,14 +3392,14 @@ survey.utilities = utilityList;
                                                     "variable_wastewater_charge" : "Tiered"
                                                 }; break;
                                     }
-                                    
+                                    /*
                                     switch(j)
                                     {
                                         case 0: commodityJSON[j].tiered_billing_unit_commodity = billingUnits[structure][j]; break;
                                         case 1: commodityJSON[j].tiered_billing_unit_drought = billingUnits[structure][j]; break;
                                         case 2: commodityJSON[j].tiered_billing_unit_waste = billingUnits[structure][j]; break;
                                     }
-                                    
+                                    */
                                     if(isTierStartsDepends[structure][j])
                                     {
                                         switch(j)
@@ -3558,14 +3591,14 @@ survey.utilities = utilityList;
                                                     "variable_wastewater_charge" : "Budget"
                                                 }; break;
                                     }
-                                    
+                                    /*
                                     switch(j)
                                     {
                                         case 0: commodityJSON[j].budget_billing_unit_commodity = billingUnits[structure][j]; break;
                                         case 1: commodityJSON[j].budget_billing_unit_drought = billingUnits[structure][j]; break;
                                         case 2: commodityJSON[j].budget_billing_unit_waste = billingUnits[structure][j]; break;
                                     }
-                                    
+                                    */
                                     switch(j)
                                     {
                                         case 0:  
@@ -3958,6 +3991,8 @@ survey.utilities = utilityList;
                     var YAMLfile = document.createElement("pre");
                     YAMLfile.innerHTML = YAML;
                     cleared.appendChild(YAMLfile);
+					
+					surveyIsCompleted = true;
                     
                     /*
                     var submitForm = document.createElement("form");
@@ -4029,7 +4064,8 @@ survey.utilities = utilityList;
                 }
 				
 				window.onbeforeunload = function(){
-				  return 'Are you sure you want to leave? Your responses will not be saved until the end.';
+					if(!surveyIsCompleted)
+						return 'Are you sure you want to leave? Your responses will not be saved until the end.';
 				};		
                 
                 MainPage();
