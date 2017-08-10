@@ -243,7 +243,7 @@ survey.utilities = utilityList;
                     Answer = document.createElement("span");
                     Answer.innerHTML = '<label for = "YesBillUnits" class = "radio-inline"><input type = "radio" id = "YesBillUnits" name = "BillUnits" onclick = "BillingUnit=\'kgal\'" value = "kgal" />'+
                     'Kgal (1000 gallons)</label>'+
-                    '<label for = "BillUnits" class = "radio-inline"><input type = "radio" id = "NoBillUnits" name = "BillUnits" onclick = "BillingUnit=\'ccf\'" value = "ccf" checked/>'+
+                    '<label for = "NoBillUnits" class = "radio-inline"><input type = "radio" id = "NoBillUnits" name = "BillUnits" onclick = "BillingUnit=\'ccf\'" value = "ccf" checked/>'+
                     'CCF (748.052 gallons)</label>';
                     Answer.id = "billingUnit";
                     Answer.classList.add("form-control");
@@ -687,16 +687,16 @@ survey.utilities = utilityList;
                     
                     if(isCommodityCharge[currentIndex][1])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Variable Drought Surcharge?\', \'Variable Drought Surcharge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Variable Drought Surcharge?\', \'Variable Drought Surcharge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, questionDict[\'isThereVolumeDrought\'], \'Variable Drought Surcharge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, questionDict[\'isThereVolumeDrought\'], \'Variable Drought Surcharge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
                         getCommodityChargeInfo(1, questionDict["isThereVolumeDrought"], "Variable Drought Surcharge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][1] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Variable Drought Surcharge?\', \'Variable Drought Surcharge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Variable Drought Surcharge?\', \'Variable Drought Surcharge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, questionDict[\'isThereVolumeDrought\'], \'Variable Drought Surcharge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, questionDict[\'isThereVolumeDrought\'], \'Variable Drought Surcharge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -1201,6 +1201,15 @@ survey.utilities = utilityList;
                         clear(DIV);
                         commodityStructure[currentIndex][chargeIdentifier] = [];
                         
+						if(chargeIdentifier === 1)
+						{
+							createSection(sectionTextDict["variableDroughtCharge"], "variableDroughtCharge", "h3", DIV)
+						}
+						else if(chargeIdentifier === 0)
+						{
+							createSection(sectionTextDict["variableCommChargeSection"], "variableCommChargeSection", "h3", DIV)
+						}
+						
                         QuestionTxt(Question, 9, DIV);
                         
                         Answer = document.createElement("span");
@@ -2994,14 +3003,14 @@ survey.utilities = utilityList;
                                                         var regex = /^\d+(?:%)$/.test(tempCharge.value);
                                                         if(j % tierLevels[currentIndex][i] + 1 == 2)
                                                         {
-                                                            if(tempCharge.value == "indoor" || regex)
+                                                            if(tempCharge.value == "indoor" || tempCharge.value == "outdoor" || regex)
                                                             {
                                                                 tierStartsValues[currentIndex][i].push(tempCharge.value);
                                                             }
                                                             else
                                                             {
                                                                 var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                                alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the format 100% or say indoor");
+                                                                alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the format 100% or say 'indoor' or 'outdoor'");
                                                                 Continue = false;
                                                             }
                                                         }
@@ -3067,10 +3076,10 @@ survey.utilities = utilityList;
                                             {
                                                 if(j == 1)
                                                 {
-                                                    if(Level.value == "indoor" || regex)
+                                                    if(Level.value == "indoor" || Level.value == "outdoor" || regex)
                                                         tierStartsValues[currentIndex][i].push(Level.value);
                                                     else
-                                                        alert("The Tier Level for tier " + (j + 1) + " must be in the format 100% or say indoor");
+                                                        alert("The Tier Level for tier " + (j + 1) + " must be in the format 100% or say 'indoor' or 'outdoor'");
                                                 }
                                                 else
                                                     tierStartsValues[currentIndex][i].push(Level.value); 
