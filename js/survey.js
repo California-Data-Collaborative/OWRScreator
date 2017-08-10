@@ -1763,7 +1763,7 @@ survey.utilities = utilityList;
                     budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
 						"indoor", "Indoor Budget Equation:", "glyphicon-home", indoor[currentIndex][chargeIdentifier], "hhsize*gpcd*days_in_period*(1/748)");
                     budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
-						"outdoor", "Outdoor Budget Equation:", "glyphicon-globe", gpcd[currentIndex][chargeIdentifier], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
+						"outdoor", "Outdoor Budget Equation:", "glyphicon-globe", outdoor[currentIndex][chargeIdentifier], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
                     budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
 						"budget", "Budget:", "glyphicon-usd", budget[currentIndex][chargeIdentifier], "indoor+outdoor");
                     
