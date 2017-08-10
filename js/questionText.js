@@ -58,7 +58,14 @@ questionDict = {
 	
 	"tierPricesDependWhat": "<b>2.5) What attributes do the tier prices depend on?</b>",
 				
-	"budgetExplainer1":"",
+	"budgetExplainer1":"<b>2.1b) Please specify the coefficients and formulas used to calculate your water budgets:</b>"+
+						"<br><br>"+
+						"The defaults below are for a typical residential customer. "+
+						"<br><br>"+
+						"For a typical <b>Irrigation</b> customer please specify only 'outdoor' in the 'Budget:' field."+
+						"<br><br>"+
+						"For a typical <b>Commercial</b> customer based on a rolling average of historic use, "+
+						"please specify only 'rolling_average' in the 'Budget:' field.",
 	
 	"budgetExplainer2":"For the next questions, we would like to collect information about your water budget rate structure tiers."+
 						"<br><br>"+
