@@ -1444,7 +1444,7 @@ survey.utilities = utilityList;
                     QuestionTxt(questionDict["howManyTiers"], "howManyTiers", commodityDependsOnDiv);
                     Answer = document.createElement("select");
                     Answer.classList.add("form-control");
-                    for(var i = 2; i <= 6; ++i)
+                    for(var i = 2; i <= 9; ++i)
                     {
                         Answer.appendChild(new Option(i, i));
                     }
@@ -1708,7 +1708,7 @@ survey.utilities = utilityList;
                     
                     QuestionTxt(questionDict["howManyTiers"], "howManyTiers", commodityDependsOnDiv);
                     Answer = document.createElement("select");
-                    for(var i = 2; i <= 6; ++i)
+                    for(var i = 2; i <= 9; ++i)
                     {
                         Answer.appendChild(new Option(i, i));
                     }
