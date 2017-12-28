@@ -17,16 +17,24 @@ questionDict = {
 				"<font color='red'>ATTENTION:<br>"+
 				"Please DO NOT refresh the page or hit the 'back' button in your browser. Instead use the 'Next' and 'Previous' "+
 				"buttons at the bottom of the page.</font>",
+                
+    "nameQuestion" : "<b>1) Please enter your full name:</b>",
+    
+    "emailQuestion" : "<b>2) Please enter your E-mail address:<b>",
+    
+    "phoneQuestion" : "<b>3) Please enter a phone number we can reach you at:</b>",
 				
 	"utilityNameQuestion": "<b>1) Enter the Name of the Utility:</b>",
+    
+    "prop218Question": "<b>2) Please enter the Prop 218 link to the utility's rates:</b>",
 	
-	"billFrequencyQuestion": "<b>2) Enter the Bill Frequency:</b>"+
+	"billFrequencyQuestion": "<b>3) Enter the Bill Frequency:</b>"+
 						"<br><br>"+
 						"In the case of different billing frequencies for different customers, please choose the most common case.",
 						
-	"effectiveDateQuestion": "<b>3) Enter the Effective Date of this Rate Structure:</b>",
+	"effectiveDateQuestion": "<b>4) Enter the Effective Date of this Rate Structure:</b>",
 	
-	"custClassQuestion": "<b>4) Select the Customer Classes Used by the Utility:</b>"+
+	"custClassQuestion": "<b>5) Select the Customer Classes Used by the Utility:</b>"+
 							"<br><br>"+
 							"Note: Not all rate structures will break neatly into these categories. "+
 							"If your rate codes span multiple customer classes (e.g. single and multifamily are billed the same) "+
