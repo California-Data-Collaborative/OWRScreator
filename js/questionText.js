@@ -26,7 +26,7 @@ questionDict = {
 				
 	"utilityNameQuestion": "<b>1) Enter the Name of the Utility:</b>",
     
-    "prop218Question": "<b>2) Please enter the Prop 218 link to the utility's rates:</b>",
+    "prop218Question": "<b>2) Please enter a link to your utility's Prop. 218 notice or another webpage where full water rate information can be found:</b>",
 	
 	"billFrequencyQuestion": "<b>3) Enter the Bill Frequency:</b>"+
 						"<br><br>"+
