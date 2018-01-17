@@ -33,10 +33,15 @@ survey.utilities = utilityList;
                 var text;
                 var OWRSformat;
                 
+                var creator = "";
+                var creatorEmail = "";
+                var creatorPhone = "";
+                
                 var UtilityName = "";
                 var BillFrequency = "";
 				var BillingUnit = "ccf";
                 var EffectiveDate = "";
+                var prop218link = "";
                 var SelectedRateStructures = [];
                 var ServiceSame = [];
                 
@@ -192,6 +197,47 @@ survey.utilities = utilityList;
                     clear(form);
                     
 					createSection(questionDict["intro"], "intro", "h5", form)
+                    
+                    var horizontalLine1 = document.createElement("hr");
+                    form.appendChild(horizontalLine1);
+                    
+                    var contactInfoHeader = document.createElement("h3");
+                    contactInfoHeader.innerHTML = "<b>Contact Information(Optional):</b>";
+                    form.appendChild(contactInfoHeader);
+                    
+                    QuestionTxt(questionDict["nameQuestion"], "creatorNameQuestion", form);
+                    
+                    Answer = document.createElement("input");
+                    Answer.setAttribute("type", "text");
+                    Answer.classList.add("form-control");
+                    Answer.setAttribute("placeholder", "Jane Doe");
+                    Answer.id = "creatorName";
+                    form.appendChild(Answer);
+                    
+                    QuestionTxt(questionDict["emailQuestion"], "creatorEmailQuestion", form);
+                    
+                    Answer = document.createElement("input");
+                    Answer.setAttribute("type", "text");
+                    Answer.classList.add("form-control");
+                    Answer.setAttribute("placeholder", "jdoe@thebestwaterutility.com");
+                    Answer.id = "creatorEmail";
+                    form.appendChild(Answer);
+                    
+                    QuestionTxt(questionDict["phoneQuestion"], "creatorPhoneQuestion", form);
+                    
+                    Answer = document.createElement("input");
+                    Answer.setAttribute("type", "text");
+                    Answer.classList.add("form-control");
+                    Answer.setAttribute("placeholder", "(562)867-5309");
+                    Answer.id = "creatorPhone";
+                    form.appendChild(Answer);
+                    
+                    var horizontalLine2 = document.createElement("hr");
+                    form.appendChild(horizontalLine2);
+                    
+                    var utilityInfoHeader = document.createElement("h3");
+                    utilityInfoHeader.innerHTML = "<b>Utility Information:</b>";
+                    form.appendChild(utilityInfoHeader);
 					
                     QuestionTxt(questionDict["utilityNameQuestion"], "utilityNameQuestion", form);
                 
@@ -223,6 +269,15 @@ survey.utilities = utilityList;
 							return false;
 						}
 					});
+                    
+                    QuestionTxt(questionDict["prop218Question"], "prop218Question", form);
+                    
+                    Answer = document.createElement("input");
+                    Answer.setAttribute("type", "text");
+                    Answer.classList.add("form-control");
+                    Answer.setAttribute("placeholder", "http://www.waterrates.com");
+                    Answer.id = "prop218";
+                    form.appendChild(Answer);
                 
                     QuestionTxt(questionDict["billFrequencyQuestion"], "billFrequencyQuestion", form);
                     
@@ -303,6 +358,10 @@ survey.utilities = utilityList;
                         document.getElementById("billFrequency").value = BillFrequency;
 						setBillingUnit();
                         document.getElementById("effectiveDate").value = EffectiveDate;
+                        document.getElementById("prop218").value = prop218link;
+                        document.getElementById("creatorName").value = creator;
+                        document.getElementById("creatorEmail").value = creatorEmail;
+                        document.getElementById("creatorPhone").value = creatorPhone;
                         
                         for(var i = 0; i < 17; ++i)
                         {
@@ -335,6 +394,10 @@ survey.utilities = utilityList;
                     UtilityName = document.getElementById("utilityName").value;
                     BillFrequency = document.getElementById("billFrequency").value;
                     EffectiveDate = document.getElementById("effectiveDate").value;
+                    prop218Link = document.getElementById("prop218").value;
+                    creator = document.getElementById("creatorName").value;
+                    creatorEmail = document.getElementById("creatorEmail").value;
+                    creatorPhone = document.getElementById("creatorPhone").value;
                     
                     //Error checking for Date
                     var date = true;
@@ -342,6 +405,13 @@ survey.utilities = utilityList;
                     { 
                         alert("Must select a valid Effective Date for the Rate Structure");
                         date = false;
+                    }
+                    
+                    var UtilityNamePresent = true;
+                    if(UtilityName == "")
+                    {
+                        alert("Must enter a Utility Name");
+                        UtilityNamePresent = false;
                     }
                     
                     //Error Checking for Rate Structures
@@ -361,7 +431,7 @@ survey.utilities = utilityList;
                     { alert("Please Select A Customer Class"); }
                     
                     //Call Next Page
-                    if(!noneChecked && date)
+                    if(!noneChecked && date && UtilityNamePresent)
                     ChargePage();
                 }
                 
@@ -375,6 +445,14 @@ survey.utilities = utilityList;
                     capacityDiv.id = "Capacity";
                     form.appendChild(capacityDiv);
                     
+                    var explanationDiv = document.createElement("div");
+                    explanationDiv.id = "Explanation";
+                    capacityDiv.appendChild(explanationDiv);
+                    
+                    var explanationText = document.createElement("h5");
+                    explanationText.innerHTML = "<b>A capacity charge is a one-time fee for new connections</b>";
+                    explanationDiv.appendChild(explanationText);
+                    
                     var questionDiv = document.createElement("div");
                     questionDiv.id = "questionDiv";
                     capacityDiv.appendChild(questionDiv);
@@ -387,7 +465,7 @@ survey.utilities = utilityList;
                     fieldDiv.id = "fieldDiv";
                     capacityDiv.appendChild(fieldDiv);
                     
-                    QuestionTxt("<b>5) Is there a Capacity Charge(s) for this Utility</b>", 13, questionDiv);
+                    QuestionTxt("<b>1) Is there a Capacity Charge(s) for this Utility</b>", 13, questionDiv);
                     
                     Answer = document.createElement("span");
                     
@@ -1507,7 +1585,7 @@ survey.utilities = utilityList;
                     QuestionTxt(questionDict["howManyTiers"], "howManyTiers", commodityDependsOnDiv);
                     Answer = document.createElement("select");
                     Answer.classList.add("form-control");
-                    for(var i = 2; i <= 6; ++i)
+                    for(var i = 2; i <= 9; ++i)
                     {
                         Answer.appendChild(new Option(i, i));
                     }
@@ -1771,7 +1849,7 @@ survey.utilities = utilityList;
                     
                     QuestionTxt(questionDict["howManyTiers"], "howManyTiers", commodityDependsOnDiv);
                     Answer = document.createElement("select");
-                    for(var i = 2; i <= 6; ++i)
+                    for(var i = 2; i <= 9; ++i)
                     {
                         Answer.appendChild(new Option(i, i));
                     }
@@ -3201,11 +3279,17 @@ survey.utilities = utilityList;
                 function Complete()
                 {
                     OWRSformat = {
+                       "author_info" : {
+                           "author" : "" + creator + "",
+                           "email" : "" + creatorEmail + "",
+                           "phone" : "" + creatorPhone + ""
+                       },
                        "metadata" : {
                             "effective_date" : "" + EffectiveDate + "",
                             "utility_name" : "" + UtilityName + "",
                             "bill_frequency" : "" + BillFrequency + "",
-							"bill_unit" : "" + BillingUnit + ""
+							              "bill_unit" : "" + BillingUnit + "",
+                            "prop_218_link" : "" + prop218Link + ""
                        },
                        "rate_structure" : {
                        

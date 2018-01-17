@@ -19,18 +19,26 @@ questionDict = {
 				"<font color='red'>ATTENTION:<br>"+
 				"Please DO NOT refresh the page or hit the 'back' button in your browser. Instead use the 'Next' and 'Previous' "+
 				"buttons at the bottom of the page.</font>",
+                
+    "nameQuestion" : "<b>1) Please enter your full name:</b>",
+    
+    "emailQuestion" : "<b>2) Please enter your E-mail address:<b>",
+    
+    "phoneQuestion" : "<b>3) Please enter a phone number we can reach you at:</b>",
 				
 	"utilityNameQuestion": "<b>1) Enter the name of the utility:</b>",
+  
+  "prop218Question": "<b>2) Please enter a link to your utility's Prop. 218 notice or another webpage where full water rate information can be found:</b>",
 	
-	"billFrequencyQuestion": "<b>2) Enter the bill frequency:</b>"+
+	"billFrequencyQuestion": "<b>3) Enter the bill frequency:</b>"+
 						"<br><br>"+
 						"In the case of different billing frequencies for different customers, please choose the most common case.",
 						
-	"billingUnitQuestion": "<b>Select the billing unit:</b>",
+	"billingUnitQuestion": "<b>4) Select the billing unit:</b>",
 						
-	"effectiveDateQuestion": "<b>3) Enter the effective date of this rate structure:</b>",
+	"effectiveDateQuestion": "<b>5) Enter the effective date of this rate structure:</b>",
 	
-	"custClassQuestion": "<b>4) Select the customer classes to report in this survey:</b>"+
+	"custClassQuestion": "<b>6) Select the customer classes to report in this survey:</b>"+
 							"<br><br>"+
 							"Note: Please complete single-family rates and as many other classes as you are comfortable providing."+
 							"<br><br>"+
