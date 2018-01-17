@@ -14,13 +14,16 @@ questionDict = {
 	"intro": "This portion of the survey is designed to gather detailed technical information about the structure and pricing "+
 				"of your water rates. "+
 				"<br><br>"+
-				"For inquiries, please contact Kevin Kostiuk < KKostiuk@raftelis.com >"+
+				"For inquiries, please contact CaDC Support < support@californiadatacollaborative.org >"+
 				"<br><br>"+
 				"<font color='red'>ATTENTION:<br>"+
 				"Please DO NOT refresh the page or hit the 'back' button in your browser. Instead use the 'Next' and 'Previous' "+
 				"buttons at the bottom of the page.</font>",
                 
-    "nameQuestion" : "<b>1) Please enter your full name:</b>",
+    "nameQuestion" : 
+					 "OWRS files are stored publicly to enable easy corrections and comments from other member of the water community. The direct contact email and phone number of the point person on water rate information is helpful for analysts, researchers and others to follow up on data available here. If you do not have a point person or would not like to share that information, please feel free to share your district's general contact email and phone number."+
+					 "<br><br><br>"+
+					 "<b>1) Please enter your full name:</b>",
     
     "emailQuestion" : "<b>2) Please enter your E-mail address:<b>",
     
