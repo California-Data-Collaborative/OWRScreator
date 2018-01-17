@@ -450,7 +450,6 @@ survey.utilities = utilityList;
                     capacityDiv.appendChild(explanationDiv);
                     
                     var explanationText = document.createElement("h5");
-                    explanationText.innerHTML = "<b>A capacity charge is a one-time fee for new connections</b>";
                     explanationDiv.appendChild(explanationText);
                     
                     var questionDiv = document.createElement("div");
@@ -465,7 +464,8 @@ survey.utilities = utilityList;
                     fieldDiv.id = "fieldDiv";
                     capacityDiv.appendChild(fieldDiv);
                     
-                    QuestionTxt("<b>1) Is there a Capacity Charge(s) for this Utility</b>", 13, questionDiv);
+                    QuestionTxt("<b>1) Is there a Capacity Charge(s) for this utility?</b><br><br>"+
+								"A capacity charge recovers the costs associated with providing additional water and wastewater capacity to new users or existing users requiring additional capacity. This is not a monthly service charge.", 13, questionDiv);
                     
                     Answer = document.createElement("span");
                     
