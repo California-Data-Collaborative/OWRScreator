@@ -1,15 +1,13 @@
 var surveyJSON = '{"title": "Open Water Rate Survey",' +
-'"billFrequency": ["Monthly", "BiMonthly", "Quarterly", "Annually", "Other"],'+
+'"billFrequency": ["Monthly", "Bi-Monthly", "Quarterly", "Annually", "Semi-Annually"],'+
 '"rateStructures":['+
-'"Residential Single", "Residential Multi",'+
+'"Single-Family Residential", "Multi-Family Residential",'+
 '"Irrigation", "Commercial",'+
-'"Industrial", "Institutional",'+
-'"Fire Service", "Non-Potable",'+
-'"Non-Residential", "Unmetered",'+
-'"Reclaimed", "Governmental",'+
-'"Interruptible", "Docks Shipping",'+
+'"Industrial", "Institutional", "Agriculture",'+
+'"Fire Service", "Raw Water",'+
+'"Non-Residential", "Unmetered", "Governmental",'+
+'"Interruptible",'+
 '"Potable", "Recycled",'+
-'"Building Contractor", "Residential Construction",'+
 '"Other"],'+
 '"commodityDependsOn": ["Meter Size", "Meter Type", "Season", "Temperature Zone", "Pressure Zone", '+
 '"Lot Size Group", "Month", "City Limits"],'+
@@ -28,6 +26,7 @@ survey.utilities = utilityList;
                 var title = document.getElementById("Header");
                 var subtitle = document.getElementById("lilHeader");
                 var currentIndex = 0;
+				var surveyIsCompleted = false;
                 
                 var Question;
                 var Answer;
@@ -40,6 +39,7 @@ survey.utilities = utilityList;
                 
                 var UtilityName = "";
                 var BillFrequency = "";
+				var BillingUnit = "ccf";
                 var EffectiveDate = "";
                 var prop218link = "";
                 var SelectedRateStructures = [];
@@ -82,7 +82,7 @@ survey.utilities = utilityList;
                 var indoor = [];
                 var outdoor = [];
                 var budget = [];
-                var billingUnits = [];
+                //var billingUnits = [];
                 
                 var uniformDependsOn = [];
                 var commodityMeterSize = [];
@@ -165,8 +165,8 @@ survey.utilities = utilityList;
                         outdoor[currentIndex] = [];
                     if(budget[currentIndex] == null)
                         budget[currentIndex] = [];
-                    if(billingUnits[currentIndex] == null)
-                        billingUnits[currentIndex] = [];
+                    //if(billingUnits[currentIndex] == null)
+                    //    billingUnits[currentIndex] = [];
                     
                     if(uniformDependsOn[currentIndex] == null)
                         uniformDependsOn[currentIndex] = [];
@@ -291,6 +291,18 @@ survey.utilities = utilityList;
                     Answer.id = "billFrequency";
                     Answer.classList.add("form-control");
                     form.appendChild(Answer);
+					
+					QuestionTxt(questionDict["billingUnitQuestion"], "billingUnitQuestion", form);
+                    
+                    //Create Billing Unit Radio button
+                    Answer = document.createElement("span");
+                    Answer.innerHTML = '<label for = "YesBillUnits" class = "radio-inline"><input type = "radio" id = "YesBillUnits" name = "BillUnits" onclick = "BillingUnit=\'kgal\'" value = "kgal" />'+
+                    'Kgal (1000 gallons)</label>'+
+                    '<label for = "NoBillUnits" class = "radio-inline"><input type = "radio" id = "NoBillUnits" name = "BillUnits" onclick = "BillingUnit=\'ccf\'" value = "ccf" checked/>'+
+                    'CCF (748.052 gallons)</label>';
+                    Answer.id = "billingUnit";
+                    Answer.classList.add("form-control");
+                    form.appendChild(Answer);
                     
                     QuestionTxt(questionDict["effectiveDateQuestion"], "effectiveDateQuestion", form);
                     
@@ -314,7 +326,18 @@ survey.utilities = utilityList;
                         
                         Answer = document.createElement("label");
                         Answer.setAttribute("for", "custClass" + i); 
-                        Answer.innerHTML = '<input type = "checkbox" id = "custClass'+ i +'" value = "' + survey.rateStructures[i] +'"/> ' + survey.rateStructures[i] + '';
+						
+						if(survey.rateStructures[i] === "Single-Family Residential")
+						{
+							Answer.innerHTML = '<input type = "checkbox" id = "custClass'+ i +
+												'" value = "' + survey.rateStructures[i] +'" checked/> ' + survey.rateStructures[i] + '';
+						}
+						else
+						{
+							Answer.innerHTML = '<input type = "checkbox" id = "custClass'+ i +
+												'" value = "' + survey.rateStructures[i] +'"/> ' + survey.rateStructures[i] + '';
+						}
+                        
                         DIV.appendChild(Answer); 
                     }
                     
@@ -333,6 +356,7 @@ survey.utilities = utilityList;
                     {
                         document.getElementById("utilityName").value = UtilityName;
                         document.getElementById("billFrequency").value = BillFrequency;
+						setBillingUnit();
                         document.getElementById("effectiveDate").value = EffectiveDate;
                         document.getElementById("prop218").value = prop218link;
                         document.getElementById("creatorName").value = creator;
@@ -606,12 +630,12 @@ survey.utilities = utilityList;
                                 }
                                 else
                                 {
-                                    var regex = /^\d+(?:.\d{2})$/.test(temp.value);
+                                    var regex = /^\d+(\.\d+)?$/.test(temp.value);
                                     if(regex)
                                         capacityCharges.push(temp.value);
                                     else
                                     {
-                                        alert("Charge Must be entered in the format  15.99");
+                                        alert("Charge price must be a non-negative number");
                                         Continue = false;
                                         i = capacityMeterSizes.length;
                                     }
@@ -631,15 +655,16 @@ survey.utilities = utilityList;
                 
                 //Creates All Rate Structure/Customer Class Pages
                 function RateStructure(index)
-                {window.scroll(0, 0);
+                {
+					window.scroll(0, 0);
                     primeArrays(0); primeArrays(1); primeArrays(2);
                     //Sets title to Utility Name and Subtitle to Cusstomer class and Clears page
                     title.innerHTML = UtilityName;
                     subtitle.innerHTML = SelectedRateStructures[index];
                     clear(form);
 					
-					q = "Questions in this section refer to " + SelectedRateStructures[index] + " customers.";
-					QuestionTxt(q, "custClassExplainer", form);
+					s = "<p style='color: #66afe9;'>Questions in this section refer to " + SelectedRateStructures[index] + " customers</p>";
+					createSection(s, "custClassExplainer", "h4", form);
                     
                     //Populates The Service Charge Div
                     var serviceList = document.createElement("div");
@@ -680,16 +705,16 @@ survey.utilities = utilityList;
                     
                     if(isCommodityCharge[currentIndex][0])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Variable Commodity Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Variable Commodity Charge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(0, questionDict["variableCommChargeQuestion"], "Volumetric Commodity Charge");
+                        getCommodityChargeInfo(0, questionDict["variableCommChargeQuestion"], "Variable Commodity Charge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][0] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Volumetric Commodity Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge0" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Variable Commodity Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge0" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge0" name = "isCommodityCharge0" onclick = "getCommodityChargeInfo(0, \'' + questionDict["variableCommChargeQuestion"] + '\', \'Variable Commodity Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -716,16 +741,16 @@ survey.utilities = utilityList;
                     //
                     if(isServiceCharge[currentIndex][1])
                     {
-                        Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1)" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge1" class = "radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, questionDict[\'isThereFixedDrought\'], \'Fixed Drought Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, questionDict[\'isThereFixedDrought\'], \'Fixed Drought Charge\')" value = "No" />No</label>';
                         serviceList.appendChild(Answer);
                         serviceChargeTheSame(1, questionDict["isThereFixedDrought"], "Fixed Drought Charge");
                     }
                     else
                     {  
                         isServiceCharge[currentIndex][1] = false;
-                        Answer.innerHTML = '<label for = "YesServiceCharge1" class ="radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, \'Is there a fixed Drought Surcharge?\', \'Fixed Drought Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesServiceCharge1" class ="radio-inline"><input type = "radio" id = "YesServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, questionDict[\'isThereFixedDrought\'], \'Fixed Drought Charge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoServiceCharge1" class ="radio-inline"><input type = "radio" id = "NoServiceCharge1" name = "isServiceCharge1" onclick = "serviceChargeTheSame(1, questionDict[\'isThereFixedDrought\'], \'Fixed Drought Charge\')" value = "No"  checked = "true"/>No</label>';
                         serviceList.appendChild(Answer);
                     }
                     
@@ -733,23 +758,23 @@ survey.utilities = utilityList;
                     commodityList.id = "commodityList1";
                     form.appendChild(commodityList);
                     
-					createSection(sectionTextDict["variableDroughtCharge"], "variableDroughtCharge", "h3", serviceList)
+					createSection(sectionTextDict["variableDroughtCharge"], "variableDroughtCharge", "h3", commodityList)
                     QuestionTxt(questionDict["isThereVolumeDrought"], 9, commodityList);
                     
                     Answer = document.createElement("span");
                     
                     if(isCommodityCharge[currentIndex][1])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, questionDict[\'isThereVolumeDrought\'], \'Variable Drought Surcharge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, questionDict[\'isThereVolumeDrought\'], \'Variable Drought Surcharge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(1, questionDict["isThereVolumeDrought"], "Volumetric Drought Surcharge");
+                        getCommodityChargeInfo(1, questionDict["isThereVolumeDrought"], "Variable Drought Surcharge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][1] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, \'Is There A Volumetric Drought Surcharge?\', \'Volumetric Drought Surcharge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge1" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, questionDict[\'isThereVolumeDrought\'], \'Variable Drought Surcharge\')" value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge1" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge1" name = "isCommodityCharge1" onclick = "getCommodityChargeInfo(1, questionDict[\'isThereVolumeDrought\'], \'Variable Drought Surcharge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
                     
@@ -758,7 +783,7 @@ survey.utilities = utilityList;
                     
                     
                     
-                    
+                    /*
                     var serviceList = document.createElement("div");
                     serviceList.id = "serviceList2";
                     form.appendChild(serviceList);
@@ -795,19 +820,19 @@ survey.utilities = utilityList;
                     
                     if(isCommodityCharge[currentIndex][2])
                     {
-                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
-                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "No" />No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Variable Wastewater Charge?\', \'Variable Wastewater Charge\')" value = "Yes" checked = "true"/>Yes</label>'+
+                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Variable Wastewater Charge?\', \'Variable Wastewater Charge\')" value = "No" />No</label>';
                         commodityList.appendChild(Answer);
-                        getCommodityChargeInfo(2, questionDict["isThereVolumeWastewater"], "Volumetric Wastewater Charge");
+                        getCommodityChargeInfo(2, questionDict["isThereVolumeWastewater"], "Variable Wastewater Charge");
                     }
                     else
                     {  
                         isCommodityCharge[currentIndex][2] = false;
-                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')"value = "Yes" />Yes</label>'+
-                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Volumetric Wastewater Charge?\', \'Volumetric Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
+                        Answer.innerHTML = '<label for = "YesCommodityCharge2" class = "radio-inline"><input type = "radio" id = "YesCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Variable Wastewater Charge?\', \'Variable Wastewater Charge\')"value = "Yes" />Yes</label>'+
+                        '<label for = "NoCommodityCharge2" class = "radio-inline"><input type = "radio" id = "NoCommodityCharge2" name = "isCommodityCharge2" onclick = "getCommodityChargeInfo(2, \'Is There a Variable Wastewater Charge?\', \'Variable Wastewater Charge\')" value = "No"  checked = "true"/>No</label>';
                         commodityList.appendChild(Answer);
                     }
-                    
+                    */
                     
                     
                     
@@ -839,7 +864,7 @@ survey.utilities = utilityList;
                 //Checks if The Service Charge is The Same as a previously entered Service Charge 
 				//If it is the same it calls the getServiceSame() Function
                 //If it isn't it goes to serviceChargeDepends()
-                function  serviceChargeTheSame(chargeIdentifier, Question, chargeName)
+                function serviceChargeTheSame(chargeIdentifier, Question, chargeName)
                 {
                     var DIV = document.getElementById("serviceList" + chargeIdentifier);
                     //
@@ -905,6 +930,18 @@ survey.utilities = utilityList;
                         clear(DIV);
                         serviceParameters[currentIndex][chargeIdentifier] = [];
                         
+						if(chargeIdentifier === 1)
+						{
+							createSection(sectionTextDict["drought"], "drought", "h2", DIV)
+							createSection(sectionTextDict["fixedDroughtCharge"], "fixedDroughtCharge", "h3", DIV)
+						}
+						else if(chargeIdentifier === 0)
+						{
+							createSection(sectionTextDict["water"], "water", "h2", DIV)
+							createSection(sectionTextDict["fixedServiceChargeSection"], "fixedServiceChargeSection", "h3", DIV)
+						}
+						
+						
                         QuestionTxt(Question, 5, DIV);
                         
                         Answer = document.createElement("span");
@@ -1096,7 +1133,7 @@ survey.utilities = utilityList;
                         if(service.childNodes.length > 0)
                             clear(service);
                         
-                        QuestionTxt("<b>Enter the " + chargeName + " (In the form of 15.99)</b>:", 512, service);
+                        QuestionTxt("<b>Enter the " + chargeName + " (In the form of 15.99):</b>", 512, service);
                         
                         divider = document.createElement("div");
                         divider.classList.add("form-group");
@@ -1219,9 +1256,9 @@ survey.utilities = utilityList;
 								"Note that while a budget-based rate structure may include tiers, "+
 								"we consider 'Budget' and 'Tiered' as unique rate structures. "+
 								"<br><br>"+
-								"Please choose 'Budget' if the tier widths change based on "+
-								"attributes like household size, landscape area, ET, or on historic average use. "+
-								"For tier widths that change based on season or discrete temperature zones, "+
+								"Please choose 'Budget' if the tier definitions change based on "+
+								"attributes like household size, landscape area, evapotranspiration, or on historic average use. "+
+								"For tier definitions that change based on season or discrete temperature zones, "+
 								"please choose 'Tiered'."	
 						
                         QuestionTxt(q , 10, DIV);
@@ -1242,6 +1279,15 @@ survey.utilities = utilityList;
                         clear(DIV);
                         commodityStructure[currentIndex][chargeIdentifier] = [];
                         
+						if(chargeIdentifier === 1)
+						{
+							createSection(sectionTextDict["variableDroughtCharge"], "variableDroughtCharge", "h3", DIV)
+						}
+						else if(chargeIdentifier === 0)
+						{
+							createSection(sectionTextDict["variableCommChargeSection"], "variableCommChargeSection", "h3", DIV)
+						}
+						
                         QuestionTxt(Question, 9, DIV);
                         
                         Answer = document.createElement("span");
@@ -1308,7 +1354,7 @@ survey.utilities = utilityList;
                         clear(commodityDependsOnDiv);
                     }
                     
-                    QuestionTxt("<b>1.3) Does this Uniform " + chargeName + " depend on anything?</b>", 11, commodityDependsOnDiv);
+                    QuestionTxt("<b>2.2) Does this Uniform " + chargeName + " depend on anything?</b>", 11, commodityDependsOnDiv);
                     
                     Answer = document.createElement("span");
                         
@@ -1398,9 +1444,9 @@ survey.utilities = utilityList;
                             
                             if(Continue && ParametersToUse.length > 0)
                             {
-                                billUnit(chargeIdentifier, uniformPriceDiv);
+                                //billUnit(chargeIdentifier, uniformPriceDiv);
                                 
-                                QuestionTxt("<b>Enter The Cost Per " + billingUnits[currentIndex][chargeIdentifier] + " (In the form of 15.99):</b>", 12, uniformPriceDiv)
+                                QuestionTxt("<b>Enter the cost per unit (In the form of 15.99):</b>", 12, uniformPriceDiv)
                                 commodityChargeCategories[currentIndex][chargeIdentifier] = [];
                                 getCategories(commodityChargeCategories[currentIndex][chargeIdentifier], 0, ParametersToUse.length, "", "Rate:");
                             
@@ -1448,9 +1494,9 @@ survey.utilities = utilityList;
                     }
                     else if(isUniformDependsOn[currentIndex][chargeIdentifier] == 'No')
                     {
-                        billUnit(chargeIdentifier, uniformPriceDiv);
+                        //billUnit(chargeIdentifier, uniformPriceDiv);
                         
-                        QuestionTxt("<b>Enter The Cost Per " + billingUnits[currentIndex][chargeIdentifier] + " (In the form of 15.99):</b>", 12, uniformPriceDiv);
+                        QuestionTxt("<b>Enter the cost per unit (In the form of 15.99):</b>", 12, uniformPriceDiv);
                        
                         inputGroup = document.createElement("div");
                         inputGroup.classList.add("input-group");
@@ -1476,6 +1522,7 @@ survey.utilities = utilityList;
                     }
                 }
                 
+				/*
                 function billUnit(chargeIdentifier, DIV)
                 {
                     QuestionTxt("<b>Select The Billing Unit</b>", 45, DIV);
@@ -1499,6 +1546,7 @@ survey.utilities = utilityList;
                     }
                 }
                 
+				
                 function changeBillUnits(chargeIdentifier, num)
                 {
                     if(num == 0)
@@ -1506,6 +1554,21 @@ survey.utilities = utilityList;
                     else
                         billingUnits[currentIndex][chargeIdentifier] = "ccf";
                 }
+				*/
+				
+				function setBillingUnit()
+				{
+					var Kgal = document.getElementById("YesBillUnits");
+                    var CCF = document.getElementById("NoBillUnits");
+                    
+                    if(BillingUnit != "")
+                    {
+                        if(BillingUnit == "ccf")
+                            CCF.checked = true;
+                        else
+                            Kgal.checked = true;
+                    }
+				}
                 
                 function TieredDepends(chargeIdentifier, chargeName)
                 {
@@ -1551,7 +1614,7 @@ survey.utilities = utilityList;
                     tierLevels[currentIndex][chargeIdentifier] = tiers.value;
                     
                     Tier("tierStarts" + chargeIdentifier + "Div", questionDict["doTiersDepend"], "doTiersDepend", isTierStartsDepends[currentIndex][chargeIdentifier], "TierStarts", getTierStartsInfo, chargeIdentifier, chargeName);
-                    Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doPricesDepend"], "doPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
+                    Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doTierPricesDepend"], "doTierPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
                     getTierStartsInfo(chargeIdentifier, chargeName);
                     getTierPricesInfo(chargeIdentifier, chargeName);
                 }
@@ -1615,8 +1678,8 @@ survey.utilities = utilityList;
                             clear(tierStartsDiv);
                         }
                         
-                        if(commodityStructure[currentIndex][chargeIdentifier])
-                            billUnit(chargeIdentifier, tierStartsDiv);
+                        //if(commodityStructure[currentIndex][chargeIdentifier])
+                            //billUnit(chargeIdentifier, tierStartsDiv);
                         
                         QuestionTxt(questionDict["doTiersDepend"], "doTiersDepend",tierStartsDiv)
                         Answer = document.createElement("span");
@@ -1679,7 +1742,7 @@ survey.utilities = utilityList;
                         {
                             clear(tierPricesDiv);
                         }
-                        QuestionTxt(questionDict["doPricesDepend"], "doPricesDepend", tierPricesDiv)
+                        QuestionTxt(questionDict["doTierPricesDepend"], "doTierPricesDepend", tierPricesDiv)
                         Answer = document.createElement("span");
                         
                         Answer.innerHTML = '<label for = "YesTierPrices' + chargeIdentifier + '" class = "radio-inline"><input type = "radio" id = "YesTierPrices' + chargeIdentifier + '" name = "isTierPricesDepends' + chargeIdentifier + '" onclick = "getTierPricesInfo(' + chargeIdentifier + ', \'' + chargeName + '\')" value = "Yes" checked = "true"/>'+
@@ -1706,7 +1769,7 @@ survey.utilities = utilityList;
                     else
                     {
                         isTierPricesDepends[currentIndex][chargeIdentifier] = false;
-                        Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doPricesDepend"], "doPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
+                        Tier("tierPrices" + chargeIdentifier + "Div", questionDict["doTierPricesDepend"], "doTierPricesDepend", isTierPricesDepends[currentIndex][chargeIdentifier], "TierPrices", getTierPricesInfo, chargeIdentifier, chargeName);
                         
                         Answer = document.createElement('div');
                         Answer.id = "tierPricesValues" + chargeIdentifier + "Div";
@@ -1778,7 +1841,7 @@ survey.utilities = utilityList;
                     budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
 						"indoor", "Indoor Budget Equation:", "glyphicon-home", indoor[currentIndex][chargeIdentifier], "hhsize*gpcd*days_in_period*(1/748)");
                     budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
-						"outdoor", "Outdoor Budget Equation:", "glyphicon-globe", gpcd[currentIndex][chargeIdentifier], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
+						"outdoor", "Outdoor Budget Equation:", "glyphicon-globe", outdoor[currentIndex][chargeIdentifier], "landscape_factor*et_amount*irr_area*0.62*(1/748)");
                     budgetVariableFieldCreator(commodityDependsOnDiv, chargeIdentifier, 
 						"budget", "Budget:", "glyphicon-usd", budget[currentIndex][chargeIdentifier], "indoor+outdoor");
                     
@@ -1825,7 +1888,15 @@ survey.utilities = utilityList;
                     {
                         clear(DIV);
                     }
-                    QuestionTxt(questionDict["doPricesDepend"], "doPricesDepend", DIV);
+					
+					if(DIVname.substring(0,7) === "service"){
+						QuestionTxt(questionDict["doFixedPricesDepend"], "doTierPricesDepend", DIV);
+					}
+					else
+					{
+						QuestionTxt(questionDict["tierPricesDependWhat"], "tierPricesDependWhat", DIV);
+					}
+                    
                     
                     for(var i = 0; i < survey.commodityDependsOn.length; ++i)
                     {
@@ -2230,11 +2301,11 @@ survey.utilities = utilityList;
                             {
                                 if(commodityStructure[currentIndex][chargeIdentifier] == "Tiered")
                                 {
-                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (Must be a whole number): ", chargeIdentifier);
+                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Definitions (Must be a whole number): ", chargeIdentifier);
                                 }
                                 else
                                 {
-                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Levels (Must be in the format 100%): ", chargeIdentifier);
+                                    createTierFields(tierStartsValuesDiv, "tierStarts", tierStartsCategories[currentIndex][chargeIdentifier], "Tier Definitions (Must be in the format 100%): ", chargeIdentifier);
                                 }
                             }
                         }
@@ -2619,14 +2690,14 @@ survey.utilities = utilityList;
                                                 }
                                                 else
                                                 {
-                                                    var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                                    var regex = /^\d+(\.\d+)?$/.test(tempCharge.value);
                                                     if(regex)
                                                     {
                                                         serviceCharges[currentIndex][i].push(tempCharge.value);
                                                     }
                                                     else
                                                     {
-                                                        alert("Service Charge at row " + (j + 1) + " must be in the Format 1.00");
+                                                        alert("Service Charge at row " + (j + 1) + " must be a non-negative number");
                                                         Continue = false;
                                                     }
                                                 }
@@ -2655,7 +2726,7 @@ survey.utilities = utilityList;
                                 }
                                 else
                                 {
-                                    var regex = /^\d+(?:.\d{2})$/.test(temp.value);
+                                    var regex = /^\d+(\.\d+)?$/.test(temp.value);
                                     if(regex)
                                     {
                                         serviceCharges[currentIndex][i] = []
@@ -2663,7 +2734,7 @@ survey.utilities = utilityList;
                                     }
                                     else
                                     {
-                                        alert("The service charge must be in the Format 1.00");
+                                        alert("The service charge must be a non-negative number");
                                         Continue = false;
                                     }
                                 }
@@ -2703,17 +2774,17 @@ survey.utilities = utilityList;
                                 {
                                     var Charge = document.getElementById("commodityCharge" + i + "0");
                                     if(Charge.value == "")
-                                    { alert("You must enter a rate"); Continue = false; } 
+                                    { alert("You must enter a uniform rate"); Continue = false; } 
                                     else
                                     { 
-                                        var regex = /^\d+(?:.\d{2})$/.test(Charge.value);
-                                        if(regex)
+                                        var regex = /^\d+(\.\d+)?$/.test(Charge.value);
+                                        if(regex && parseFloat(Charge.value) >= 0)
                                         {
                                             commodityCharges[currentIndex][i].push(Charge.value);
                                         }
                                         else
                                         {
-                                            alert('Rate must be in the Format 1.00');
+                                            alert('Rate must be a non-negative number');
                                             Continue = false;
                                         }
                                     }
@@ -2739,14 +2810,14 @@ survey.utilities = utilityList;
                                                     }
                                                     else
                                                     {
-                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
-                                                        if(regex)
+                                                        var regex = /^\d+(\.\d+)?$/.test(tempCharge.value);
+                                                        if(regex && parseFloat(tempCharge.value) >= 0)
                                                         {
                                                             commodityCharges[currentIndex][i].push(tempCharge.value);
                                                         }
                                                         else
                                                         {
-                                                            alert("Commodity Charge at row " + (j + 1) + " must be in the Format 1.00");
+                                                            alert("Commodity Charge at tier " + (j + 1) + " must be a non-negative number");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2793,14 +2864,14 @@ survey.utilities = utilityList;
                                                     else
                                                     {
                                                         var regex = /^\d+$/.test(tempCharge.value);
-                                                        if(regex)
+                                                        if(regex && parseFloat(tempCharge.value) >= 0)
                                                         {
                                                             tierStartsValues[currentIndex][i].push(tempCharge.value);
                                                         }
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number");
+                                                            alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number and non-negative");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2816,7 +2887,7 @@ survey.utilities = utilityList;
                                     else
                                     {
                                         Continue = false;
-                                        alert("No parameters Selected for Tier Levels");
+                                        alert("No parameters Selected for Tier Definitions");
                                     }
                                 }
                                 else
@@ -2832,13 +2903,13 @@ survey.utilities = utilityList;
                                         else
                                         { 
                                             var regex = /^\d+$/.test(Level.value);
-                                            if(regex)
+                                            if(regex && parseFloat(Level.value) >= 0)
                                             {
                                                 tierStartsValues[currentIndex][i].push(Level.value);
                                             }
                                             else
                                             {
-                                                alert("The Tier Level for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number");
+                                                alert("The Tier Level for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a whole number and non-negative");
                                                 Continue = false;
                                             } 
                                         }
@@ -2867,15 +2938,15 @@ survey.utilities = utilityList;
                                                     }
                                                     else
                                                     {
-                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
-                                                        if(regex)
+                                                        var regex = /^\d+(\.\d+)?$/.test(tempCharge.value);
+                                                        if(regex && parseFloat(tempCharge.value) >= 0)
                                                         {
                                                             commodityCharges[currentIndex][i].push(tempCharge.value);
                                                         }
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][i][tempIndex].replace(" Rate:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the Format 1.00");
+                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][i][tempIndex].replace(" Rate:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a non-negative number");
                                                             Continue = false;
                                                         }
                                                     }
@@ -2906,14 +2977,14 @@ survey.utilities = utilityList;
                                         } 
                                         else
                                         { 
-                                            var regex = /^\d+(?:.\d{2})$/.test(Price.value);
-                                            if(regex)
+                                            var regex = /^\d+(\.\d+)?$/.test(Price.value);
+                                            if(regex && parseFloat(Price.value) >= 0)
                                             {
                                                 commodityCharges[currentIndex][i].push(Price.value);
                                             }
                                             else
                                             {
-                                                alert("The Tier Price for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the Format 1.00");
+                                                alert("The Tier Price for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a non-negative number");
                                                 Continue = false;
                                             } 
                                         }
@@ -3010,14 +3081,14 @@ survey.utilities = utilityList;
                                                         var regex = /^\d+(?:%)$/.test(tempCharge.value);
                                                         if(j % tierLevels[currentIndex][i] + 1 == 2)
                                                         {
-                                                            if(tempCharge.value == "indoor" || regex)
+                                                            if(tempCharge.value == "indoor" || tempCharge.value == "outdoor" || regex)
                                                             {
                                                                 tierStartsValues[currentIndex][i].push(tempCharge.value);
                                                             }
                                                             else
                                                             {
                                                                 var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                                alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the format 100% or say indoor");
+                                                                alert("The Tier Level for " + tierStartsCategories[currentIndex][i][tempIndex].replace(" Level:", "").replace("<QUOTE>", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the format 100% or say 'indoor' or 'outdoor'");
                                                                 Continue = false;
                                                             }
                                                         }
@@ -3051,7 +3122,7 @@ survey.utilities = utilityList;
                                     else
                                     {
                                         Continue = false;
-                                        alert("No parameters Selected for Tier Levels");
+                                        alert("No parameters Selected for Tier Definitions");
                                     }
                                 }
                                 else
@@ -3083,10 +3154,10 @@ survey.utilities = utilityList;
                                             {
                                                 if(j == 1)
                                                 {
-                                                    if(Level.value == "indoor" || regex)
+                                                    if(Level.value == "indoor" || Level.value == "outdoor" || regex)
                                                         tierStartsValues[currentIndex][i].push(Level.value);
                                                     else
-                                                        alert("The Tier Level for tier " + (j + 1) + " must be in the format 100% or say indoor");
+                                                        alert("The Tier Level for tier " + (j + 1) + " must be in the format 100% or say 'indoor' or 'outdoor'");
                                                 }
                                                 else
                                                     tierStartsValues[currentIndex][i].push(Level.value); 
@@ -3117,7 +3188,7 @@ survey.utilities = utilityList;
                                                     }
                                                     else
                                                     {
-                                                        var regex = /^\d+(?:.\d{2})$/.test(tempCharge.value);
+                                                        var regex = /^\d+(\.\d+)?$/.test(tempCharge.value);
                                                         if(regex)
                                                         {
                                                             commodityCharges[currentIndex][i].push(tempCharge.value);
@@ -3125,7 +3196,7 @@ survey.utilities = utilityList;
                                                         else
                                                         {
                                                             var tempIndex = Math.floor(j/tierLevels[currentIndex][i]);
-                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][i][tempIndex].replace(" Rate:", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the Format 1.00");
+                                                            alert("The Tier Price for " + commodityChargeCategories[currentIndex][i][tempIndex].replace(" Rate:", "") + " at tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a non-negative number");
                                                             Continue = false;
                                                         }
                                                     }
@@ -3156,14 +3227,14 @@ survey.utilities = utilityList;
                                         } 
                                         else
                                         { 
-                                            var regex = /^\d+(?:.\d{2})$/.test(Price.value);
+                                            var regex = /^\d+(\.\d+)?$/.test(Price.value);
                                             if(regex)
                                             {
                                                 commodityCharges[currentIndex][i].push(Price.value);
                                             }
                                             else
                                             {
-                                                alert("The Tier Price for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be in the Format 1.00");
+                                                alert("The Tier Price for tier " + (j % tierLevels[currentIndex][i] + 1) + " must be a non-negative number");
                                                 Continue = false;
                                             } 
                                         }
@@ -3217,6 +3288,7 @@ survey.utilities = utilityList;
                             "effective_date" : "" + EffectiveDate + "",
                             "utility_name" : "" + UtilityName + "",
                             "bill_frequency" : "" + BillFrequency + "",
+							              "bill_unit" : "" + BillingUnit + "",
                             "prop_218_link" : "" + prop218Link + ""
                        },
                        "rate_structure" : {
@@ -3318,22 +3390,22 @@ survey.utilities = utilityList;
                                                     "flat_rate_commodity" : {}
                                                 }; break;
                                         case 1: commodityJSON[j]  = {
-                                                    "volumetric_drought_surcharge" : "flat_rate_drought*usage_ccf",
+                                                    "variable_drought_surcharge" : "flat_rate_drought*usage_ccf",
                                                     "flat_rate_drought" : {}
                                                 }; break;
                                         case 2: commodityJSON[j]  = {
-                                                    "volumetric_wastewater_charge" : "flat_rate_waste*usage_ccf",
+                                                    "variable_wastewater_charge" : "flat_rate_waste*usage_ccf",
                                                     "flat_rate_waste" : {}
                                                 }; break;
                                     }
-                                    
+                                    /*
                                     switch(j)
                                     {
                                         case 0: commodityJSON[j].billing_unit_commodity = billingUnits[structure][j]; break;
                                         case 1: commodityJSON[j].billing_unit_drought = billingUnits[structure][j]; break;
                                         case 2: commodityJSON[j].billing_unit_waste = billingUnits[structure][j]; break;
                                     }
-                                    
+                                    */
                                     if(isUniformDependsOn[structure][j] == 'No')
                                     {
                                         switch(j)
@@ -3407,20 +3479,20 @@ survey.utilities = utilityList;
                                                     "commodity_charge" : "Tiered"
                                                 }; break;
                                         case 1: commodityJSON[j]  = {
-                                                    "volumetric_drought_surcharge" : "Tiered"
+                                                    "variable_drought_surcharge" : "Tiered"
                                                 }; break;
                                         case 2: commodityJSON[j]  = {
-                                                    "volumetric_wastewater_charge" : "Tiered"
+                                                    "variable_wastewater_charge" : "Tiered"
                                                 }; break;
                                     }
-                                    
+                                    /*
                                     switch(j)
                                     {
                                         case 0: commodityJSON[j].tiered_billing_unit_commodity = billingUnits[structure][j]; break;
                                         case 1: commodityJSON[j].tiered_billing_unit_drought = billingUnits[structure][j]; break;
                                         case 2: commodityJSON[j].tiered_billing_unit_waste = billingUnits[structure][j]; break;
                                     }
-                                    
+                                    */
                                     if(isTierStartsDepends[structure][j])
                                     {
                                         switch(j)
@@ -3606,20 +3678,20 @@ survey.utilities = utilityList;
                                                     "commodity_charge" : "Budget"
                                                 }; break;
                                         case 1: commodityJSON[j]  = {
-                                                    "volumetric_drought_surcharge" : "Budget"
+                                                    "variable_drought_surcharge" : "Budget"
                                                 }; break;
                                         case 2: commodityJSON[j]  = {
-                                                    "volumetric_wastewater_charge" : "Budget"
+                                                    "variable_wastewater_charge" : "Budget"
                                                 }; break;
                                     }
-                                    
+                                    /*
                                     switch(j)
                                     {
                                         case 0: commodityJSON[j].budget_billing_unit_commodity = billingUnits[structure][j]; break;
                                         case 1: commodityJSON[j].budget_billing_unit_drought = billingUnits[structure][j]; break;
                                         case 2: commodityJSON[j].budget_billing_unit_waste = billingUnits[structure][j]; break;
                                     }
-                                    
+                                    */
                                     switch(j)
                                     {
                                         case 0:  
@@ -3834,17 +3906,17 @@ survey.utilities = utilityList;
                                                     "commodity_charge" : 0
                                                 }; break;
                                         case 1: commodityJSON[j]  = {
-                                                    "volumetric_drought_surcharge" : 0
+                                                    "variable_drought_surcharge" : 0
                                                 }; break;
                                         case 2: commodityJSON[j]  = {
-                                                    "volumetric_wastewater_charge" : 0
+                                                    "variable_wastewater_charge" : 0
                                                 }; break;
                                     } 
                         };
                         }
                         switch(SelectedRateStructures[structure])
                         {
-                            case "Residential Single": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
+                            case "Single-Family Residential": tempStructure = { "RESIDENTIAL_SINGLE" : { "service_charge" : {} } };
                                                         tempStructure.RESIDENTIAL_SINGLE.service_charge = serviceJSON[0] ;
                                                         tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON[0]); 
                                                         tempStructure.RESIDENTIAL_SINGLE.fixed_drought_surcharge = serviceJSON[1] ;
@@ -3852,7 +3924,7 @@ survey.utilities = utilityList;
                                                         tempStructure.RESIDENTIAL_SINGLE.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.RESIDENTIAL_SINGLE = jQuery.extend({}, tempStructure.RESIDENTIAL_SINGLE, commodityJSON[2]); 
                                                         tempStructure.RESIDENTIAL_SINGLE.bill = "service_charge+commodity_charge"; break;
-                            case "Residential Multi": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
+                            case "Multi-Family Residential": tempStructure = { "RESIDENTIAL_MULTI" : { "service_charge" : {} } }; 
                                                         tempStructure.RESIDENTIAL_MULTI.service_charge = serviceJSON[0]; 
                                                         tempStructure.RESIDENTIAL_MULTI = jQuery.extend({}, tempStructure.RESIDENTIAL_MULTI, commodityJSON[0]); 
                                                         tempStructure.RESIDENTIAL_MULTI.fixed_drought_surcharge = serviceJSON[1] ;
@@ -3900,14 +3972,14 @@ survey.utilities = utilityList;
                                                         tempStructure.FIRE_SERVICE.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.FIRE_SERVICE = jQuery.extend({}, tempStructure.FIRE_SERVICE, commodityJSON[2]); 
                                                         tempStructure.FIRE_SERVICE.bill = "service_charge+commodity_charge"; break;
-                            case "Non-Potable": tempStructure = { "NONPOTABLE" : { "service_charge" : {} } };
-                                                        tempStructure.NONPOTABLE.service_charge = serviceJSON[0]; 
-                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[0]); 
-                                                        tempStructure.NONPOTABLE.fixed_drought_surcharge = serviceJSON[1] ;
-                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[1]);
-                                                        tempStructure.NONPOTABLE.fixed_wastewater_charge = serviceJSON[2] ;
-                                                        tempStructure.NONPOTABLE = jQuery.extend({}, tempStructure.NONPOTABLE, commodityJSON[2]); 
-                                                        tempStructure.NONPOTABLE.bill = "service_charge+commodity_charge"; break;
+                            case "Raw Water": tempStructure = { "RAW" : { "service_charge" : {} } };
+                                                        tempStructure.RAW.service_charge = serviceJSON[0]; 
+                                                        tempStructure.RAW = jQuery.extend({}, tempStructure.RAW, commodityJSON[0]); 
+                                                        tempStructure.RAW.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.RAW = jQuery.extend({}, tempStructure.RAW, commodityJSON[1]);
+                                                        tempStructure.RAW.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.RAW = jQuery.extend({}, tempStructure.RAW, commodityJSON[2]); 
+                                                        tempStructure.RAW.bill = "service_charge+commodity_charge"; break;
                             case "Potable": tempStructure = { "POTABLE" : { "service_charge" : {} } };
                                                         tempStructure.POTABLE.service_charge = serviceJSON[0]; 
                                                         tempStructure.POTABLE = jQuery.extend({}, tempStructure.POTABLE, commodityJSON[0]); 
@@ -3932,6 +4004,14 @@ survey.utilities = utilityList;
                                                         tempStructure.NON_RESIDENTIAL.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.NON_RESIDENTIAL = jQuery.extend({}, tempStructure.NON_RESIDENTIAL, commodityJSON[2]); 
                                                         tempStructure.NON_RESIDENTIAL.bill = "service_charge+commodity_charge"; break;
+							case "Agriculture": tempStructure = { "AGRICULTURAL" : { "service_charge" : {} } }; 
+                                                        tempStructure.AGRICULTURAL.service_charge = serviceJSON[0]; 
+                                                        tempStructure.AGRICULTURAL = jQuery.extend({}, tempStructure.AGRICULTURAL, commodityJSON[0]); 
+                                                        tempStructure.AGRICULTURAL.fixed_drought_surcharge = serviceJSON[1] ;
+                                                        tempStructure.AGRICULTURAL = jQuery.extend({}, tempStructure.AGRICULTURAL, commodityJSON[1]);
+                                                        tempStructure.AGRICULTURAL.fixed_wastewater_charge = serviceJSON[2] ;
+                                                        tempStructure.AGRICULTURAL = jQuery.extend({}, tempStructure.AGRICULTURAL, commodityJSON[2]); 
+                                                        tempStructure.AGRICULTURAL.bill = "service_charge+commodity_charge"; break;
                             case "Unmetered": tempStructure = { "UNMETERED" : { "service_charge" : {} } };
                                                         tempStructure.UNMETERED.service_charge = serviceJSON[0]; 
                                                         tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON[0]); 
@@ -3940,14 +4020,6 @@ survey.utilities = utilityList;
                                                         tempStructure.UNMETERED.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.UNMETERED = jQuery.extend({}, tempStructure.UNMETERED, commodityJSON[2]); 
                                                         tempStructure.UNMETERED.bill = "service_charge+commodity_charge"; break;
-                            case "Reclaimed": tempStructure = { "RECLAIMED" : { "service_charge" : {} } }; 
-                                                        tempStructure.RECLAIMED.service_charge = serviceJSON[0]; 
-                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[0]); 
-                                                        tempStructure.RECLAIMED.fixed_drought_surcharge = serviceJSON[1] ;
-                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[1]);
-                                                        tempStructure.RECLAIMED.fixed_wastewater_charge = serviceJSON[2] ;
-                                                        tempStructure.RECLAIMED = jQuery.extend({}, tempStructure.RECLAIMED, commodityJSON[2]); 
-                                                        tempStructure.RECLAIMED.bill = "service_charge+commodity_charge"; break;
                             case "Governmental": tempStructure = { "GOVERNMENTAL" : { "service_charge" : {} } }; 
                                                         tempStructure.GOVERNMENTAL.service_charge = serviceJSON[0]; 
                                                         tempStructure.GOVERNMENTAL = jQuery.extend({}, tempStructure.GOVERNMENTAL, commodityJSON[0]); 
@@ -3995,7 +4067,7 @@ survey.utilities = utilityList;
                                                         tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON[1]);
                                                         tempStructure.OTHER.fixed_wastewater_charge = serviceJSON[2] ;
                                                         tempStructure.OTHER = jQuery.extend({}, tempStructure.OTHER, commodityJSON[2]); 
-                                                        tempStructure.OTHER.bill = "service_charge+commodity_charge+fixed_wastewater_charge+volumetric_wastewater_charge"; break;
+                                                        tempStructure.OTHER.bill = "service_charge+commodity_charge+fixed_wastewater_charge+variable_wastewater_charge"; break;
                         }
                         OWRSformat.rate_structure = jQuery.extend({}, OWRSformat.rate_structure, tempStructure);
                     }
@@ -4012,6 +4084,8 @@ survey.utilities = utilityList;
                     var YAMLfile = document.createElement("pre");
                     YAMLfile.innerHTML = YAML;
                     cleared.appendChild(YAMLfile);
+					
+					surveyIsCompleted = true;
                     
                     /*
                     var submitForm = document.createElement("form");
@@ -4081,5 +4155,10 @@ survey.utilities = utilityList;
                     while(parent.firstChild)
                     {  parent.removeChild(parent.firstChild); }
                 }
+				
+				window.onbeforeunload = function(){
+					if(!surveyIsCompleted)
+						return 'Are you sure you want to leave? Your responses will not be saved until the end.';
+				};		
                 
                 MainPage();
