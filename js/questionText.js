@@ -12,23 +12,40 @@ sectionTextDict = {
 
 questionDict = {
 	"intro": "This portion of the survey is designed to gather detailed technical information about the structure and pricing "+
-				"of your water rates."+
+				"of your water rates. "+
+				"<br><br>"+
+				"For inquiries, please contact CaDC Support < support@californiadatacollaborative.org >"+
 				"<br><br>"+
 				"<font color='red'>ATTENTION:<br>"+
 				"Please DO NOT refresh the page or hit the 'back' button in your browser. Instead use the 'Next' and 'Previous' "+
 				"buttons at the bottom of the page.</font>",
+                
+    "nameQuestion" : 
+					 "OWRS files are stored publicly to enable easy corrections and comments from other member of the water community. The direct contact email and phone number of the point person on water rate information is helpful for analysts, researchers and others to follow up on data available here. If you do not have a point person or would not like to share that information, please feel free to share your district's general contact email and phone number."+
+					 "<br><br><br>"+
+					 "<b>1) Please enter your full name:</b>",
+    
+    "emailQuestion" : "<b>2) Please enter your E-mail address:<b>",
+    
+    "phoneQuestion" : "<b>3) Please enter a phone number we can reach you at:</b>",
 				
-	"utilityNameQuestion": "<b>1) Enter the Name of the Utility:</b>",
+	"utilityNameQuestion": "<b>1) Enter the name of the utility:</b>",
+  
+  "prop218Question": "<b>2) Please enter a link to your utility's Prop. 218 notice or another webpage where full water rate information can be found:</b>",
 	
-	"billFrequencyQuestion": "<b>2) Enter the Bill Frequency:</b>"+
+	"billFrequencyQuestion": "<b>3) Enter the bill frequency:</b>"+
 						"<br><br>"+
 						"In the case of different billing frequencies for different customers, please choose the most common case.",
 						
-	"effectiveDateQuestion": "<b>3) Enter the Effective Date of this Rate Structure:</b>",
+	"billingUnitQuestion": "<b>4) Select the billing unit:</b>",
+						
+	"effectiveDateQuestion": "<b>5) Enter the effective date of this rate structure:</b>",
 	
-	"custClassQuestion": "<b>4) Select the Customer Classes Used by the Utility:</b>"+
+	"custClassQuestion": "<b>6) Select the customer classes to report in this survey:</b>"+
 							"<br><br>"+
-							"Note: Not all rate structures will break neatly into these categories. "+
+							"Note: Please complete single-family rates and as many other classes as you are comfortable providing."+
+							"<br><br>"+
+							"Not all rate structures will break neatly into these categories. "+
 							"If your rate codes span multiple customer classes (e.g. single and multifamily are billed the same) "+
 							"please provide the same pricing information for both classes."+
 							"<br><br>"+
@@ -36,24 +53,30 @@ questionDict = {
 							"a single customer class (e.g. commercial) is broken up into a number of different rate codes. "+
 							"In this case, please use your best judgement and provide information for the most common case.",
 							
-	"fixedServiceChargeQuestion": "<b>1) Are customers in this class charged a fixed Service Charge?</b>",
+	"fixedServiceChargeQuestion": "<b>1) Are customers in this class charged a Fixed Service Charge?</b>",
 	
-	"variableCommChargeQuestion": "<b>2) Are customers in this class charged a variable Commodity Charge?</b>", 
-				
-	"serviceChargeDepends": "<b>Does the price of the fixed Service Charge depend on attributes of the customer account?</b>"+
-					"<br><br>"+
-					"For example, service charges often depend on meter size of the connection "+
-					"but they can also change depending on other attributes like the pressure zone the meter is located in.",
+	"doFixedPricesDepend": "<b>1.2) What attributes does the price depend on?</b>",
+	
+	"variableCommChargeQuestion": "<b>2) Are customers in this class charged a Variable Commodity Charge?</b>", 
 					
-	"howManyTiers": "<b>2.2) How Many Tiers?</b>",
+	"howManyTiers": "<b>2.2) How many tiers?</b>",
 	
-	"doTiersDepend": "<b>2.3) Do the Tier Levels Depend On Anything?</b>"+
+	"doTiersDepend": "<b>2.3) Do the tier definitions depend on customer attributes?</b>"+
 						"<br><br>"+
-						"For example some rate structures change their tier widths seasonally, or based on discrete temerature zones.",
+						"For example some rate structures change their tier definitions seasonally, or based on discrete temperature zones.",
 						
-	"doPricesDepend": "<b>2.4) Do the Tier Prices Depend On Anything?</b>",
+	"doTierPricesDepend": "<b>2.4) Do the tier prices depend on customer attributes?</b>",
+	
+	"tierPricesDependWhat": "<b>2.5) What attributes do the tier prices depend on?</b>",
 				
-	"budgetExplainer1":"",
+	"budgetExplainer1":"<b>2.1b) Please specify the coefficients and formulas used to calculate your water budgets:</b>"+
+						"<br><br>"+
+						"The defaults below are for a typical residential customer. "+
+						"<br><br>"+
+						"For a typical <b>Irrigation</b> customer please specify only 'outdoor' in the 'Budget:' field."+
+						"<br><br>"+
+						"For a typical <b>Commercial</b> customer based on a rolling average of historic use, "+
+						"please specify only 'rolling_average' in the 'Budget:' field.",
 	
 	"budgetExplainer2":"For the next questions, we would like to collect information about your water budget rate structure tiers."+
 						"<br><br>"+
@@ -79,10 +102,10 @@ questionDict = {
 						"<br><br>"+
 						"The second question will ask for the corresponding rates for the budget rates described. ",
 						
-	"isThereFixedDrought":"<b>Is there a fixed Drought Surcharge?</b>",
-	"isThereVolumeDrought":"<b>Is There A Volumetric Drought Surcharge?</b>",
+	"isThereFixedDrought":"<b>Is there a Fixed Drought Surcharge? (also referred to as drought rates, water shortage charges, or similar):</b>",
+	"isThereVolumeDrought":"<b>Is there a Variable Drought Surcharge? (also referred to as drought rates, water shortage charges, or similar):</b>",
 	
 	"isThereFixedWastewater":"<b>Is there a fixed wasterwater charge?</b>",
-	"isThereVolumeWastewater":"<b>Is There a Volumetric Wastewater Charge?</b>",
+	"isThereVolumeWastewater":"<b>Is There a Variable Wastewater Charge?</b>",
 }
 
